@@ -17,7 +17,10 @@
                 <!-- ______________Thumbs __________________________-->
                 @foreach($vip_takhfifs  as $vip_takhfif)
                     <a href="{{route('single',$vip_takhfif->slug)}}">
-                        <div class="home-top-thumb-side position-relative"
+                        <div class="home-top-thumb-side position-relative
+                        @if($loop->index == 0)
+                        mt-0
+                        @endif"
                              style="background-image: url({{asset($vip_takhfif->images()->count()?$vip_takhfif->images()->first()->path:'')}});">
                             <div class="thumb-timer text-center">
                                 @include('front.layouts.timer',['timer_takhfif'=>$vip_takhfif])
