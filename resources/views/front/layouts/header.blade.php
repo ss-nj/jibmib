@@ -74,7 +74,6 @@
             <div class="d-flex flex-column">
                 <div class="w-100 d-flex justify-content-between ">
                     <div class="align-self-center" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-bars"></i></div>
-                    <div class="position-relative">
                     <ul class="dropdown-menu w-100">
                         @foreach($cashed_menus as $cashed_menu)
                             <li class="dropdown-item pt-3 menu-dropright"><a class="d-flex pl-2 pr-2 w-100" href="{{$cashed_menu->link}}">{{$cashed_menu->name}}</a></li>
@@ -113,7 +112,6 @@
                         </li>
                         @endforeach
                     </ul>
-                    
                     <div class="align-self-center"><img class="responsive-header-logo" src="{{asset(trim($siteSettings['site_logo']->value_fa))}}" alt=""></div>
                     <div class="align-self-center">
                        @include('front.layouts.cart')
