@@ -22,11 +22,11 @@ class CreateTransactionsTable extends Migration
             $table->integer('amount');
             $table->json('meta')->nullable();//for extra data
             $table->string('track_code');
-            $table->string('cardNumber');
+            $table->string('cardNumber')->nullable();
             $table->bigInteger('ref_id')->nullable();
-            $table->boolean('status')->default(false);
-            $table->boolean('pay_way')->default(false);
+            $table->boolean('status')->default(2);
             $table->ipAddress('ip')->nullable();
+            $table->timestamp('payment_date')->nullable();
             $table->timestamps();
         });
     }

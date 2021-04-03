@@ -53,10 +53,10 @@ Route::post('sort', '\Rutorika\Sortable\SortableController@sort');
 Route::get('/select-city', [HomeController::class, 'citySelect'])->name('city.select');
 
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 foreach (Place::select('slug')->get()  as $place){
-    Route::get('/'.$place->slug, [HomeController::class, 'index'])->name('home');
+    Route::get('/'.$place->slug, [HomeController::class, 'index']);
 }
 
 Route::get('/coupon/{slug}', [HomeController::class, 'single'])->name('single');
@@ -93,8 +93,8 @@ Route::get('change-count-ajax', [BasketController::class,'change_count'])->name(
 
 
 //commerce
-Route::get('basket', [BasketController::class,'pay'])->name('basket.pay')->middleware('auth');;
-Route::post ('payment-status', [BasketController::class,'pay'])->name('callback');;
+Route::get('basket-pay', [BasketController::class,'pay'])->name('basket.pay')->middleware('auth');;
+Route::post ('payment-status', [BasketController::class,'callback'])->name('callback');;
 
 
 

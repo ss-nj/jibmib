@@ -129,26 +129,60 @@ class BasketController extends Controller
             $transID = $gateway->transactionId(); // شماره تراکنش
 
             // در اینجا
-            Transaction::create([
-                'user_id'=>Auth::id(),
-                'is_for'=>'cart-pay',
-                'amount'=>$price,
-                'meta'=>'',
-                'track_code'=>$refId,
-                'ref_id'=>$refId,
-                'status'=>'',
-                'pay_way'=>'',
-                'ip'=>'',
-            ]);
-            //  شماره تراکنش  بانک را با توجه به نوع ساختار دیتابیس تان
-            //  در جداول مورد نیاز و بسته به نیاز سیستم تان
-            // ذخیره کنید .
+
 
             return $gateway->redirect();
 
         } catch (\Exception $e) {
 
             echo $e->getMessage();
+        }
+    }
+
+    public function callback()
+    {
+        try {
+
+            $gateway = Gateway::verify();
+            $trackingCode = $gateway->trackingCode();
+            $refId = $gateway->refId();
+            $cardNumber = $gateway->cardNumber();
+
+            $transaction =   Transaction::create([
+                'user_id'=>Auth::id(),
+                'is_for'=>'cart-pay',
+                'amount'=>$gateway->amount,
+                'meta'=>'',
+                'cardNumber'=>$cardNumber,
+                'payment_date'=>now(),
+                'track_code'=>$trackingCode,
+                'ref_id'=>$refId,
+                'status'=>1,
+                'ip'=> Request::getClientIp(),
+            ]);
+            $message = false;
+            return view('front.callback',compact($transaction,'message' ));
+
+
+            // تراکنش با موفقیت سمت بانک تایید گردید
+            // در این مرحله عملیات خرید کاربر را تکمیل میکنیم
+
+        } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
+
+            // تراکنش قبلا سمت بانک تاییده شده است و
+            // کاربر احتمالا صفحه را مجددا رفرش کرده است
+            // لذا تنها فاکتور خرید قبل را مجدد به کاربر نمایش میدهیم
+
+            echo $e->getMessage() . "<br>";
+
+            $message = $e->getMessage();
+            return view('front.callback',compact($transaction,'message' ));
+
+        } catch (\Exception $e) {
+
+            // نمایش خطای بانک
+            $message = $e->getMessage();
+            return view('front.callback',compact($transaction,'message' ));
         }
     }
 

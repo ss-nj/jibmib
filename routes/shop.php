@@ -46,7 +46,7 @@ Route::group(['prefix' => 'shop'], function () {
     Route::get('mobile-verify', [LoginController::class,'showPasswordConfirmForm']);
     Route::post('new-password', [LoginController::class,'newPassword'])->name('shop.new.password');
 
-    Route::get('login', [LoginController::class,'showLoginForm'])->name('shop.login');
+    Route::get('login', [LoginController::class,'showLoginForm'])->name('shop.login.form');
 
     Route::get('register', [LoginController::class,'showRegisterForm'])->name('shop.register.user');
     Route::post('forget-password-user', [LoginController::class,'forgetPassword'])->name('shop.forgot.password')->middleware('auth');

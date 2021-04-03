@@ -23,9 +23,10 @@ class Transaction extends Model
         'is_for',
         'amount',
         'meta',
+        'cardNumber',
         'track_code',
         'ref_id',
-        'status',
+        'status',//2 onprogress 1 approved 0 not success or canceled
         'pay_way',
         'ip',
 
