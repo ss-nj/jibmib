@@ -3,7 +3,11 @@
         <img src="{{asset($path_user.'img/top.png').'?ver='.$ver}}" alt="">
         <div class="content-container">
             <div class="primary-header-container po-relative row">
-                <div class="col-3 align-self-center text-center"><img class="primary-header-logo" src="{{asset(trim($siteSettings['site_logo']->value_fa))}}" alt=""></div>
+                <div class="col-3 align-self-center text-center">
+                    <a href="{{route('home')}}">
+                    <img class="primary-header-logo" src="{{asset(trim($siteSettings['site_logo']->value_fa))}}" alt="">
+                    </a>
+                </div>
                 <div class="col-9">
                     <div class="d-flex justify-content-center w-100" style="float: left;">
                         <div class="search-form">

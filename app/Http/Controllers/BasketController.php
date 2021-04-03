@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Basket;
+use App\Http\Shop\Models\Transaction;
 use App\Support\BasketHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Larabookir\Gateway\Gateway;
+use Larabookir\Gateway\Mellat\Mellat;
 
 class BasketController extends Controller
 {
@@ -32,13 +35,13 @@ class BasketController extends Controller
     {
 
         $request->validate([
-            'count' => ['required','digits_between:1,999'],
+            'count' => ['required', 'digits_between:1,999'],
             'id' => ['required']
         ]);
 
         $count = $request->count;
         $basket = Basket::with('takhfif')->where('user_id', auth()->id())->find($request->id);
-        if (!$basket ||$count<=0)
+        if (!$basket || $count <= 0)
             return response()->json(['success' => false
                 , 'error' => 'محصول قبلا از سبد حذف شده صفحه را رفرش(بارگزاری مجدد) کنید '], 200);
 
@@ -51,7 +54,7 @@ class BasketController extends Controller
 
         $capacity = $basket->takhfif->capacity + $basket->count - $count;
 
-        if ($capacity<0)
+        if ($capacity < 0)
             return response()->json(['success' => false
                 , 'error' => 'مشکلی پیش آمده صفحه را رفرش(بارگزاری مجدد) کنید '], 200);
 
@@ -61,7 +64,7 @@ class BasketController extends Controller
 
         $basket->takhfif()->update(['capacity' => $capacity]);
 
-        return response()->json(['success' => true ,$count, $capacity  ],200);
+        return response()->json(['success' => true, $count, $capacity], 200);
 
     }
 
@@ -97,6 +100,56 @@ class BasketController extends Controller
 
         return view('front.checkout',
             compact('baskets', 'totalPrice', 'total_count', 'totalPrice_no_dis', 'total_discount'));
+    }
+
+    public function pay()
+    {
+        list($baskets, $totalPrice, $totalPrice_no_dis, $total_count, $total_discount) = BasketHelpers::calcPrices();
+
+        $price = $totalPrice;
+        return $this->payWithMellat($price);
+
+    }
+
+    /**
+     * @param $price
+     * @return mixed
+     */
+    public function payWithMellat($price)
+    {
+        try {
+
+            $gateway = Gateway::make(new Mellat());
+
+            $gateway->setCallback(route('callback')); // You can also change the callback
+            $gateway->price($price)
+                ->ready();
+
+            $refId = $gateway->refId(); // شماره ارجاع بانک
+            $transID = $gateway->transactionId(); // شماره تراکنش
+
+            // در اینجا
+            Transaction::create([
+                'user_id'=>Auth::id(),
+                'is_for'=>'cart-pay',
+                'amount'=>$price,
+                'meta'=>'',
+                'track_code'=>$refId,
+                'ref_id'=>$refId,
+                'status'=>'',
+                'pay_way'=>'',
+                'ip'=>'',
+            ]);
+            //  شماره تراکنش  بانک را با توجه به نوع ساختار دیتابیس تان
+            //  در جداول مورد نیاز و بسته به نیاز سیستم تان
+            // ذخیره کنید .
+
+            return $gateway->redirect();
+
+        } catch (\Exception $e) {
+
+            echo $e->getMessage();
+        }
     }
 
 }

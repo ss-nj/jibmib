@@ -92,4 +92,10 @@ Route::delete('basket/{basket}', [BasketController::class,'delete_basket'])->nam
 Route::get('change-count-ajax', [BasketController::class,'change_count'])->name('change.count.ajax');
 
 
+//commerce
+Route::get('basket', [BasketController::class,'pay'])->name('basket.pay')->middleware('auth');;
+Route::post ('payment-status', [BasketController::class,'pay'])->name('callback');;
+
+
+
 

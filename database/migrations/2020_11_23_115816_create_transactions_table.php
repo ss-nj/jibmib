@@ -20,8 +20,9 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('is_for');
             $table->integer('amount');
-            $table->json('meta')->nullable();
-            $table->string('authority');
+            $table->json('meta')->nullable();//for extra data
+            $table->string('track_code');
+            $table->string('cardNumber');
             $table->bigInteger('ref_id')->nullable();
             $table->boolean('status')->default(false);
             $table->boolean('pay_way')->default(false);
