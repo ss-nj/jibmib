@@ -1,0 +1,100 @@
+/**
+ *
+ * @package Azin-tejarat
+ * Theme-responsive-styles v1.0.0
+ */
+
+
+ @media only screen and (max-width: 1360px) {
+
+ }
+ @media only screen and (max-width: 1280px) {
+    .cat-fixed-container{right:0}
+ }
+
+@media only screen and (max-width: 1200px) {
+    :root {
+        --content-width: 100%;
+    }
+    .cat-fixed-container, .cat-fixed-container, .footer-side, .footer-bottom-semicircle,
+    .footer-top-semicircle
+    {display: none;}
+    .content-container{width: 100%; padding-left: 5px; padding-right: 5px;}
+    .social-side{left: 10px;}
+    .theme-footer{height: 100%;}
+    .copyright-container{position: relative;}
+    .footer-right-side{border: none;}
+    .footer-left-side{border-top: none; border-left: none; border-bottom: none; border-right: 2px solid #fff;}
+    .product-summery-content{width: 100%;}
+    .single-btn-container{left: 0;}
+}
+
+@media only screen and (max-width: 1130px) {
+    .primary-header-logo{width: 180px;}
+    .primary-header-btn, .login-bg-top, .login-bg-bottom, .login-logo-top{display: none;}
+    .tablet-header-btn{display: block;}
+    .footer-address-container{width: 100%;}
+
+}
+
+
+
+@media only screen and (max-width: 992px) {
+    :root {
+        --small-content-width: 100%;
+    }
+    .small-content-container{ padding-left: 5px; padding-right: 5px;}
+    .home-cat-container{display: none;}
+    .home-scrole-section{flex-wrap: nowrap !important; overflow-x: scroll !important;}
+    .login-page-container{padding-top: 0;}
+    .login-container{background-image: none; }
+    .login-container .col-lg-4{background-color: #00C2AC; padding: 20px ;}
+    .login-container .col-lg-8{background-color: #FFD229;}
+    .login-title{text-align: center; width: 100%; transform: rotate(0deg); margin:0;}
+    .login-form-container{padding: 10px; width: 100%;}
+}
+@media only screen and (max-width: 900px) {
+    .primary-header{display: none;}
+    .responsive-header{display: block;} 
+    .responsive-header-container input[type='text']{border-radius: 20px;}   
+}
+
+@media only screen and (max-width: 810px) {
+   
+}
+
+@media only screen and (max-width: 768px) {
+    h1{font-size: 30px;}
+    .responsive-header-container input[type='text']{width: 300px; border-radius: 20px;}
+    .footer-left-side{padding-top: 0;}
+    .footer-right-side-container{margin: 10px auto;}
+    .product-summery .job-big-thumb-off{z-index: 1000; left: 10px;}
+    .usr-icon{display: none;}
+}
+
+@media only screen and (max-width: 590px) {
+    .footer-menus-container{width: 100%; height: auto;}
+    .footer-cols-container{margin: 10px auto;}
+    .footer-menus-container ul{width: fit-content; margin: 10px auto;}
+    .job-big-thumb{width: 100%; height: auto;}
+    .job-big-thumb-img{height: auto;}
+    .job-big-thumb-rating span:first-child{display: none;}
+    .usr-profile-title{border-left: none; }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive-header-container .theme-btn{width: auto;}
+    .responsive-header-container input[type='text']{width: 250px;}
+    .job-big-thumb-add-cart{margin-left: -20px;} 
+}
+
+@media only screen and (max-width: 400px) {
+    .responsive-header-container .theme-btn{font-size: 0.65rem;}
+    .large-img-container{width: 100%; height: auto;}
+    .large-img-container img{height: auto;}
+}
+
+@media only screen and (max-width: 380px) {
+    .responsive-header-container input[type='text']{width: 200px;}
+}
+

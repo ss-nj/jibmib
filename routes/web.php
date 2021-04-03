@@ -1,0 +1,95 @@
+<?php
+
+use App\Http\Auth\User\LoginController;
+use App\Http\Auth\User\RegisterController;
+use App\Http\Commerce\Models\Place;
+use App\Http\Controllers\BasketController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Core\Controllers\CityController;
+use App\Http\ProfileController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Route::group(['namespace' => 'Auth\User',], function () {
+
+    Route::middleware('throttle:3,1')->group(function () {
+
+        Route::post('user-login', [LoginController::class,'login'])->name('user.login');
+        Route::post('user-register', [RegisterController::class,'register'])->name('user.register');
+
+    });
+    Route::get('login', [LoginController::class,'showLoginForm'])->name('login.form');
+    Route::get('register', [RegisterController::class,'showRegisterForm'])->name('register.form');
+
+    Route::get('user-logout', [LoginController::class,'logout'])->name('logout');
+
+});
+
+
+Route::group(['middleware' => ['auth', 'confirmedMobile']], function () {
+
+    Route::resource('profile', ProfileController::class)->only('index','update');
+    Route::post('/password-update', [ProfileController::class, 'updatePassword'])->name('user.password.update');
+
+});
+
+//sortable package route
+Route::post('sort', '\Rutorika\Sortable\SortableController@sort');
+
+//change city
+Route::get('/select-city', [HomeController::class, 'citySelect'])->name('city.select');
+
+
+Route::get('/', [HomeController::class, 'index']);
+
+foreach (Place::select('slug')->get()  as $place){
+    Route::get('/'.$place->slug, [HomeController::class, 'index'])->name('home');
+}
+
+Route::get('/coupon/{slug}', [HomeController::class, 'single'])->name('single');
+//category
+Route::get('/city/{city}/cat/{cat}', [HomeController::class, 'category'])->name('category');
+
+Route::post('/news-letter/', [HomeController::class, 'join'])->name('newsletter.join');
+
+
+Route::get('/policy', [HomeController::class, 'policy'])->name('policy');
+Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about.us');
+Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.us');
+
+//ajax city list load
+Route::get('cities', [CityController::class,'cityList'])->name('city.load');
+Route::get('provinces', [CityController::class,'provinceList'])->name('province.load');
+Route::get('places', [CityController::class,'placesList'])->name('places.load');
+
+//shopping routes
+//اضافه کردن اژکس به سبد
+Route::any('add-to-cart', [CartController::class,'addToCart'])->name('add.to.cart');
+Route::any('refresh-cart', [CartController::class,'refreshCart'] )->name('refresh.cart');
+
+//حذف کردن اژکس از سبد
+Route::any('remove-from-cart',  [CartController::class,'removeFromCart'])->name('remove.from.cart');
+
+//if user is not logged in cant go further than view cart
+//view cart
+//checkout :remove sessions add to basket middleware auth
+Route::get('basket', [BasketController::class,'cartView'])->name('view.basket')->middleware('auth');;
+Route::get('checkout', [BasketController::class,'checkout'])->name('checkout')->middleware('auth');
+Route::delete('basket/{basket}', [BasketController::class,'delete_basket'])->name('delete-basket');
+Route::get('change-count-ajax', [BasketController::class,'change_count'])->name('change.count.ajax');
+
+
+

@@ -1,0 +1,1 @@
+!function(n){"use trict";n(function(){n(document).on("click",".file-upload-browse",function(){n(this).parent().parent().parent().find(".file-upload-default").trigger("click")}),n(".file-upload-default").on("change",function(){n(this).parent().find(".form-control").val(n(this).val().replace(/C:\\fakepath\\/i,""))})})}(jQuery);
