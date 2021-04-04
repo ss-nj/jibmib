@@ -124,6 +124,10 @@ input:focus{border:none !important;}
 .responsive-header-container .tablet-header-btn button {margin-top: -5px;}
 .responsive-header-container .tablet-header-btn ul{width: fit-content !important; min-width: fit-content !important;}
 .header-select-city{/*position: absolute; top: 30px; right: 35px; */ font-size: 1rem;height: 40px;background-color: #fff;border-radius: 0 20px 20px 0;padding: 8px;margin-left: -4px;}
+.mobile-header-select-city{font-size: 1rem; height: 40px;background-color: #fff;border-radius: 0 20px 20px 0; padding: 8px;margin-left: -4px;}
+.mobile-header-select-city>i{position: absolute;font-size: 1.5rem; right: 50px;}
+.mobile-header-select-city>select{border: none;}
+.mobile-search-text{border-radius: 20px 0 0 20px !important;}
 .header-select-city select{border: none;}
 .header-select-city option{padding: 10px;}
 

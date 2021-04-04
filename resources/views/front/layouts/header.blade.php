@@ -71,9 +71,10 @@
     <!-- __________________________ Responsive Header __________________________ -->
     <section class="responsive-header w-100">
         <div class="responsive-header-container p-2">
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column position-rlative">
                 <div class="w-100 d-flex justify-content-between ">
                     <div class="align-self-center" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-bars"></i></div>
+                    
                     <ul class="dropdown-menu w-100">
                         @foreach($cashed_menus as $cashed_menu)
                             <li class="dropdown-item pt-3 menu-dropright"><a class="d-flex pl-2 pr-2 w-100" href="{{$cashed_menu->link}}">{{$cashed_menu->name}}</a></li>
@@ -118,13 +119,28 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-around">
-                    <div class="search-form"><form action="#" class="p-relative"><input type="text"><span><i class="fa-regular fa-magnifying-glass"></i></span></form></div>
+                    <div class="search-form">
+                        <form action="#" class="p-relative d-flex">
+                            <label class="mobile-header-select-city" for="header-city">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <select id="header-city" name="city" id="">
+                                    <option value="0"></option>
+                                    @foreach($cached_places as $cached_place)
+                                    <option value="{{$cached_place->slug}}">
+                                    {{$cached_place->name}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                            <input class="mobile-search-text" type="text"><span><i class="fa-regular fa-magnifying-glass"></i></span>
+                        </form>
+                    </div>
                     @auth()
                         <div class="tablet-header-btn align-self-center dropdown">
                             <button class="theme-btn orange-btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                 ورود / ثبت نام
                             </button>
-                            <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                            <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3" style="left: 0;">
                                 @if (Auth::check()&& Auth::user()->hasRole(['super_administrator']))
                                     <li><a class="dropdown-item" href="{{route('panel.dashboard')}}">داشبورد</a></li>
                                 @endif
