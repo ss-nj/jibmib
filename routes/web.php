@@ -86,10 +86,10 @@ Route::any('remove-from-cart',  [CartController::class,'removeFromCart'])->name(
 //if user is not logged in cant go further than view cart
 //view cart
 //checkout :remove sessions add to basket middleware auth
-Route::get('basket', [BasketController::class,'cartView'])->name('view.basket')->middleware('auth');;
+Route::get('basket', [BasketController::class,'cartView'])->name('view.basket')->middleware('auth');
 Route::get('checkout', [BasketController::class,'checkout'])->name('checkout')->middleware('auth');
-Route::delete('basket/{basket}', [BasketController::class,'delete_basket'])->name('delete-basket');
-Route::get('change-count-ajax', [BasketController::class,'change_count'])->name('change.count.ajax');
+Route::delete('basket/{basket}', [BasketController::class,'delete_basket'])->name('delete-basket')->middleware('auth');
+Route::get('change-count-ajax', [BasketController::class,'change_count'])->name('change.count.ajax')->middleware('auth');
 
 
 //commerce

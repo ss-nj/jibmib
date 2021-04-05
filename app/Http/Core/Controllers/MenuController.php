@@ -64,6 +64,7 @@ class MenuController extends Controller
 //        }
         $request->validate([
             'name' => 'required|string|min:2|max:254|unique:menus',
+            'menu' => ['required'],
             'link' => ['required', 'min:2', 'max:254'],
             'slug' => ['nullable', 'string', 'min:2', 'max:254', 'unique:menus,slug'],
             'main_image' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',

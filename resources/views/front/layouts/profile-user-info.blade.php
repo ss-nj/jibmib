@@ -10,7 +10,8 @@
             <div class="form-group col-md-12">
 
                 <label for="ajaxName" class="form-control-label">تصویر کاربر:</label>
-                <img style="width: 30%" src="{{asset(\Illuminate\Support\Facades\Auth::user()->image->path)}}" class="output"/>
+                <img style="width: 30%" src="{{asset(\Illuminate\Support\Facades\Auth::user()->image->path)}}"
+                     class="output" id="output"/>
 
                 <div class="form-group">
 
@@ -41,14 +42,14 @@
             <div class="form-group col-md-6">
                 <label for="first-name">نام</label>
                 <input type="text" class="form-control  first_name" id="first-name" name="first_name" placeholder="نام"
-                value="{{auth()->user()->first_name}}">
+                       value="{{auth()->user()->first_name}}">
                 <div class="error_field text-danger"></div>
             </div>
             <div class="form-group col-md-6">
                 <label for="last-name">نام خانوادگی</label>
                 <div class="error_field text-danger"></div>
                 <input type="text" class="form-control last_name" id="last-name" name="last_name"
-                       value="{{auth()->user()->last_name}}"   placeholder="نام خانوادگی">
+                       value="{{auth()->user()->last_name}}" placeholder="نام خانوادگی">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail">پست الکترونیک</label>
@@ -64,56 +65,67 @@
         </div>
     </form>
 
-{{--    <!-- _________________User Password ________________________ -->--}}
-{{--    <div class="title">تغییر کلمه عبور</div>--}}
-{{--    <form class="mb-4 ajax_validate" method="post" action="" enctype="multipart/form-data">--}}
-{{--        @csrf--}}
-{{--        <div class="form-row">--}}
-{{--            <div class="form-group col-md-6">--}}
-{{--                <label for="current-pass">کلمه عبور فعلی</label>--}}
-{{--                <input type="password" class="form-control" id="current-pass">--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="form-row">--}}
-{{--            <div class="form-group col-md-6">--}}
-{{--                <label for="new-pass">کلمه عبور جدید</label>--}}
-{{--                <input type="password" class="form-control" id="new-pass">--}}
-{{--            </div>--}}
-{{--            <div class="form-group col-md-6">--}}
-{{--                <label for="renew-pass">تکرار کلمه عبور جدید</label>--}}
-{{--                <input type="password" class="form-control" id="renew-pass">--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="d-flex justify-content-end">--}}
-{{--            <button type="submit" class="theme-btn green-btn">تغییر کلمه عبور</button>--}}
-{{--        </div>--}}
-{{--    </form>--}}
+    {{--    <!-- _________________User Password ________________________ -->--}}
+    {{--    <div class="title">تغییر کلمه عبور</div>--}}
+    {{--    <form class="mb-4 ajax_validate" method="post" action="" enctype="multipart/form-data">--}}
+    {{--        @csrf--}}
+    {{--        <div class="form-row">--}}
+    {{--            <div class="form-group col-md-6">--}}
+    {{--                <label for="current-pass">کلمه عبور فعلی</label>--}}
+    {{--                <input type="password" class="form-control" id="current-pass">--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--        <div class="form-row">--}}
+    {{--            <div class="form-group col-md-6">--}}
+    {{--                <label for="new-pass">کلمه عبور جدید</label>--}}
+    {{--                <input type="password" class="form-control" id="new-pass">--}}
+    {{--            </div>--}}
+    {{--            <div class="form-group col-md-6">--}}
+    {{--                <label for="renew-pass">تکرار کلمه عبور جدید</label>--}}
+    {{--                <input type="password" class="form-control" id="renew-pass">--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--        <div class="d-flex justify-content-end">--}}
+    {{--            <button type="submit" class="theme-btn green-btn">تغییر کلمه عبور</button>--}}
+    {{--        </div>--}}
+    {{--    </form>--}}
 
-{{--    <!-- _________________User Phone ________________________ -->--}}
-{{--    <div class="title">تغییر شماره همراه</div>--}}
-{{--    <form class="mb-4 ajax_validate" method="post" action="" enctype="multipart/form-data">--}}
-{{--        @csrf--}}
-{{--        <div class="form-row">--}}
-{{--            <div class="form-group col-md-6">--}}
-{{--                <input type="phone" class="form-control" id="phone-number" placeholder="شماره همراه خود را وارد نمایید">--}}
-{{--            </div>--}}
-{{--        </div>--}}
+    {{--    <!-- _________________User Phone ________________________ -->--}}
+    {{--    <div class="title">تغییر شماره همراه</div>--}}
+    {{--    <form class="mb-4 ajax_validate" method="post" action="" enctype="multipart/form-data">--}}
+    {{--        @csrf--}}
+    {{--        <div class="form-row">--}}
+    {{--            <div class="form-group col-md-6">--}}
+    {{--                <input type="phone" class="form-control" id="phone-number" placeholder="شماره همراه خود را وارد نمایید">--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
 
-{{--        <div class="d-flex justify-content-end">--}}
-{{--            <button type="submit" class="theme-btn green-btn">تغییر شماره همراه</button>--}}
-{{--        </div>--}}
-{{--    </form>--}}
+    {{--        <div class="d-flex justify-content-end">--}}
+    {{--            <button type="submit" class="theme-btn green-btn">تغییر شماره همراه</button>--}}
+    {{--        </div>--}}
+    {{--    </form>--}}
 
 
 </div>
 @push('internal_js')
     <script>
         var loadFile = function (event) {
-            var output = $('.output');
+
+            // var output = $('.output');
+            var output = document.getElementById('output');
+            var output2 = document.getElementById('output2');
+
             output.src = URL.createObjectURL(event.target.files[0]);
             output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }
+            output2.src = URL.createObjectURL(event.target.files[0]);
+            output2.onload = function () {
+                URL.revokeObjectURL(output2.src) // free memory
+            }
+
+            // var output = document.getElementById('output');
+
         };
 
     </script>

@@ -25,9 +25,9 @@ return [
     // Mellat gateway
     //--------------------------------
     'mellat' => [
-        'username'     => 'user1507',
-        'password'     => '8418189',
-        'terminalId'   => 1507,
+        'username'     => 'user1508',
+        'password'     => '83963698',
+        'terminalId'   => 1508,
         'callback-url' => '/'
     ],
 

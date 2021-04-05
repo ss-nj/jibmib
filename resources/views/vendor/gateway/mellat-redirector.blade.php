@@ -3,7 +3,8 @@
         <script>
         	var form = document.createElement("form");
         	form.setAttribute("method", "POST");
-        	form.setAttribute("action", "https://bpm.shaparak.ir/pgwchannel/startpay.mellat");
+        	// form.setAttribute("action", "https://bpm.shaparak.ir/pgwchannel/startpay.mellat");
+            form.setAttribute("action", "https://banktest.ir/gateway/pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat");
         	form.setAttribute("target", "_self");
 
             var hiddenField = document.createElement("input");

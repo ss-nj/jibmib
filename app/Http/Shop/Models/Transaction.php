@@ -31,7 +31,14 @@ class Transaction extends Model
         'ip',
 
     ];
-
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'meta' => 'array',
+    ];
 
     /*
 |--------------------------------------------------------------------------
@@ -43,4 +50,22 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+//    public function getMetaAttribute($meta)
+//    {
+//        return join(', ', json_decode($meta));
+//    }
+//
+//
+//    public function getMetaArrayAttribute()
+//    {
+//        return json_decode($this->attributes['meta']);
+//    }
+//
+//    public function setMetaAttribute($meta)
+//    {
+//        $this->attributes['meta'] = json_encode(array_map('trim',
+//            explode(',', $meta)));
+//    }
 }

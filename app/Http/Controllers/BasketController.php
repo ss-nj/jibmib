@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Basket;
 use App\Http\Shop\Models\Transaction;
+use App\OrderItem;
 use App\Support\BasketHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,7 @@ class BasketController extends Controller
 
         $count = $request->count;
         $basket = Basket::with('takhfif')->where('user_id', auth()->id())->find($request->id);
-        if (!$basket || $count <= 0)
+        if (!$basket)
             return response()->json(['success' => false
                 , 'error' => 'محصول قبلا از سبد حذف شده صفحه را رفرش(بارگزاری مجدد) کنید '], 200);
 
@@ -106,7 +107,7 @@ class BasketController extends Controller
     {
         list($baskets, $totalPrice, $totalPrice_no_dis, $total_count, $total_discount) = BasketHelpers::calcPrices();
 
-        $price = $totalPrice;
+        $price = $totalPrice*10;
         return $this->payWithMellat($price);
 
     }
@@ -117,30 +118,43 @@ class BasketController extends Controller
      */
     public function payWithMellat($price)
     {
-        try {
 
-            $gateway = Gateway::make(new Mellat());
+        $gateway = Gateway::make(new Mellat());
+        $gateway->setCallback(route('callback')); // You can also change the callback
+        $gateway->price($price)
+            ->ready();
 
-            $gateway->setCallback(route('callback')); // You can also change the callback
-            $gateway->price($price)
-                ->ready();
-
-            $refId = $gateway->refId(); // شماره ارجاع بانک
-            $transID = $gateway->transactionId(); // شماره تراکنش
-
-            // در اینجا
+        $refId = $gateway->refId(); // شماره ارجاع بانک
+        $transID = $gateway->transactionId(); // شماره تراکنش
 
 
-            return $gateway->redirect();
+        Transaction::create([
+            'user_id' => Auth::id(),
+            'is_for' => 'cart-pay',
+            'amount' => $price,
+            'meta' => [
+                'call-ip' => request()->getClientIp(),
+                'trans-id' => $transID,
+                'call-amount' => $price,
+                'return-ip' => '',
+                'return-amount' => '',
+            ],
+            'cardNumber' => '',
+            'payment_date' => now(),
+            'track_code' => '',
+            'ref_id' => $refId,
+            'status' => 2,
+            'ip' => request()->getClientIp(),
+        ]);
 
-        } catch (\Exception $e) {
 
-            echo $e->getMessage();
-        }
+        return $gateway->redirect();
+
     }
 
     public function callback()
     {
+
         try {
 
             $gateway = Gateway::verify();
@@ -148,24 +162,47 @@ class BasketController extends Controller
             $refId = $gateway->refId();
             $cardNumber = $gateway->cardNumber();
 
-            $transaction =   Transaction::create([
-                'user_id'=>Auth::id(),
-                'is_for'=>'cart-pay',
-                'amount'=>$gateway->amount,
-                'meta'=>'',
-                'cardNumber'=>$cardNumber,
-                'payment_date'=>now(),
-                'track_code'=>$trackingCode,
-                'ref_id'=>$refId,
-                'status'=>1,
-                'ip'=> Request::getClientIp(),
+            $transaction = Transaction::where('ref_id', $refId)->firstOrFail();
+
+            $price = $gateway->getPrice()/10;
+
+            $transaction->update([
+                'meta' => [
+                    'return-ip' => request()->getClientIp(),
+                    'return-amount' => $price,
+                ],
+                'cardNumber' => $cardNumber,
+                'payment_date' => now(),
+                'track_code' => $trackingCode,
+                'ref_id' => $refId,
+                'status' => 1,
+                'ip' => request()->getClientIp(),
             ]);
+
+//manage cart
+            list($baskets, $totalPrice, $totalPrice_no_dis, $total_count, $total_discount) = BasketHelpers::calcPrices($transaction->user_id);
+
+            if ($price != $totalPrice) {
+                $message = 'مشکلی در پرداخت پیش آمده لطفا شماره ی پیگیری خود را برای پشتیبانی ارسال کنید . در اولین فرصت مبلغ به حساب شما برگردانده خواهد شد .';
+                return view('front.callback', compact('transaction', 'message'));
+            }
+
+
+            //save basket to orders and order items
+            foreach ($baskets as $basket) {
+                OrderItem::create([
+                    'transaction_id' => $transaction->id,
+                    'takhfif_id' => $basket->takhfif_id,
+                    'takhfif_name' => $basket->takhfif->name,
+                    'code' => $this->generateAffLink(),
+                    'takhfif_price' => $basket->takhfif->price,
+                    'takhfif_discount' => $basket->takhfif->discount_price,
+                    'takhfif_count' => $basket->count,
+                ]);
+            }
+
             $message = false;
-            return view('front.callback',compact($transaction,'message' ));
-
-
-            // تراکنش با موفقیت سمت بانک تایید گردید
-            // در این مرحله عملیات خرید کاربر را تکمیل میکنیم
+            return view('front.callback', compact('transaction'));
 
         } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
 
@@ -173,17 +210,27 @@ class BasketController extends Controller
             // کاربر احتمالا صفحه را مجددا رفرش کرده است
             // لذا تنها فاکتور خرید قبل را مجدد به کاربر نمایش میدهیم
 
-            echo $e->getMessage() . "<br>";
 
             $message = $e->getMessage();
-            return view('front.callback',compact($transaction,'message' ));
+            return view('front.callback', compact('message'));
 
         } catch (\Exception $e) {
-
             // نمایش خطای بانک
             $message = $e->getMessage();
-            return view('front.callback',compact($transaction,'message' ));
+            return view('front.callback', compact('message'));
         }
     }
 
+    private function generateAffLink()
+    {
+        do {
+            $code = rand_str(10);
+            $status = OrderItem::where('code', $code)->count();
+        } while ($status);
+
+        return $code;
+
+
+    }
 }
+

@@ -45,10 +45,9 @@ class BasketHelpers
         return $flag;
     }
 
-    public static function calcPrices(): array
+    public static function calcPrices($user_id=null): array
     {
-
-        $baskets = Basket::where('user_id', auth()->id())->with('takhfif')->get();
+        $baskets = Basket::where('user_id', $user_id?? auth()->id())->with('takhfif')->get();
 
         $totalPrice = 0;
         $totalPrice_no_dis = 0;

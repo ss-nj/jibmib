@@ -16,7 +16,7 @@
 
                     <div class="card">
                         <div class="card card-body">
-                            <h4 class="card-title">ایجاد منوی جدید</h4>
+                            <h4 class="card-title">ویرایش منو</h4>
                             <div class="row">
                                 <div class="col-sm-12 col-xs-12">
                                     <form action="{{ route('menus.store') }}" class="ajax_validate" method="post" enctype="multipart/form-data"
@@ -34,9 +34,9 @@
                                             <select name="menu"
                                                     class="form-control menu "
                                                     style="width: 100%;">
-                                                <option >انتخاب کنید</option>
+{{--                                                <option >انتخاب کنید</option>--}}
                                                 @foreach(\App\Http\Core\Models\Menu::MENU_MAP as $key=> $position)
-                                                    <option value="{{$key}}" {{$menu->position ==$position?'selected':''}} >{{$position}}</option>
+                                                    <option value="{{$key}}" {{$menu->position ==$key?'selected':''}} >{{$position}}</option>
                                                 @endforeach
                                             </select>
                                             <div class="error_field text-danger"> </div>

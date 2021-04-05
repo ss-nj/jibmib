@@ -29,7 +29,7 @@
                                     <select name="menu"
                                             class="form-control menu "
                                             style="width: 100%;">
-                                        <option >انتخاب کنید</option>
+                                        <option value="" >انتخاب کنید</option>
                                         @foreach(\App\Http\Core\Models\Menu::MENU_MAP as $key=>$position)
                                             <option  value="{{$key}}"  >{{$position}}</option>
                                         @endforeach

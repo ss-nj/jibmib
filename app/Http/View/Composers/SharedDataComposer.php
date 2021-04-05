@@ -13,6 +13,7 @@ use App\Http\Core\Models\Setting;
 use App\Http\Shop\Models\Takhfif;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -82,7 +83,11 @@ class SharedDataComposer
         if (auth()->check()) {
             $baskets = \auth()->user()->baskets;
             $cart_count = Basket::where('user_id', Auth::id())->count();
-            $cart_sum = Basket::where('user_id', auth()->id())->sum('discount_price');
+            $cart_sum = Basket::where('user_id', auth()->id())->sum(DB::raw('baskets.discount_price * baskets.count'));;
+//            $cart_sum = Basket::where('user_id', auth()->id())->sum('discount_price');
+//            $cart_sum = Basket::where('user_id', auth()->id())->sum(function($t){
+//                return $t->discount_price * $t->count;
+//            });
         } else {
             $cart_count = 0;
             $cart_sum = 0;
@@ -92,6 +97,7 @@ class SharedDataComposer
         $path = url('/') . '/thems/jibmib/';
         $path_user = url('/') . '/thems/jibmib-user/';
         $ver = '.01';
+
         $view->with(compact('siteSettings', 'path', 'path_user', 'ver', 'logos', 'selected_city',
             'cart_count', 'cart_sum','baskets',
             'cached_cities', 'cached_provinces', 'cached_places', 'cached_categories',
