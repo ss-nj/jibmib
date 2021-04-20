@@ -11,8 +11,21 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    /* The accessors to append to the model's array form.
+         *
+         * @var array
+         */
+    protected $appends = [
+        'status_text'
+    ];
+    protected $casts = [
+        'status' => 'boolean',
+
+    ];
+
     protected $fillable = [
         'takhfif_id',
+        'user_id',
         'takhfif_name',
         'transaction_id',
         'code',
@@ -30,4 +43,17 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Takhfif::class);
     }
+
+
+    public function getStatusTextAttribute()
+    {
+        $statusMap = [
+            0=>'فعال',
+            1=> 'استفاده شده',
+            2=> 'غیر فعال',
+        ];
+        return $statusMap[$this->status];
+
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Core\Models;
 
 use App\Basket;
+use App\OrderItem;
 use App\Traits\Imagable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -132,5 +133,9 @@ class User extends Authenticatable implements Auditable
     public function baskets()
     {
         return $this->hasMany(Basket::class);
+    }
+    public function orders()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

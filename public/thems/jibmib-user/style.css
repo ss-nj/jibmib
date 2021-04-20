@@ -1,6 +1,6 @@
 /*
 
-	@package Pejoohan Mehr 
+	@package Pejoohan Mehr
 
 */
 
@@ -86,7 +86,7 @@ input:focus{border:none !important;}
 .theme-btn{margin-top: 5px;}
 .primary-nav-container{position: absolute; bottom: -9px; right: 5px;}
 .primary-nav-container .dropdown-menu{margin-top: -10px; margin-right: -10px; width: 200px;}
-.primary-nav-container .dropdown-item{color: #707070; font-size: 1rem; padding: 0 2px;} 
+.primary-nav-container .dropdown-item{color: #707070; font-size: 1rem; padding: 0 2px;}
 .primary-nav-container .dropdown-item i{font-size: 1.5rem;}
 .primary-nav-container .sub-menu{position: absolute; top:0; right:200px; background-color: #fff; border: 1px solid #dcdcdc;}
 
@@ -409,10 +409,10 @@ input:focus{border:none !important;}
 	Media Print
 	=========================================
 */
-@media print { 
+@media print {
 	/* All your print styles go here */
-	header, footer, .cat-fixed-container, .support-fixed-container, .btn{ display: none !important; }
+	header, footer, .cat-fixed-container, .support-fixed-container,.print-ticket, .btn{ display: none !important; }
 	.small-content-container{ width: 800px;}
 	.ticket-section{border: 1px solid #dcdcdc;}
-	
+
    }

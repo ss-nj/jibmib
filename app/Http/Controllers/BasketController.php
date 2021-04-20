@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Basket;
+use App\Http\Shop\Models\Takhfif;
 use App\Http\Shop\Models\Transaction;
 use App\OrderItem;
+use App\Providers\RouteServiceProvider;
 use App\Support\BasketHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Larabookir\Gateway\Gateway;
 use Larabookir\Gateway\Mellat\Mellat;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BasketController extends Controller
 {
@@ -190,15 +195,18 @@ class BasketController extends Controller
 
             //save basket to orders and order items
             foreach ($baskets as $basket) {
-                OrderItem::create([
+//dd($basket);
+             $a=   OrderItem::create([
                     'transaction_id' => $transaction->id,
                     'takhfif_id' => $basket->takhfif_id,
+                    'user_id' => $basket->user_id,
                     'takhfif_name' => $basket->takhfif->name,
-                    'code' => $this->generateAffLink(),
+                    'code' => $this->generateCodeLink($basket->user_id),
                     'takhfif_price' => $basket->takhfif->price,
                     'takhfif_discount' => $basket->takhfif->discount_price,
                     'takhfif_count' => $basket->count,
                 ]);
+
             }
 
             $message = false;
@@ -221,12 +229,24 @@ class BasketController extends Controller
         }
     }
 
-    private function generateAffLink()
+
+
+    private function generateCodeLink($user_id)
     {
         do {
             $code = rand_str(10);
             $status = OrderItem::where('code', $code)->count();
         } while ($status);
+
+
+        $path = public_path('img/users/'.$user_id.'/coupons/');
+
+        if(!File::isDirectory($path)){
+
+            File::makeDirectory($path, 0777, true, true);
+        }
+
+        QrCode::generate(route('home').'/coupons/'.$code, 'img/users/'.$user_id.'/coupons/'.$code.'.svg');
 
         return $code;
 

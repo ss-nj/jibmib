@@ -10,21 +10,21 @@ class Setting extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 //    'register_red_path','login_redirect_path','login_admin_redirect_path'
     public const MAP_REG_REDIRECTS = [
-        '0' => 'home',
+        '0' => '',
         '1' => 'profile',
         '2' => 'cart',
         '3' => 'user.dashboard',
     ];
 
     public const MAP_LOGIN_REDIRECTS = [
-        '0' => 'home',
+        '0' => '',
         '1' => 'profile',
         '2' => 'cart',
         '3' => 'user.dashboard',
     ];
 
     public const MAP_ADMIN_LOGIN_REDIRECTS = [
-        '0' => 'home',
+        '0' => '',
         '1' => 'profile',
         '2' => 'cart',
         '3' => 'user.dashboard',

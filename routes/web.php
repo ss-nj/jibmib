@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::fallback(function(){
+    return view('errors.404');
+});
 
 Route::group(['namespace' => 'Auth\User',], function () {
 
@@ -42,7 +45,8 @@ Route::group(['namespace' => 'Auth\User',], function () {
 Route::group(['middleware' => ['auth', 'confirmedMobile']], function () {
 
     Route::resource('profile', ProfileController::class)->only('index','update');
-    Route::post('/password-update', [ProfileController::class, 'updatePassword'])->name('user.password.update');
+
+    Route::get ('print/{code}', [ProfileController::class,'print'])->name('print');;
 
 });
 

@@ -22,8 +22,8 @@ class CreateTakhfifsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->timestamp('display_start_time')->nullable();
             $table->timestamp('display_end_time')->nullable();
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('expire_time')->nullable();
+            $table->timestamp('usage_start_time')->nullable();
+            $table->timestamp('usage_expire_time')->nullable();
             $table->unsignedInteger('time_out')->nullable();
             $table->unsignedInteger('capacity')->default(0);
             $table->tinyInteger('vip')->default(0);

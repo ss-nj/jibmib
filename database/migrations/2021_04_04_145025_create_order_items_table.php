@@ -15,6 +15,7 @@ class CreateOrderItemsTable extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
             $table->bigInteger('transaction_id');
             $table->bigInteger('takhfif_id');
             $table->string('takhfif_name');
@@ -22,6 +23,7 @@ class CreateOrderItemsTable extends Migration
             $table->bigInteger('takhfif_price');
             $table->bigInteger('takhfif_discount');
             $table->integer('takhfif_count');
+            $table->integer('status');
             $table->timestamps();
         });
     }

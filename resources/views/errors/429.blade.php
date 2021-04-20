@@ -92,7 +92,7 @@
                                 <h1> با عرض پوزش </h1>
                                 <h2>تنها سه بار در هر دقیقه مجاز به تلاش هستید </h2>
                                 <p>کمی صبر کنید و دوباره تلاش کنید</p>
-                                <a href="{{url('/')}}">بازگشت به صفحه اصلی</a>
+                                <a href="{{url('/')}}">بازگشت dfdfبه صفحه اصلی</a>
                                 <div class="notfound-social">
                                     {{--                            <a href="#"><i class="fa fa-facebook"></i></a>--}}
                                     {{--                            <a href="#"><i class="fa fa-twitter"></i></a>--}}

@@ -32,7 +32,7 @@
                 <!-- _______________________ Off Items Section ___________________ -->
                 <!-- <div id="offs-list" class="fade show active" role="tabpanel" aria-labelledby="off-list-tab"> -->
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-{{--                   @include('front.layouts.profile-takhfif-list')--}}
+                   @include('front.layouts.profile-takhfif-list')
                 </div>
 
                 <!-- _______________________ Personal Information Section ___________________ -->

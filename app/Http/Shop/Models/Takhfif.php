@@ -20,8 +20,8 @@ class Takhfif extends Model
 //        'slug',
         'display_start_time',
         'display_end_time',
-        'start_time',
-        'expire_time',
+        'usage_start_time',
+        'usage_expire_time',
         'time_out',
         'capacity',
         'vip',
@@ -59,6 +59,14 @@ class Takhfif extends Model
     {
         return $this->morphMany(Image::class, 'imagable');
     }
+
+    public function getImageFirstAttribute()
+    {
+        return $this->images()->count()
+            ? $this->images()->first()->path
+            : \App\Http\Core\Models\Image::NO_IMAGE_PATH;
+    }
+
 
 //    public function image()
 //    {
@@ -132,5 +140,18 @@ class Takhfif extends Model
             return 0;
         $discount = ((($this->price - $this->discount_price) / $this->price) * 100);
         return $discount > 0 ? $discount : 0;
+    }
+
+    public function getUsageTimeOutAttribute()
+    {
+        if (!$this->usage_start_time  ||
+            !$this->usage_expire_time ||
+            ($this->usage_start_time <= $this->usage_expire_time)||
+            (now() >= $this->usage_expire_time)
+        )
+            return 0;
+
+        $usage_time_out = now() - $this->usage_expire_time;
+        return $usage_time_out > 0 ? $usage_time_out : 0;
     }
 }

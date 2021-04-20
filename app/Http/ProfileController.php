@@ -8,6 +8,8 @@ use App\Http\Core\Models\Image;
 use App\Http\Core\Models\Setting;
 use App\Http\Core\Models\Ticket;
 use App\Http\Core\Models\User;
+use App\Http\Shop\Models\Takhfif;
+use App\OrderItem;
 use App\Rules\UuidCheck;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,9 +40,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
-//        dd(\Illuminate\Support\Facades\Auth::user());
+
         $user = auth()->user();
-        return view( 'front.profile', compact('user'));
+        $orders = OrderItem::with('takhfif')->where('user_id',auth()->id())->get();
+
+        return view( 'front.profile', compact('user','orders'));
     }
 
 
@@ -97,10 +101,13 @@ class ProfileController extends Controller
 
     }
 
-    public function subusersIndex()
+    public function print($code)
     {
-        $subusers=Auth::user()->child;
-        return view('user.profile.subusers',compact('subusers'));
+
+        $order = OrderItem::with('takhfif')->where('code',$code)->firstOrFail();
+//dd($order);
+        return view('front.belit-print',compact('order'));
+
     }
 
 }

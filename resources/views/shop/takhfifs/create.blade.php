@@ -190,13 +190,13 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">تاریخ شروع استفاده</label>
-                            <input type="text" value="{{verta($takhfif->usege_start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}" class="usege_start_time form-control start_time"
+                            <input type="text" value="{{verta($takhfif->usage_start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}" class="usage_start_time form-control start_time"
                                    name="start_time" aria-invalid="true">
                             <div class="error_field text-danger"></div>
                         </div>
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">تاریخ پایان</label>
-                            <input type="text" value="{{verta($takhfif->usege_expire_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}" class="usege_expire_time form-control text-left expire_time"
+                            <input type="text" value="{{verta($takhfif->usage_expire_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}" class="usage_expire_time form-control text-left expire_time"
                                    name="expire_time" dir="ltr">
                             <div class="error_field text-danger"></div>
                         </div>
@@ -767,7 +767,7 @@
         $(document).ready(function () {
 
             var to1, from1;
-            to1 = $(".usege_expire_time").persianDatepicker({
+            to1 = $(".usage_expire_time").persianDatepicker({
                 inline: false,
                 // initialValueType: 'gregorian',
                 observer: true,
@@ -786,7 +786,7 @@
                     }
                 }
             });
-            from1 = $(".usege_start_time").persianDatepicker({
+            from1 = $(".usage_start_time").persianDatepicker({
                 inline: false,
                 // initialValueType: 'gregorian',
                 observer: true,
