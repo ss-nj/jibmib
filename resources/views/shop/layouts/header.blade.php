@@ -105,7 +105,7 @@
                                              data-plugin-options="{'color': '#0088cc', 'animated': true, 'delay': 600, 'strokeBased': true}"
                                              style="opacity: 1;">
                                         <a class="dropdown-item dropdown-toggle active"
-                                           href="{{route('shop.dashboard')}}">
+                                           href="{{route('shop.transactions.index')}}">
 
                                             مدیریت مالی
                                         </a>

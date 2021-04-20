@@ -11,6 +11,7 @@ use App\Http\Shop\Controllers\PhoneController;
 use App\Http\Shop\Controllers\ShopController;
 use App\Http\Shop\Controllers\ShopDashboardController;
 use App\Http\Shop\Controllers\TakhfifController;
+use App\Http\Shop\Controllers\TransactionsController;
 use App\Http\Shop\Controllers\UsageTermController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -114,6 +115,7 @@ Route::name('shop.')->prefix('shop')->middleware(['auth', 'confirmedMobile'])->g
 
 
     //commerce routes
+    Route::resource('transactions', TransactionsController ::class)->only('index');
 
     //takhfifs routes
 

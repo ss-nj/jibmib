@@ -39,9 +39,9 @@ class OrderItem extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function takhfif()
+    public function takhfifs()
     {
-        return $this->belongsTo(Takhfif::class);
+        return $this->belongsTo(Takhfif::class,'takhfif_id');
     }
 
 

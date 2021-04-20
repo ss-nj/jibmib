@@ -3,6 +3,8 @@
 namespace App\Http\Shop\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Shop\Models\Transaction;
+use App\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,8 +12,16 @@ class TransactionsController extends Controller
 {
     public function index()
     {
-        $transactions = Auth::user()->transactions()->orderBy('created_at', 'desc')->get();
+        $id = auth()->id();
 
-        return view('transactions.index', compact('transactions'));
+        $transactions = Transaction::with('user')->whereHas('orders',function ($query)use ($id) {
+            $query->whereHas('takhfifs', function ($query) use ($id) {
+                $query->where('shop_id', $id);
+            });
+        })->withCount('orders')->get();
+
+//        dd($transactions);
+        return view('shop.transactions.index', compact('transactions'));
+
     }
 }

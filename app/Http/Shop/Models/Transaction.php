@@ -9,6 +9,7 @@ use App\Http\Core\Models\City;
 use App\Http\Core\Models\Image;
 use App\Http\Core\Models\Province;
 use App\Http\Core\Models\User;
+use App\OrderItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -49,6 +50,12 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function orders()
+    {
+        return $this->hasMany(OrderItem::class,'transaction_id');
     }
 
 
