@@ -11,7 +11,7 @@
                     <div>
                         <div class="p-1">
                             <span class="font-weight-bold">شماره سفارش: </span>
-                            <span>{{$order->code}}</span>
+                            <span>{{$order->order_id}}</span>
                         </div>
                         <div class="p-1">
                             <span class="font-weight-bold">بلیط : </span>

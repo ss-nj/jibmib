@@ -3,6 +3,7 @@
 
 use App\Http\Auth\Shop\LoginController;
 use App\Http\Auth\Shop\RegisterController;
+use App\Http\Shop\Controllers\CouponController;
 use App\Http\Shop\Controllers\LicencesController;
 use App\Http\Shop\Controllers\OpenTimesController;
 use App\Http\Shop\Controllers\ParameterController;
@@ -117,6 +118,9 @@ Route::name('shop.')->prefix('shop')->middleware(['auth', 'confirmedMobile'])->g
     //takhfifs routes
 
     //coupon routes //for managing sold coupons
+    Route::resource('coupon', CouponController::class)->only('index','update');
+
+
 
     //ads routes
 

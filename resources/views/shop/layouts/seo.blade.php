@@ -5,8 +5,8 @@
 <title>پنل فروشندگان</title>
 
 <meta name="keywords" content="HTML5 Template">
-<meta name="description" content="Porto - Responsive HTML5 Template">
-<meta name="author" content="okler.net">
+<meta name="description" content=" Responsive HTML5 Template">
+<meta name="author" content="">
 
 <!-- Favicon -->
 {{--<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">--}}

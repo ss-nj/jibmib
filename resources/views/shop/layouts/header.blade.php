@@ -7,7 +7,7 @@
                 <div class="col-9">
                     <div class="py-4">
                         <a href="{{route('shop.dashboard')}}">
-                            <img class="ml-2" alt="Porto" width="82" height="40" data-change-src="" src="">
+                            <img class="ml-2" alt="" width="82" height="40" data-change-src="" src="">
                         </a>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
 
                         {{--                        <img class="icon-animated" width="45" src="{{asset($path.'vendor/linea-icons/linea-basic/icons/home.svg')}}" alt="" data-icon="" data-plugin-options="{'color': '#0088cc', 'animated': true, 'delay': 600, 'strokeBased': true}" style="opacity: 1;">--}}
                         <a href="{{route('shop.dashboard')}}">
-                            <img alt="Porto" width="100" height="48"
+                            <img alt="" width="100" height="48"
                                  src="{{asset($siteSettings['site_logo']->value_fa).'?ver='.$ver}}">
                             <span class="hide-text">داشبورد فروشندگان</span>
                         </a>
@@ -119,7 +119,7 @@
                                              data-plugin-options="{'color': '#0088cc', 'animated': true, 'delay': 600, 'strokeBased': true}"
                                              style="opacity: 1;">
                                         <a class="dropdown-item dropdown-toggle active"
-                                           href="{{route('shop.dashboard')}}">
+                                           href="{{route('shop.coupon.index')}}">
 
                                            ابطال کوپن
                                         </a>

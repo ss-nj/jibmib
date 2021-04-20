@@ -16,6 +16,7 @@ class CreateOrderItemsTable extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->bigInteger('order_id');
             $table->bigInteger('transaction_id');
             $table->bigInteger('takhfif_id');
             $table->string('takhfif_name');

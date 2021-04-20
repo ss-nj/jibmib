@@ -6,7 +6,7 @@
                 <div class="off-item-title d-flex flex-column">
                     <div class="p-2">
                         شماره سفارش
-                        {{$order->code}}
+                        {{$order->order_id}}
                         تاریخ ثیت
                            {{verta($order->created_at)->timezone('Asia/Tehran')->format('Y/m/d')}}
                        {{$order->takhfif->name}}

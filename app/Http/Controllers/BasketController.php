@@ -195,13 +195,14 @@ class BasketController extends Controller
 
             //save basket to orders and order items
             foreach ($baskets as $basket) {
-//dd($basket);
-             $a=   OrderItem::create([
+
+              OrderItem::create([
                     'transaction_id' => $transaction->id,
                     'takhfif_id' => $basket->takhfif_id,
                     'user_id' => $basket->user_id,
                     'takhfif_name' => $basket->takhfif->name,
                     'code' => $this->generateCodeLink($basket->user_id),
+                    'order_id' => $this->generateOrderId(),
                     'takhfif_price' => $basket->takhfif->price,
                     'takhfif_discount' => $basket->takhfif->discount_price,
                     'takhfif_count' => $basket->count,
@@ -246,10 +247,21 @@ class BasketController extends Controller
             File::makeDirectory($path, 0777, true, true);
         }
 
-        QrCode::size(150)->generate(route('home').'/coupons/'.$code, 'img/users/'.$user_id.'/coupons/'.$code.'.svg');
+        QrCode::size(150)->generate($code, 'img/users/'.$user_id.'/coupons/'.$code.'.svg');
 
         return $code;
 
+
+    }
+
+    private function generateOrderId()
+    {
+        do {
+            $code = rand_str(7);
+            $status = OrderItem::where('order_id', $code)->count();
+        } while ($status);
+
+        return $code;
 
     }
 }
