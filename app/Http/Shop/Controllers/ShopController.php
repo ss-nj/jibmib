@@ -8,7 +8,9 @@ use App\Http\Core\Models\Image;
 use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ShopController extends Controller
 {
@@ -38,27 +40,27 @@ class ShopController extends Controller
     public function update(Request $request, $profiles)
     {
         $shop = Shop::findOrfail($profiles);
-        if ($request->main_image=='undefined')
+        if ($request->main_image == 'undefined')
             $request->offsetUnset('main_image');
 //        dd($request->all());
         $request->validate([
             'owner_name' => ['string', 'max:80'],
             'shop_name' => ['required', 'string', 'max:80'],
-            'category_id' => ['required','integer', 'exists:categories,id'],
-            'lat' => ['required',  'max:20'],
-            'lang' => ['required',  'max:20'],
-            'province_id' => ['required','integer', 'exists:provinces,id'],
-            'city_id' => ['required','integer', 'exists:cities,id'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'lat' => ['required', 'max:20'],
+            'lang' => ['required', 'max:20'],
+            'province_id' => ['required', 'integer', 'exists:provinces,id'],
+            'city_id' => ['required', 'integer', 'exists:cities,id'],
             'address' => ['required', 'string', 'max:999'],
-            'place_id' => ['required','integer', 'exists:places,id'],
+            'place_id' => ['required', 'integer', 'exists:places,id'],
             'description' => ['required', 'string', 'max:5000'],
-            'uuid' => ['required', 'integer','digits:11'],
+            'uuid' => ['required', 'integer', 'digits:11'],
             'isbn' => ['required', 'string', 'max:30'],
             'bank_id' => ['required', 'string', 'max:20'],
             'bank_account_owner_name' => ['required', 'string', 'max:80'],
             'bank_account_owner_last_name' => ['required', 'string', 'max:80'],
             'bank_account_type' => ['required', 'string', 'max:80'],
-            'main_image' => [ 'image', 'mimes:jpg,jpeg,png,svg'],
+            'main_image' => ['image', 'mimes:jpg,jpeg,png,svg'],
 
         ]);
 
@@ -86,6 +88,19 @@ class ShopController extends Controller
 
         } catch (\Exception $e) {
             Log::info($e);
+        }
+
+        if ($shop->lat&& $shop->lang) {
+            $path = public_path('img/shops/' . $shop->id . '/maps/');
+
+            if (!File::isDirectory($path)) {
+
+                File::makeDirectory($path, 0777, true, true);
+            }
+            $map_url = sprintf('http://www.google.com/maps/place/%s,%s/@%s,%s,10z', $shop->lat, $shop->lang, $shop->lat, $shop->lang);
+
+            QrCode::size(150)->generate($map_url, 'img/shops/' . $shop->id . '/maps/map.svg');
+
         }
 
         return JsonResponse::sendJsonResponse(1, 'موفق', sprintf('پروفایل  %s  با موفقیت ویرایش شد', $shop->shop_name),

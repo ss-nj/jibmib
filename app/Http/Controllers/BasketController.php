@@ -246,7 +246,7 @@ class BasketController extends Controller
             File::makeDirectory($path, 0777, true, true);
         }
 
-        QrCode::generate(route('home').'/coupons/'.$code, 'img/users/'.$user_id.'/coupons/'.$code.'.svg');
+        QrCode::size(150)->generate(route('home').'/coupons/'.$code, 'img/users/'.$user_id.'/coupons/'.$code.'.svg');
 
         return $code;
 
