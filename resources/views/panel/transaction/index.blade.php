@@ -23,14 +23,32 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-4">
+
+                                <label for="ajaxUserName" class="form-control-label">قسمتی از نام با شماره همراه کاربر:</label>
+
+                                <div class="form-group">
+                                    <input type="text" class="ajaxUserName form-control" id="ajaxUserName" name="ajaxUserName">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+
+                                <label for="ajaxAmount" class="form-control-label">مقدار تراکنش(کمتر از):</label>
+
+                                <div class="form-group">
+                                    <input type="text" class="ajaxAmount form-control" id="ajaxAmount" name="ajaxAmount">
+                                </div>
+                            </div>
+
 
                             <div class="form-group col-md-4">
 
                                 <label for="ajaxApproved" class="form-control-label">وضعیت :</label>
                                 <select name="ajaxApproved" id="ajaxApproved" class="form-control ajaxApproved ">
                                     <option value="">انتخاب کنید</option>
-                                    <option value="1">نمایش</option>
-                                    <option value="0">عدم نمایش</option>
+                                    <option value="1">موفق</option>
+                                    <option value="0">نا موفق</option>
 
                                 </select>
                             </div>
@@ -41,8 +59,6 @@
                                 <select name="ajaxSortBy" id="ajaxSortBy" class="ajaxSortBy form-control">
                                     <option value="created_at">تاریخ ایجاد</option>
                                     <option value="id">شماره</option>
-                                    <option value="name">نام</option>
-                                    <option value="code">کد</option>
 
                                 </select>
                             </div>
@@ -125,6 +141,8 @@
                     // Read values
                     var ajaxName = $('.ajaxName').val();
                     var ajaxId = $('.ajaxId').val();
+                    var ajaxUserName = $('.ajaxUserName').val();
+                    var ajaxAmount = $('.ajaxAmount').val();
                     var ajaxApproved = $('#ajaxApproved').val();
                     var ajaxSortBy = $('#ajaxSortBy').val();
                     var ajaxAscDesc = $('#ajaxAscDesc').val();
@@ -132,6 +150,8 @@
                     // Append to data
                     data.searchByName = ajaxName;
                     data.searchById = ajaxId;
+                    data.searchByUserNmae = ajaxUserName;
+                    data.searchByAmount = ajaxAmount;
                     data.searchByStatus = ajaxApproved;
                     data.searchSortBy = ajaxSortBy;
                     data.searchByAscDesc = ajaxAscDesc;
@@ -166,7 +186,7 @@
 
 
         //select boxes
-        $('.ajaxName ,.ajaxId,.ajaxCode').keyup((event) => {
+        $('.ajaxName ,.ajaxId,.ajaxCode,.ajaxUserName,.ajaxAmount').keyup((event) => {
             dataTable.draw();
         });
 

@@ -23,6 +23,18 @@ class TransactionsController extends Controller
             $query->where('id', 'LIKE', '%' . $request->searchById . '%');
         }
 
+        if ($request->searchByUserNmae) {
+            $query->whereHas('user', function ($query) use ($request) {
+                $query->where('first_name', 'like', '%' . $request->searchByUserNmae . '%')
+                    ->orWhere('last_name', 'like', '%' . $request->searchByUserNmae . '%')
+                    ->orWhere('mobile', 'like', '%' . $request->searchByUserNmae . '%');
+            });
+        }
+
+        if ($request->searchByAmount) {
+            $query->where('amount', '>=', $request->searchByAmount);
+        }
+
         if (isset($request->searchByStatus)) {
             $query->where('status', $request->searchByStatus);
         }
