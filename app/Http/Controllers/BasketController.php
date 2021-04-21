@@ -8,6 +8,7 @@ use App\Http\Shop\Models\Transaction;
 use App\OrderItem;
 use App\Providers\RouteServiceProvider;
 use App\Support\BasketHelpers;
+use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
@@ -112,8 +113,25 @@ class BasketController extends Controller
     {
         list($baskets, $totalPrice, $totalPrice_no_dis, $total_count, $total_discount) = BasketHelpers::calcPrices();
 
-        $price = $totalPrice*10;
-        return $this->payWithMellat($price);
+        $message = null;
+        if ($totalPrice <= 0)
+            $message = 'مبلغ سبد خرید کمتر از حد مجاز است .';
+        if ($baskets->count() == 0)
+            $message = 'هیچ کالایی در سبد خرید وجود ندارد ';
+
+        if ($message)
+            return JsonResponse::sendJsonResponse(1, 'موفق', $message);
+
+        $price = $totalPrice * 10;
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'به زودی به درپاه بانکی منتقل خواهید شد .',
+            'REDIRECT',route('basket.bank',$price));
+
+    }
+
+    public function goToBank($price)
+    {
+
+       return $this->payWithMellat($price);
 
     }
 
@@ -169,7 +187,7 @@ class BasketController extends Controller
 
             $transaction = Transaction::where('ref_id', $refId)->firstOrFail();
 
-            $price = $gateway->getPrice()/10;
+            $price = $gateway->getPrice() / 10;
 
             $transaction->update([
                 'meta' => [
@@ -196,7 +214,7 @@ class BasketController extends Controller
             //save basket to orders and order items
             foreach ($baskets as $basket) {
 
-              OrderItem::create([
+                OrderItem::create([
                     'transaction_id' => $transaction->id,
                     'takhfif_id' => $basket->takhfif_id,
                     'user_id' => $basket->user_id,
@@ -207,7 +225,7 @@ class BasketController extends Controller
                     'takhfif_discount' => $basket->takhfif->discount_price,
                     'takhfif_count' => $basket->count,
                 ]);
-
+                $basket->delete();
             }
 
             $message = false;
@@ -231,7 +249,6 @@ class BasketController extends Controller
     }
 
 
-
     private function generateCodeLink($user_id)
     {
         do {
@@ -240,14 +257,14 @@ class BasketController extends Controller
         } while ($status);
 
 
-        $path = public_path('img/users/'.$user_id.'/coupons/');
+        $path = public_path('img/users/' . $user_id . '/coupons/');
 
-        if(!File::isDirectory($path)){
+        if (!File::isDirectory($path)) {
 
             File::makeDirectory($path, 0777, true, true);
         }
 
-        QrCode::size(150)->generate($code, 'img/users/'.$user_id.'/coupons/'.$code.'.svg');
+        QrCode::size(150)->generate($code, 'img/users/' . $user_id . '/coupons/' . $code . '.svg');
 
         return $code;
 

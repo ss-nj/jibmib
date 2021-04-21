@@ -15,7 +15,7 @@ class TransactionsController extends Controller
         $id = auth()->id();
 
         $transactions = Transaction::with('user')->whereHas('orders',function ($query)use ($id) {
-            $query->whereHas('takhfifs', function ($query) use ($id) {
+            $query->whereHas('takhfif', function ($query) use ($id) {
                 $query->where('shop_id', $id);
             });
         })->withCount('orders')->get();

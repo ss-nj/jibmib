@@ -39,7 +39,7 @@ class OrderItem extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function takhfifs()
+    public function takhfif()
     {
         return $this->belongsTo(Takhfif::class,'takhfif_id');
     }

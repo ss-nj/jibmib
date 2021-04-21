@@ -62,9 +62,7 @@ class Takhfif extends Model
 
     public function getImageFirstAttribute()
     {
-        return $this->images()->count()
-            ? $this->images()->first()->path
-            : \App\Http\Core\Models\Image::NO_IMAGE_PATH;
+        return $this->images()->count() ? $this->images()->first()->path : Image::NO_IMAGE_PATH;
     }
 
 

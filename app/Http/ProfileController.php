@@ -95,8 +95,7 @@ class ProfileController extends Controller
         $request->offsetUnset('wallet');
         $profile->update($request->all());
 
-        return JsonResponse::sendJsonResponse(1, 'موفق', 'ویرایش حساب کاربری با موفقیت انجام شد.',
-        );
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'ویرایش حساب کاربری با موفقیت انجام شد.');
 
 
     }

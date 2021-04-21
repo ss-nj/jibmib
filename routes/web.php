@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::fallback(function(){
-    return view('errors.404');
-});
+//Route::fallback(function(){
+//    return view('errors.404');
+//});
 
 Route::group(['namespace' => 'Auth\User',], function () {
 
@@ -97,7 +97,8 @@ Route::get('change-count-ajax', [BasketController::class,'change_count'])->name(
 
 
 //commerce
-Route::get('basket-pay', [BasketController::class,'pay'])->name('basket.pay')->middleware('auth');;
+Route::post('basket-pay', [BasketController::class,'pay'])->name('basket.pay')->middleware('auth');;
+Route::get('go-to-bank/{price}', [BasketController::class,'goToBank'])->name('basket.bank')->middleware('auth');;
 Route::post ('payment-status', [BasketController::class,'callback'])->name('callback');;
 
 

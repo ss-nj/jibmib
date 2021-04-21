@@ -158,7 +158,7 @@
         if (result.status) {
             if (result.action) {
                 if (result.action === "REFRESH") {
-                    location.reload();
+                    // location.reload();
                     return;
                 }
                 if (result.action === "DATATABLE_REFRESH") {

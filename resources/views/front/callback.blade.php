@@ -24,7 +24,7 @@
                         <div class="align-self-center p-2 m-auto">
                             پرداخت شما با موفقیت انجام شد. شماره رهگیری سفارش شما
                             <span>{{$transaction->track_code}}</span>
-                            <a href="{{route('profile.index')}}"></a> <div class="btn btn-success cart-page-btn mr-auto">مشاهده بلیط ها</div>
+                            <a href="{{route('profile.index','#home')}}"> <div class="btn btn-success cart-page-btn mr-auto">مشاهده بلیط ها</div></a>
                         </div>
                     </div><!-- .confirm-payment-section -->
                 @endif

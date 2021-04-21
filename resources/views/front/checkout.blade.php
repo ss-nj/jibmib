@@ -63,7 +63,11 @@
                             <div class="col-6 text-success"><span class="basket-totalPrice">{{number_format($totalPrice)}}</span><span> تومان</span></div>
                         </div>
                         <div class="w-100 d-flex">
-                            <div class="btn btn-success cart-page-btn"><a href="{{route('basket.pay')}}">تایید و ادامه</a> </div>
+                            <div class="btn btn-success cart-page-btn">
+                                <form action="{{route('basket.pay')}}" method="get" class="ajax_validate">
+                                        <button type="submit" class="btn btn-success">تایید و ادامه</button>
+                                </form>
+                            </div>
                         </div>
 
                     </div>
