@@ -233,6 +233,8 @@ return array(
         'time_out' => 'مهلت استفاده',
         'capacity' => 'ظرفیت',
         'categories' => 'دسته بندی',
+        'icon' => 'آیکن',
+        'email_address' => 'ادرس ایمیل',
 
     ),
 );

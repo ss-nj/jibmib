@@ -66,6 +66,7 @@ class MenuController extends Controller
             'name' => 'required|string|min:2|max:254|unique:menus',
             'menu' => ['required'],
             'link' => ['required', 'min:2', 'max:254'],
+            'icon' => ['required', 'min:2', 'max:254'],
             'slug' => ['nullable', 'string', 'min:2', 'max:254', 'unique:menus,slug'],
             'main_image' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
 
@@ -122,7 +123,9 @@ class MenuController extends Controller
             $request->offsetUnset('main_image');
         $request->validate([
             'name' => 'required|string|min:3|max:254|unique:menus,name,' . $menu->id,
+            'menu' => ['required'],
             'link' => ['required', 'min:2', 'max:254'],
+            'icon' => ['required', 'min:2', 'max:254'],
             'slug' => ['nullable', 'string', 'min:2', 'max:254', 'unique:menus,slug,' . $menu->id],
             'main_image' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
         ]);

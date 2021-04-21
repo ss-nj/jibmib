@@ -23,6 +23,7 @@ class Category extends Model
         'position',
         'is_menu',
         'active',
+        'icon',
     ];
 
     protected $casts = ['is_menu' => 'boolean'];

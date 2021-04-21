@@ -14,11 +14,7 @@ class TransactionsController extends Controller
     {
         $id = auth()->id();
 
-        $transactions = Transaction::with('user')->whereHas('orders',function ($query)use ($id) {
-            $query->whereHas('takhfif', function ($query) use ($id) {
-                $query->where('shop_id', $id);
-            });
-        })->withCount('orders')->get()->sortByDesc('created_at');
+        $transactions = [];
 
 //        dd($transactions);
         return view('shop.transactions.index', compact('transactions'));

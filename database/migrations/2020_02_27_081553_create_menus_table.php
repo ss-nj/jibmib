@@ -21,6 +21,7 @@ class CreateMenusTable extends Migration
             $table->unsignedInteger('takhfif_id')->nullable();
             $table->string('name');
             $table->text('slug')->nullable();
+            $table->text('icon')->nullable();
             $table->text('link')->nullable();
             $table->string('icon')->nullable();
             $table->tinyInteger('type')->default('0');

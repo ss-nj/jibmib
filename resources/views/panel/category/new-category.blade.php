@@ -31,6 +31,14 @@
                         <div class="error_field text-danger"> </div>
                     </div>
                     <div class="form-group">
+                        <label for="name" class="form-control-label">  ایکن دسته بندی :   <a target="_blank" href="https://iconify.design/icon-sets/fa/">مقدار را از اینجا انتخاب کنید</a></label>
+                        <input type="text" class="form-control icon" id="icon" name="icon" minlength="5"
+                               title="ایکن دسته بندی "
+                               value=" "
+                        >
+                        <div class="error_field text-danger"> </div>
+                    </div>
+                    <div class="form-group">
                         <label for="slug">نامک(قسمت انتهایی لینک صفحه) :</label>
 
                         <input type="text"

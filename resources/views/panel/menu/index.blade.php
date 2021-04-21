@@ -48,6 +48,14 @@
                                     <div class="error_field text-danger"> </div>
 
                                 </div>
+                                <div class="form-group spec-link">
+                                    <label for="link"> ایکن منو<a target="_blank" href="https://iconify.design/icon-sets/fa/">مقدار را از اینجا انتخاب کنید</a></label>
+                                    <input type="text" class="form-control icon" name="icon" id="icon"
+                                           placeholder="ایکن منو " >
+
+                                    <div class="error_field text-danger"> </div>
+
+                                </div>
 
 
                                 <div class="form-group">
@@ -179,11 +187,25 @@
 
 @endsection
 
+@push('css')
+{{--    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />--}}
+{{--    <link href="{{ asset('plugins/fontawesome-iconpicker-master/icon-picker.min.css') }}" rel="stylesheet">--}}
 
-@push('js')
+@endpush
+
+@push('internal_js')
+
+
+@endpush
+
+@push('external_js')
+{{--    <script src="{{ asset('plugins/fontawesome-iconpicker-master/icon-picker.min.js') }}"></script>--}}
 
     <script>
 
+        $('.icon-picker').qlIconPicker({
+            'save': 'class'
+        });
         /**
          * @param {*} requestData
          */

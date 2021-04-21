@@ -16,8 +16,11 @@
 
     @foreach($cached_categories->whereNull('category_id') as  $cached_category)
         <div class="d-flex">
-
+            @if($cached_category->icon)
+                <i class="{{$cached_category->icon}}"></i>
+            @else
                 <img src="{{asset($path_user.'img/cat-icon-1.svg').'?ver='.$ver}}" alt="">
+            @endif
                 <p class="align-self-center">
                     <a href="{{route('category',['city'=>$selected_city,'cat'=>$cached_category->slug])}}">
                     {{$cached_category->name}}

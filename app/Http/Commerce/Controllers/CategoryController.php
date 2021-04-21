@@ -67,6 +67,7 @@ class CategoryController extends Controller
 //
         $request->validate([
             'name' => ['required', 'string', 'min:4', 'max:254'],
+            'icon' => ['required', 'string', 'min:4', 'max:254'],
             'slug' => ['nullable','string', 'min:4', 'max:254', 'unique:categories,slug'],
             'is_menu' => ['nullable', 'integer'],
             'category_id' => ['nullable', 'integer','exists:categories,id'],

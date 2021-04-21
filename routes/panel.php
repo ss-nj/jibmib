@@ -8,6 +8,7 @@ use App\Http\Commerce\Controllers\ExcelController;
 use App\Http\Commerce\Controllers\LogoController;
 use App\Http\Commerce\Controllers\PlaceController;
 use App\Http\Commerce\Controllers\ShopController;
+use App\Http\Commerce\Controllers\TransactionsController;
 use App\Http\Shop\Controllers\TakhfifController;
 use App\Http\Controllers\CartController;
 use App\Http\Core\Controllers\BannerController;
@@ -126,6 +127,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         Route::resource('takhfifs', \App\Http\Commerce\Controllers\TakhfifController::class)->except('show', 'destroy');
         Route::post('takhfifs/approve/{takhfif}', [\App\Http\Commerce\Controllers\TakhfifController::class, 'approveTakhfif'])->name('takhfifs.approve');
         Route::get('takhfifs/toggle/{takhfif}', [\App\Http\Commerce\Controllers\TakhfifController::class, 'activeToggle'])->name('takhfifs.toggle.active');
+        //shops routes
+        Route::resource('transaction', TransactionsController::class)->except('show', 'destroy');
+        Route::post('transaction/approve/{transaction}', [TransactionsController::class, 'approveTransaction'])->name('transaction.approve');
+        Route::get('transaction/toggle/{transaction}', [TransactionsController::class, 'activeToggle'])->name('transaction.toggle.active');
 
         //coupons routes
         Route::get('coupons/toggle/{coupon}', [CouponController::class, 'activeToggle'])->name('coupons.toggle.active');

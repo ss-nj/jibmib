@@ -69,10 +69,10 @@ class TakhfifsDataTable extends DataTable
                  return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
             ->addColumn('action', function ($query) {
+                $route = route('single',$query->slug);
 
-                $string = '';
-
-                return $string;
+                return "<a href='$route'  class='model-edit btn btn-circle btn-icon-only'>
+                    <i class='fa fa-eye '></i></a>";
             })
             ->addColumn('approve', function ($query) {
                 if ($query->approved==2){

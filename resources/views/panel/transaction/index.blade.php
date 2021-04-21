@@ -1,6 +1,6 @@
 @extends('panel.layouts.master')
 
-@section('title')مدیریت تخفیف ها@endsection
+@section('title')مدیریت تراکنشها@endsection
 
 
 @section('content')
@@ -12,7 +12,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-2">لیست تخفیف ها</h4>
+                        <h4 class="card-title mb-2">لیست تراکنشها</h4>
                         <div class="portlet light row ">
                             <div class="form-group col-md-4">
 
@@ -20,14 +20,6 @@
 
                                 <div class="form-group">
                                     <input type="text" class="ajaxId form-control" id="ajaxId" name="ajaxId">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-
-                                <label for="ajaxTitle" class="form-control-label">نام:</label>
-
-                                <div class="form-group">
-                                    <input type="text" class="ajaxTitle form-control" id="ajaxTitle" name="ajaxTitle">
                                 </div>
                             </div>
 
@@ -120,7 +112,7 @@
         });
 
 
-        var dataTable = $('#takhfifs-table').DataTable({
+        var dataTable = $('#transactions-table').DataTable({
             'pageLength': 15,
             'processing': true,
             'serverSide': true,
@@ -128,7 +120,7 @@
             stateSave: true,
             'searching': false,
             'ajax': {
-                'url': '{!! route('takhfifs.index') !!}',
+                'url': '{!! route('transaction.index') !!}',
                 'data': function (data) {
                     // Read values
                     var ajaxName = $('.ajaxName').val();
@@ -157,42 +149,11 @@
                 }],
             columns: [
                 {data: 'id', name: 'id', title: '#', 'className': 'text-center details-control', orderable: false},
-                {data: 'image', name: 'title', title: 'تصویر', 'className': 'text-center', orderable: false},
-
                 {data: 'name', name: 'name', title: 'نام ', 'className': 'text-center', orderable: false},
-                {data: 'category', name: 'category', title: 'دسته بندی ', 'className': 'text-center', orderable: false},
-                {
-                    data: 'display_start_time',
-                    name: 'display_start_time',
-                    title: 'زمان شروع نمایش',
-                    'className': 'text-center',
-                    orderable: false
-                },
-                {
-                    data: 'display_end_time',
-                    name: 'display_end_time',
-                    title: 'زمان اتمام نمایش',
-                    'className': 'text-center',
-                    orderable: false
-                },
-                {data: 'price', name: 'price', title: 'قیمت', 'className': 'text-center', orderable: false},
-                {
-                    data: 'discount_price',
-                    name: 'discount_price',
-                    title: 'قیمت با تخفیف',
-                    'className': 'text-center',
-                    orderable: false
-                },
-
-                {data: 'approve', name: 'approve', title: 'وضعیت', 'className': 'text-center', orderable: false},
+                {data: 'amount', name: 'amount', title: 'مقدار', 'className': 'text-center', orderable: false},
                 {data: 'status', name: 'status', title: 'وضعیت', 'className': 'text-center', orderable: false},
-                {
-                    data: 'created_at',
-                    name: 'created_at',
-                    title: 'زمان ایجاد',
-                    'className': 'text-center',
-                    orderable: false
-                },
+                {data: 'created_at', name: 'created_at', title: 'زمان ایجاد', 'className': 'text-center', orderable: false},
+                {data: 'payment_date', name: 'payment_date', title: 'زمان پرداخت', 'className': 'text-center', orderable: false},
                 {data: 'action', title: 'عملیات', 'className': 'text-center', name: 'action', orderable: false}
             ],
             language: {
@@ -218,92 +179,35 @@
         function format(d) {
             var base = "{{url('/')}}";
             // `d` is the original data object for the row
-            var data = '<table class="detail" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px">'
-                + '<tr>'
-                + '<td>نام تخفیف :</td>'
-                + '<td>' + d.name + '</td>'
-                + '</tr>'
+            var data = '<h6>لیست خرید</h6>'
+                +'<table class="detail" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px">'
 
                 + '<tr>'
-                + '<td>نام مالک:</td>'
-                + '<td>' + d.shop.shop_name + '</td>'
-                + '<td>شماره تماس :</td>'
-                + '<td>' + d.shop.phone + '</td>'
+                + '<td>نام کوپن</td>'
+                + '<td>نام فروشگاه</td>'
+                + '<td>تعداد</td>'
+                + '<td>قیمت</td>'
                 + '</tr>'
 
-                + '<tr>'
-                + '<td>زمان شروع نمایش :</td>'
-                + '<td>' + d.display_start_time + '</td>'
-                + '<td>زمان پایان نمایش :</td>'
-                + '<td>' + d.display_end_time + '</td>'
-                + '</tr>'
-
-                + '<tr>'
-                + '<td>زمان شروع تخفیف :</td>'
-                + '<td>' + d.start_time + '</td>'
-                + '<td>زمان پایان تخفیف :</td>'
-                + '<td>' + d.expire_time + '</td>'
-                + '</tr>'
+            $.each(d.orders, function (key, input) {
+                console.log(input)
+                data +=
+                    '<tr>'
+                    + '<td>'+input.takhfif_name+'</td>'
+                    + '<td>'+input.takhfif.shop.shop_name+'</td>'
+                    + '<td>'+input.takhfif_count+'</td>'
+                    + '<td>'+input.takhfif_discount+'</td>'
+                    + '</tr>'
+            });
 
 
-                + '<tr>'
-                + '<td>هزینه :</td>'
-                + '<td>' + d.price + '</td>'
-                + '<td>هزینه همراه با تخفیف :</td>'
-                + '<td>' + d.discount_price + '</td>'
-                + '</tr>'
+            data +=  '</table>';
 
-                + '<tr>'
-                + '<td>مهلت استفاده :</td>'
-                + '<td>' + d.time_out + '</td>'
-                + '</tr>'
-
-                + '<tr>'
-                + '<td>ظرفیت :</td>'
-                + '<td>' + d.capacity + '</td>'
-                + '</tr>'
-
-                + '<tr>'
-                + '<td>توضیح :</td>'
-                + '<td>' + d.description + '</td>'
-                + '</tr>'
-
-                + '<tr>'
-                + '<td>تعداد تمایش :</td>'
-                + '<td>' + d.view_count + '</td>'
-                + '</tr>'
-
-
-            '</table>';
-
-
-            data += '<table class="detail" cellpadding="5" cellspacing="0"  style="padding-left:50px">'
-                + '<tr>'
-                + '<td>وضعیت تایید فروشگاه</td>'
-                + '<td>'
-
-            if (d.approved == 0)
-                data += '  رد شد به دلیل :' + d.disapprove.reason;
-            else if (d.approved == 1)
-                data += 'تایید شده'
-            else if (d.approved == 2) {
-                data += '<button class="btn btn-success mt-ladda-btn ladda-button approve-shop-bot" ' +
-                    ' data-id="'
-                    + d.id
-                    + '"  >'
-                    + 'بررسی'
-                    + '</button>'
-            }
-            data += ' </td>'
-
-                + '</td>'
-                + '</tr>'
-                + '</table>'
             return data;
         }
 
         // Add event listener for opening and closing details
-        $('#takhfifs-table tbody').on('click', 'td.details-control', function () {
+        $('#transactions-table tbody').on('click', 'td.details-control', function () {
             // alert(1)
             var tr = $(this).closest('tr');
             var row = dataTable.row(tr);
@@ -323,17 +227,5 @@
     </script>
 
 
-    <script>
-        $(document).on('click', '.approve-shop-bot', function () {
-            let Id = $(this).attr('data-id');
-            let Form = $('.approve_shop_form');
-            let Modal = $('#approve-shop-modal');
-            let Url = "{{url('panel/commerce/takhfifs/approve/')}}" + '/' + Id
 
-            Form.attr('action', Url);
-
-            Modal.modal('show');
-
-        })
-    </script>
 @endpush

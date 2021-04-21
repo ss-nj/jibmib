@@ -274,6 +274,7 @@
 <!--begin::Page Scripts(used by this page) -->
 <script src="{{asset($path.'js/pages/dashboard.js')}}" type="text/javascript"></script>
 
+@stack('external_js')
 
 @stack('js')
 <script>

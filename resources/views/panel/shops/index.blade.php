@@ -194,7 +194,7 @@
             dataTable.draw();
         });
 
-        /* Formatting function for row details - modify as you need */
+        /* Formatting function for row details */
         function format(d) {
             var base = "{{url('/')}}";
             // `d` is the original data object for the row

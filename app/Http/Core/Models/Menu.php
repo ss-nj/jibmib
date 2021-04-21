@@ -34,6 +34,7 @@ class Menu extends Model
 //        'position',
         'type',
         'active',
+        'icon',
     ];
 
     protected $casts = [

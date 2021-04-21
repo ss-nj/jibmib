@@ -8,7 +8,11 @@
                     @foreach($cached_categories->whereNull('category_id') as  $cached_category)
                     <div class="dropdown-item pt-3 menu-dropright">
                         <div class="d-flex justify-content-between">
-                            <div><i class="fa-regular fa-turkey"></i></div>
+                            @if($cached_category->icon)
+                                <div><i class="fa-regular {{$cached_category->icon}}"></i></div>
+                            @else
+                                <div><i class="fa-regular fa-turkey"></i></div>
+                            @endif
                             <div class="align-self-center">
                                 <a  style="font-weight: 400;font-size: 1.1rem" href="{{route('category',['city'=>$selected_city,'cat'=>$cached_category->slug])}}">
                                 {{$cached_category->name}}
