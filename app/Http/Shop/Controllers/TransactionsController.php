@@ -18,7 +18,7 @@ class TransactionsController extends Controller
             $query->whereHas('takhfif', function ($query) use ($id) {
                 $query->where('shop_id', $id);
             });
-        })->withCount('orders')->get();
+        })->withCount('orders')->get()->sortByDesc('created_at');
 
 //        dd($transactions);
         return view('shop.transactions.index', compact('transactions'));

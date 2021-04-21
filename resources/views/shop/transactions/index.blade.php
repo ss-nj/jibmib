@@ -36,7 +36,7 @@
                             <th>#</th>
                             <th>نام مشتری</th>
                             <th>تاریخ خرید</th>
-                            <th>لیست تخفیف ها</th>
+                            <th>لیست خرید</th>
                             <th>تعداد</th>
                             <th>قیمت</th>
                             <th>وضعیت</th>
@@ -51,13 +51,13 @@
 
                                 <td>{{$transaction->user->full_name}}</td>
                                 <td>
-                                    {{verta($transaction->created_at)->timezone('Asia/Tehran')->format('Y-m-d')}}
+                                    {{verta($transaction->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i')}}
                                 </td>
-                                <td>{{$transaction->name}}</td>
+                                <td></td>
 
                                 <td>{{$transaction->orders_count}}</td>
                                 <td>{{number_format($transaction->amount)}}</td>
-                                <td class="text-success">{{$transaction->status_text}}</td>
+                                <td >{{$transaction->status_text}}</td>
                                 <td></td>
 
                             </tr>

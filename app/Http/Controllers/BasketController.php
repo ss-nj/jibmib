@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Basket;
-use App\Http\Shop\Models\Takhfif;
 use App\Http\Shop\Models\Transaction;
 use App\OrderItem;
-use App\Providers\RouteServiceProvider;
 use App\Support\BasketHelpers;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Larabookir\Gateway\Gateway;
@@ -21,10 +18,7 @@ class BasketController extends Controller
 {
     public function cartView(Request $request)
     {
-        //cart
-        //total price
-        //total sum
-        //total discount
+// remove session cart
         if (Auth::check()) {
             BasketHelpers::setSessionCartToDatabase();
         }
@@ -163,10 +157,9 @@ class BasketController extends Controller
                 'return-amount' => '',
             ],
             'cardNumber' => '',
-            'payment_date' => now(),
             'track_code' => '',
             'ref_id' => $refId,
-            'status' => 2,
+            'status' => 0,
             'ip' => request()->getClientIp(),
         ]);
 
@@ -197,7 +190,6 @@ class BasketController extends Controller
                 'cardNumber' => $cardNumber,
                 'payment_date' => now(),
                 'track_code' => $trackingCode,
-                'ref_id' => $refId,
                 'status' => 1,
                 'ip' => request()->getClientIp(),
             ]);
@@ -242,6 +234,7 @@ class BasketController extends Controller
             return view('front.callback', compact('message'));
 
         } catch (\Exception $e) {
+
             // نمایش خطای بانک
             $message = $e->getMessage();
             return view('front.callback', compact('message'));

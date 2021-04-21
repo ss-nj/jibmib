@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::fallback(function(){
-//    return view('errors.404');
-//});
+Route::fallback(function(){
+    return view('errors.404');
+});
 
 Route::group(['namespace' => 'Auth\User',], function () {
 

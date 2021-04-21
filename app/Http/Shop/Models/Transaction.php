@@ -24,6 +24,7 @@ class Transaction extends Model
         'is_for',
         'amount',
         'meta',
+        'payment_date',
         'cardNumber',
         'track_code',
         'ref_id',
@@ -41,6 +42,13 @@ class Transaction extends Model
         'meta' => 'array',
     ];
 
+    /* The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'status_text'
+    ];
     /*
 |--------------------------------------------------------------------------
 | ATRIBUTES
@@ -55,9 +63,15 @@ class Transaction extends Model
 
     public function orders()
     {
-        return $this->hasMany(OrderItem::class,'transaction_id');
+        return $this->hasMany(OrderItem::class, 'transaction_id');
     }
 
+    public function getStatusTextAttribute()
+    {
+
+        return $this->payment_date ? ($this->status == 1 ? 'پرداخت شده' : 'ناموفق1') : ( now()->diffInMinutes($this->created_at) > 20
+            ? 'ناموفق' : 'هدایت شده به بانک');
+    }
 
 //    public function getMetaAttribute($meta)
 //    {
