@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Core\Controllers\CityController;
 use App\Http\ProfileController;
+use App\Http\RateController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -100,6 +101,8 @@ Route::get('change-count-ajax', [BasketController::class,'change_count'])->name(
 Route::post('basket-pay', [BasketController::class,'pay'])->name('basket.pay')->middleware('auth');;
 Route::get('go-to-bank/{price}', [BasketController::class,'goToBank'])->name('basket.bank')->middleware('auth');;
 Route::post ('payment-status', [BasketController::class,'callback'])->name('callback');;
+
+Route::post ('rate', [RateController::class,'rate'])->name('rate');;
 
 
 

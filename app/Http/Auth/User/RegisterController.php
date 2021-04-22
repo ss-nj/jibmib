@@ -81,10 +81,10 @@ class RegisterController extends Controller
         }
 
         $retry = Session::get('retry-time');
-
+//todo check this code posibly a bug
         if (!$request->code && $retry && $retry > now())
             return JsonResponse::sendJsonResponse(1, 'خطا',
-                'در هر دو دقیقه تنها یک بار میتوانید در خواست ارسال کد تایید بدهید',
+                'در هر دو دقیقه تنها یک بار میتوانید در خواست ارسال کد تایید بدهید', '', '',
                 'verifySent');
 
         if ($request->request_verify) {

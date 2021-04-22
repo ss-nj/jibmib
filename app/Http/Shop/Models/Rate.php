@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rate extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'rate',
+        'takhfif_id',
+    ];
 
     public function user()
     {
-        $this->belongsTo(User::class,'user_id');
+        $this->belongsTo(User::class, 'user_id');
     }
 
     public function takhfif()

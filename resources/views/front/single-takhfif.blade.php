@@ -55,7 +55,8 @@
                                                 <?php endfor; ?>
                                             </select>
                                         </div>
-                                        <div id="add-to-cart" class="single-add-cart orange-btn mt-4" data-id="{{$takhfif->id}}">
+                                        <div id="add-to-cart" class="single-add-cart orange-btn mt-4"
+                                             data-id="{{$takhfif->id}}">
                                             خرید
                                         </div>
                                     </div><!-- .single-btn-container -->
@@ -81,7 +82,8 @@
                             </div>
                             <div class="col-sm-8 text-right pt-3 ornage-txt">
                                 @if($takhfif->display_end_time>now())
-                                    <span id='timer_0' data-seconds=" {{$takhfif->display_end_time->diffInSeconds(now())}}"
+                                    <span id='timer_0'
+                                          data-seconds=" {{$takhfif->display_end_time->diffInSeconds(now())}}"
                                           class='timer'>
      </span>
                                 @else
@@ -120,15 +122,20 @@
                                 <span><i class="fa-solid fa-heart"></i></span>
                             </div>
                             <div>
-                                <?php
-                                for($i = 1; $i <= 5; $i++):
-                                $color = ($i <= 2) ? '#FFD229' : '#c4c3c3'; ?>
-                                <span style="color:<?php echo $color ?>"><i class="fa-solid fa-star"></i></span>
-                                <?php endfor; ?>
-                                <span>5.0/5</span>
+
+
+                                <span class="avg-rate">{{$avg}}</span>
                                 <span>(از مجموع</span>
-                                <span>8</span>
+                                <span class="count-rate">{{$count}}</span>
                                 <span>رای)</span>
+
+                                <select id="example">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
                             </div>
                             <div>
                                 <span class="text-success"><i class="fa-solid fa-eye"></i></span>
@@ -194,69 +201,80 @@
             <div class="w-100 job-sec-title-line"></div>
             <div class="w-100 d-flex pt-3 pb-3">
                 @foreach(explode(',', $takhfif->tags )  as $tag)
-                 @if(trim($tag))   <div class="single-tag-item">{{$tag}}</div>@endif
+                    @if(trim($tag))
+                        <div class="single-tag-item">{{$tag}}</div>@endif
                 @endforeach
             </div>
 
-                <?php //________________ Comment Form Section ________________________?>
-                <div class="comment-form-container w-100 mt-4 mb-4 p-4 position-relative">
-                    <form action="#" method="post">
-                        <div class="row">
-                            <div class="col-md-1 usr-icon text-right"><i class="fas fa-user"></i></div>
-                            <div class="col-md-5"><input type="text" name="" placeholder="نام"></div>
-                            <div class="col-md-6"><input type="email" name="" placeholder="ایمیل"></div>
-                            <div class="col-12">
-                                <input type="submit" class="theme-btn orange-btn float-right mt-5" value="ارسال">
+            <?php //________________ Comment Form Section ________________________?>
+            <div class="comment-form-container w-100 mt-4 mb-4 p-4 position-relative">
+                <form action="#" method="post">
+                    <div class="row">
+                        <div class="col-md-1 usr-icon text-right"><i class="fas fa-user"></i></div>
+                        <div class="col-md-5"><input type="text" name="" placeholder="نام"></div>
+                        <div class="col-md-6"><input type="email" name="" placeholder="ایمیل"></div>
+                        <div class="col-12">
+                            <input type="submit" class="theme-btn orange-btn float-right mt-5" value="ارسال">
+                        </div>
+                    </div>
+                </form>
+                <img class="footer-side footer-side-right"
+                     src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}" alt="">
+                <img class="footer-side footer-side-left" src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}"
+                     alt="">
+            </div>
+
+            <?php //________________ Comments Content Section ________________________?>
+            <div class="w-100 pt-4 mb-5">
+                <div class="comment-item-container w-100">
+                    <div class="w-100 d-flex">
+                        <div class="align-self-center">
+                            <img class="circle-usr-img" src="{{asset(\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
+                                 alt="" width="40" heigh='40'>
+                        </div>
+                        <div class="comment-content-container p-4 m-2">
+                            <div class="w-100 row">
+                                <div class="col-8">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
+                                    برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
+                                </div>
+                                <div class="col-4 comment-content-status">
+                                    <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span class="pr-3">تاریخ</span><span> 14 مرداد 99 </span>
+                                    </div>
+                                    <div><a class="font-weight-bold text-dark" href="#">پاسخ دهید</a></div>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                    <img class="footer-side footer-side-right" src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}" alt="">
-                    <img class="footer-side footer-side-left" src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}" alt="">
-                </div>
+                    </div>
 
-                <?php //________________ Comments Content Section ________________________?>
-                <div class="w-100 pt-4 mb-5">
-                    <div class="comment-item-container w-100">
+                    <?php //____________ Comment Reply  _______________?>
+                    <div class="comment-reply-item ml-md-5">
                         <div class="w-100 d-flex">
                             <div class="align-self-center">
-                                <img class="circle-usr-img" src="{{asset(\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}" alt="" width="40" heigh='40'>
+                                <img class="circle-usr-img" src="{{asset(\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
+                                     alt="" width="40" heigh='40'>
                             </div>
                             <div class="comment-content-container p-4 m-2">
                                 <div class="w-100 row">
                                     <div class="col-8">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
+                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
                                     </div>
                                     <div class="col-4 comment-content-status">
-                                        <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span class="pr-3">تاریخ</span><span> 14 مرداد 99 </span></div>
+                                        <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span
+                                                class="pr-3">تاریخ</span><span> 14 مرداد 99 </span></div>
                                         <div><a class="font-weight-bold text-dark" href="#">پاسخ دهید</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <?php //____________ Comment Reply  _______________?>
-                        <div class="comment-reply-item ml-md-5">
-                            <div class="w-100 d-flex">
-                                <div class="align-self-center">
-                                    <img class="circle-usr-img" src="{{asset(\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}" alt="" width="40" heigh='40'>
-                                </div>
-                                <div class="comment-content-container p-4 m-2">
-                                    <div class="w-100 row">
-                                        <div class="col-8">
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                        </div>
-                                        <div class="col-4 comment-content-status">
-                                            <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span class="pr-3">تاریخ</span><span> 14 مرداد 99 </span></div>
-                                            <div><a class="font-weight-bold text-dark" href="#">پاسخ دهید</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                </div><!-- .comment-item-container -->
 
-                    </div><!-- .comment-item-container -->
-
-                </div>
+            </div>
 
 
             <?php //________________ Today Off Section ________________________?>
@@ -269,8 +287,8 @@
             </div>
 
             <!-- ______________home-line-thumb __________________________-->
-                <div class="col-12 margin-content-fit  mt-3 mb-5">
-                    @include('front.layouts.single.takhfif-tumb',['s_takhfifs'=>$today_takhfifs])
+            <div class="col-12 margin-content-fit  mt-3 mb-5">
+                @include('front.layouts.single.takhfif-tumb',['s_takhfifs'=>$today_takhfifs])
 
             </div>
 
@@ -285,7 +303,7 @@
 
             <!-- ______________home-line-thumb __________________________-->
             <div class="col-12 margin-content-fit mt-3 mb-5">
-                    @include('front.layouts.single.takhfif-tumb',['s_takhfifs'=>$similar_takhfifs])
+                @include('front.layouts.single.takhfif-tumb',['s_takhfifs'=>$similar_takhfifs])
             </div>
 
             <?php //____________________ Bottom Slider _______________________ ?>
@@ -302,10 +320,89 @@
 
     </article>
 @endsection
-@push('style')
 
-@endpush
+
 @push('internal_js')
+    <script type="text/javascript">
+
+        function changeRate(value,count) {
+            // $('select').barrating('set', value);
+            let avgRate = $('.avg-rate');
+            let countRate = $('.count-rate');
+
+            avgRate.text(value);
+            countRate.text(count);
+        }
+
+        function sendRate(value, slug) {
+
+            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            axios.post('{{ url('rate') }}',
+                {
+                    'rate': value,
+                    'slug': slug,
+                    _token: CSRF_TOKEN,
+                }
+            ).then(function (response) {
+                console.log(response.data.args[0]);
+                changeRate(response.data.args[0], response.data.args[1])
+
+            }).catch(function (errors) {
+
+                // $.each(errors.response.data.errors, function (key, val) {
+                //     validate(key, val,form)
+                //
+                // });
+            });
+        }
+
+        $(function () {
+            $('#example').barrating({
+                theme: 'fontawesome-stars-o',
+                initialRating: {{$avg}},
+                onSelect: function (value, text, event) {
+                    let id = '{{$takhfif->slug}}'
+                    if (typeof (event) !== 'undefined') {
+                        sendRate(value, id)
+                    } else {
+
+                    }
+                }
+
+            });
+        });
+        // $('select').barrating('set', value);
+        // Sets the value of the rating widget.
+        //     The value needs to exist in the underlying select field.
+        //
+        // $('select').barrating('readonly', state);
+        // Switches the read-only state to true or false.
+        // $('select').barrating('clear');
+
+        //onSelect:function(value, text, event)
+        {{--    Fired when a rating is selected.--}}
+        {{--        If the rating was set programmatically by using the `set` method event will be null.--}}
+
+        {{--        onClear:function(value, text)--}}
+        {{--    Fired when a rating is cleared.--}}
+
+        {{--        onDestroy:function(value, text)--}}
+        {{--    Fired when a rating is destroyed.--}}
+
+        // $('#example').barrating('show', {
+        //     theme: 'my-awesome-theme',
+        //     onSelect: function(value, text, event) {
+        //         if (typeof(event) !== 'undefined') {
+        //             // rating was selected by a user
+        //             console.log(event.target);
+        //         } else {
+        //             // rating was selected programmatically
+        //             // by calling `set` method
+        //         }
+        //     }
+        // });
+    </script>
     <script>
 
         $(document).ready(function () {
@@ -376,17 +473,17 @@
                                 $('.shop-cart').empty();
                                 $('.shop-cart').append(response.view);
                                 var toast_message = ' با موفقیت اضافه شد .';
-                                sendMessage('موفق',toast_message);
+                                sendMessage('موفق', toast_message);
 
                             } else {
                                 var toast_message = response.error;
-                                sendMessage('خطا',toast_message);
+                                sendMessage('خطا', toast_message);
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             if (xhr.status == 404) {
                                 var toast_message = 'مورد پیدا نشد .';
-                                sendMessage('خطا',toast_message);
+                                sendMessage('خطا', toast_message);
                             }
                         }
                     }).always(function () {
@@ -394,13 +491,33 @@
                         $('.spinner').css('display', 'none');
                     });
                 } else
-                    sendMessage('خطا',"لطفا تعداد مورد نظر را وارد کنید!");
+                    sendMessage('خطا', "لطفا تعداد مورد نظر را وارد کنید!");
             });
         });
     </script>
 
 @endpush
 @push('external_css')
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
+    <link rel="stylesheet" href="{{asset('plugins/rating/themes/fontawesome-stars.css')}}"/>
+    <link rel="stylesheet" href="{{asset('plugins/rating/themes/fontawesome-stars-o.css')}}"/>
+
+@endpush
+@push('external_js')
+    <script src="{{ asset('plugins/rating/jquery.barrating.min.js') }}"></script>
+
+@endpush
+@push('internal_css')
+    <style>
+        .br-wrapper.br-theme-fontawesome-stars, .br-widget {
+            display: inline;
+        }
+
+        .br-wrapper {
+            float: right;
+        }
+
+    </style>
 @endpush

@@ -16,7 +16,8 @@
 <script src="{{ asset('plugins/select2/select2.min.js') }}"></script>
 {{--    <script src="{{ asset('plugins/dropzone/min/dropzone.min.js') }}"></script>--}}
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
-{{--    <script src="{{ asset('js/theia-sticky-sidebar.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('plugins/sticky-sidebar/theia-sticky-sidebar.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('plugins/sticky-sidebar/ResizeSensor.min.js') }}"></script>--}}
 
 
 @stack('external_js')
@@ -32,6 +33,7 @@
     //         }
     //     });
     // })
+    // $('.leftSidebar, .rightSidebar').theiaStickySidebar();
 
     function toast(title, message) {
 

@@ -11,6 +11,7 @@ use App\Http\Core\Models\City;
 use App\Http\Core\Models\Image;
 use App\Http\Core\Models\Setting;
 use App\Http\Core\Models\Slider;
+use App\Http\Shop\Models\Rate;
 use App\Http\Shop\Models\Takhfif;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
@@ -111,7 +112,15 @@ class HomeController extends Controller
         $logos = Image::where('imagable_type', 'LOGOS')->get();
         $takhfif->view_count += 1;
         $takhfif->save();
-        return view('front.single-takhfif', compact('takhfif', 'logos', 'today_takhfifs', 'similar_takhfifs'));
+
+//        Rate::updateOrCreate(['user_id' => rand(1,20), 'takhfif_id' => $takhfif->id]
+//            , ['rate' => rand(1,5)]);
+
+        $rates = Rate::where('takhfif_id', $takhfif->id)->get();
+        $avg = round($rates->avg('rate'),1);
+        $count = $rates->count();
+
+        return view('front.single-takhfif', compact('takhfif', 'logos', 'today_takhfifs', 'similar_takhfifs','avg','count'));
     }
 
     public function policy()
