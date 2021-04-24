@@ -4,6 +4,7 @@ namespace App;
 
 use App\Http\Core\Models\User;
 use App\Http\Shop\Models\Takhfif;
+use App\Http\Shop\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,6 +43,11 @@ class OrderItem extends Model
     public function takhfif()
     {
         return $this->belongsTo(Takhfif::class,'takhfif_id');
+    }
+
+ public function transaction()
+    {
+        return $this->belongsTo(Transaction::class,'transaction_id');
     }
 
 

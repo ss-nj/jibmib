@@ -30,8 +30,6 @@
                                     <input type="text" class="ajaxTitle form-control" id="ajaxTitle" name="ajaxTitle">
                                 </div>
                             </div>
-
-
                             <div class="form-group col-md-4">
 
                                 <label for="ajaxApproved" class="form-control-label">وضعیت :</label>
@@ -42,7 +40,6 @@
 
                                 </select>
                             </div>
-
                             <div class="form-group col-md-4">
 
                                 <label for="ajaxSortBy" class="form-control-label">مرتب سازی بر اساس :</label>
@@ -54,7 +51,6 @@
 
                                 </select>
                             </div>
-
                             <div class="form-group col-md-4">
 
                                 <label for="ajaxAscDesc" class="form-control-label">صعودی -نزولی :</label>

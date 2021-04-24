@@ -8,8 +8,9 @@
 
 
     @include('shop.layouts.styles')
-    @stack('internal_css')
     @stack('external_css')
+
+    @stack('internal_css')
 </head>
 <body class="loading-overlay-showing" data-plugin-page-transition data-loading-overlay
       data-plugin-options="{'hideDelay': 500}">
@@ -27,8 +28,9 @@
 
 
 @include('shop.layouts.scripts')
-@stack('internal_js')
 @stack('external_js')
+
+@stack('internal_js')
 
 <!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information.
 <script>
