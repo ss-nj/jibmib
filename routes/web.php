@@ -2,6 +2,7 @@
 
 use App\Http\Auth\User\LoginController;
 use App\Http\Auth\User\RegisterController;
+use App\Http\CommentController;
 use App\Http\Commerce\Models\Place;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\CartController;
@@ -103,6 +104,8 @@ Route::get('go-to-bank/{price}', [BasketController::class,'goToBank'])->name('ba
 Route::post ('payment-status', [BasketController::class,'callback'])->name('callback');;
 
 Route::post ('rate', [RateController::class,'rate'])->name('rate');;
+
+Route::resource('comment', CommentController::class)->only('index','store','update');
 
 
 

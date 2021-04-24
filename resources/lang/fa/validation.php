@@ -235,6 +235,7 @@ return array(
         'categories' => 'دسته بندی',
         'icon' => 'آیکن',
         'email_address' => 'ادرس ایمیل',
+        'comment' => 'متن پیام',
 
     ),
 );

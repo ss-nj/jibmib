@@ -3,12 +3,13 @@
 namespace App\Http\Shop\Models;
 
 use App\Http\Commerce\Models\Category;
+use App\Http\Core\Models\Comment;
 use App\Http\Core\Models\User;
 use App\Http\Shop\Models\Disapproves;
-use App\Http\Commerce\Models\Transactions;
 use App\Http\Core\Models\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PayPal\Api\Transactions;
 
 class Takhfif extends Model
 {
@@ -114,6 +115,11 @@ class Takhfif extends Model
         return $this->hasMany(Transactions::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'commentable_id')->where('commentable_type','App\Http\Shop\Models\Takhfif');
+    }
+
     //ویژگی
     public function parameters()
     {
@@ -142,9 +148,9 @@ class Takhfif extends Model
 
     public function getUsageTimeOutAttribute()
     {
-        if (!$this->usage_start_time  ||
+        if (!$this->usage_start_time ||
             !$this->usage_expire_time ||
-            ($this->usage_start_time <= $this->usage_expire_time)||
+            ($this->usage_start_time <= $this->usage_expire_time) ||
             (now() >= $this->usage_expire_time)
         )
             return 0;

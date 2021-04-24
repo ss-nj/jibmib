@@ -114,7 +114,7 @@
                     <div class="col-md-6">
                         <div class="d-flex">
                             <div>
-                                <span>200</span>
+                                <span>{{$takhfif->comment_count}}</span>
                                 <span><i class="fa-solid fa-message"></i></span>
                             </div>
                             <div>
@@ -207,70 +207,20 @@
             </div>
 
             <?php //________________ Comment Form Section ________________________?>
-            <div class="comment-form-container w-100 mt-4 mb-4 p-4 position-relative">
-                <form action="#" method="post">
-                    <div class="row">
-                        <div class="col-md-1 usr-icon text-right"><i class="fas fa-user"></i></div>
-                        <div class="col-md-5"><input type="text" name="" placeholder="نام"></div>
-                        <div class="col-md-6"><input type="email" name="" placeholder="ایمیل"></div>
-                        <div class="col-12">
-                            <input type="submit" class="theme-btn orange-btn float-right mt-5" value="ارسال">
-                        </div>
-                    </div>
-                </form>
-                <img class="footer-side footer-side-right"
-                     src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}" alt="">
-                <img class="footer-side footer-side-left" src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}"
-                     alt="">
-            </div>
+            @guest()
+                <h4>قبل از ارسال نظر باید <a href="{{route('login.form')}}">وارد</a> سایت شوید</h4>
+            @endguest
+            @auth()
+                @include('front.layouts.single.comment-form')
+            @endauth
 
             <?php //________________ Comments Content Section ________________________?>
             <div class="w-100 pt-4 mb-5">
                 <div class="comment-item-container w-100">
-                    <div class="w-100 d-flex">
-                        <div class="align-self-center">
-                            <img class="circle-usr-img" src="{{asset(\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
-                                 alt="" width="40" heigh='40'>
-                        </div>
-                        <div class="comment-content-container p-4 m-2">
-                            <div class="w-100 row">
-                                <div class="col-8">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                    برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                </div>
-                                <div class="col-4 comment-content-status">
-                                    <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span class="pr-3">تاریخ</span><span> 14 مرداد 99 </span>
-                                    </div>
-                                    <div><a class="font-weight-bold text-dark" href="#">پاسخ دهید</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <?php //____________ Comment Reply  _______________?>
-                    <div class="comment-reply-item ml-md-5">
-                        <div class="w-100 d-flex">
-                            <div class="align-self-center">
-                                <img class="circle-usr-img" src="{{asset(\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
-                                     alt="" width="40" heigh='40'>
-                            </div>
-                            <div class="comment-content-container p-4 m-2">
-                                <div class="w-100 row">
-                                    <div class="col-8">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                    </div>
-                                    <div class="col-4 comment-content-status">
-                                        <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span
-                                                class="pr-3">تاریخ</span><span> 14 مرداد 99 </span></div>
-                                        <div><a class="font-weight-bold text-dark" href="#">پاسخ دهید</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @foreach($takhfif->comments as $comment)
+                        @include('front.layouts.single.comments',['comment'=>$comment])
+                    @endforeach
 
                 </div><!-- .comment-item-container -->
 
@@ -325,7 +275,7 @@
 @push('internal_js')
     <script type="text/javascript">
 
-        function changeRate(value,count) {
+        function changeRate(value, count) {
             // $('select').barrating('set', value);
             let avgRate = $('.avg-rate');
             let countRate = $('.count-rate');

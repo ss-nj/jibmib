@@ -185,6 +185,7 @@
             $('.error_field').text('');
             $.each(errors.response.data.errors, function (key, val) {
                 validate(key, val,form)
+                toast('خطا',val[0])
 
             });
         });

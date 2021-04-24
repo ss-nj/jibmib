@@ -105,7 +105,7 @@ class HomeController extends Controller
             $takhfif->save();
         }
 
-        $takhfif = Takhfif::with('shop', 'parameters', 'terms')->where('slug', $slug)->firstOrfail();
+        $takhfif = Takhfif::with('shop', 'parameters', 'terms', 'comments')->withCount('comments')->where('slug', $slug)->firstOrfail();
         $today_takhfifs = Takhfif::latest()->paginate(4);
         $similar_takhfifs = Takhfif::latest()->inRandomOrder()->paginate(4);
 

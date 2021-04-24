@@ -13,12 +13,13 @@ class Comment extends Model
         'commentable_id',
         'approved',
         'child_id',
+        'name',
         'comment',
+        'title',
         'answer',
         'operator_id',
         'approved',
         'answer_time',
-        'operator_id'
     ];
 
     /**

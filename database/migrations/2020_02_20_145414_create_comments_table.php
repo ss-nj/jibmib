@@ -20,6 +20,8 @@ class CreateCommentsTable extends Migration
             $table->string('commenter_type')->index()->nullable();
             $table->string('commentable_type');
             $table->string('commentable_id');
+            $table->text('name');
+            $table->text('title');
             $table->text('comment');
             $table->text('answer')->nullable();
             $table->timestamp('answer_time')->nullable();

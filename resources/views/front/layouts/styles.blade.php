@@ -69,6 +69,7 @@
 <link rel="stylesheet" href="{{asset($path_user.'css/style.css').'?ver='.$ver}}" type='text/css' media='all'/>
 <link rel="stylesheet" href="{{asset($path_user.'style.css').'?ver='.$ver}}" type='text/css' media='all'/>
 <link rel="stylesheet" href="{{asset($path_user.'css/responsive-style.css').'?ver='.$ver}}" type='text/css' media='all'/>
+<link rel="stylesheet" href="{{asset('css/iziToast/css/iziToast.min.css').'?ver='.$ver}}" type='text/css' media='all'/>
 
 
 <style>
@@ -91,6 +92,9 @@
         width: 100%;
         text-align: center;
         margin-top: 30px;
+    }
+    .swal-text {
+        text-align: center;
     }
 </style>
 

@@ -241,7 +241,10 @@
         let input =form.find("." + key);
         console.log(input)
         input.addClass('is-invalid');
+        // alert(val[0])
         input.next(".error_field").text(val[0]);
+        toast('خطا',val[0],'rgb(0, 255, 184)')
+        // swal("", val[0]);
 
         // setTimeout(function () {
         //     input.removeClass("is-invalid");
@@ -283,7 +286,6 @@
             onClosed: function (instance, toast, closedBy,on_closed) {
                 if(on_closed){
                     $('.close-modal').click();
-                    location.reload();
                 }
             },
             iconColor: 'rgb(0, 255, 184)'
