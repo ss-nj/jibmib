@@ -1,6 +1,6 @@
 @extends('shop.layouts.master')
 
-@section('title')مدیریت dfgfg@endsection
+@section('title')مدیریت@endsection
 
 @section('content')
     <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">

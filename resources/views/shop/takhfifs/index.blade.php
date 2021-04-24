@@ -25,7 +25,7 @@
 
     <div class="col-md-12 mb-5 mb-lg-0 appear-animation animated fadeInUpShorter appear-animation-visible"
          data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400" style="animation-delay: 400ms;">
-        <h4 class="mb-4">ویژگی ها</h4>
+        <h4 class="mb-4">تخفیف ها</h4>
 
         <div class="card border-radius-0 bg-color-light border-0 box-shadow-1">
             <div class="card-body">

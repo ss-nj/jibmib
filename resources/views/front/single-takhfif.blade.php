@@ -114,7 +114,7 @@
                     <div class="col-md-6">
                         <div class="d-flex">
                             <div>
-                                <span>{{$takhfif->comment_count}}</span>
+                                <span>{{$takhfif->comments_count}}</span>
                                 <span><i class="fa-solid fa-message"></i></span>
                             </div>
                             <div>
