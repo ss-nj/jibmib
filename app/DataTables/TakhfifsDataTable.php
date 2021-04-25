@@ -38,7 +38,7 @@ class TakhfifsDataTable extends DataTable
             })
             ->addColumn('category', function ($query) {
 
-                return isset($query->categories[0])?$query->categories->pluck('name')->toArray():'';
+                return isset($query->categories[0])?implode('-', $query->categories->pluck('name')->toArray()) :'';
             })
             ->addColumn('display_start_time', function ($query) {
 

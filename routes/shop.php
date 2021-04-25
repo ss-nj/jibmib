@@ -121,6 +121,7 @@ Route::name('shop.')->prefix('shop')->middleware(['auth', 'confirmedMobile'])->g
 
     //coupon routes //for managing sold coupons
     Route::resource('coupon', CouponController::class)->only('index','update');
+    Route::resource('coupon', CouponController::class)->only('index','update');
 
 
 

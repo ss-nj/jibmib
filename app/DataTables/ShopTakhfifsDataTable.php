@@ -33,12 +33,12 @@ class ShopTakhfifsDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('image', function ($query) {
-                $photo = url($query->images->first()?$query->images->first()->path:Image::NO_IMAGE_PATH);
+                $photo = url($query->images->first() ? $query->images->first()->path : Image::NO_IMAGE_PATH);
                 return "<img style='height:70px;width:auto;' src='{$photo}' class='preview-image'>";
             })
             ->addColumn('category', function ($query) {
 
-                return isset($query->categories[0])?$query->categories->pluck('name')->toArray():'';
+                return isset($query->categories[0]) ? implode('-', $query->categories->pluck('name')->toArray()) : '';
             })
             ->addColumn('display_start_time', function ($query) {
 
@@ -69,12 +69,46 @@ class ShopTakhfifsDataTable extends DataTable
                 return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
             ->addColumn('action', function ($query) {
-                $route = route('single',$query->slug);
 
-                return "<a href='$route'  class='model-edit btn btn-circle btn-icon-only'>
+
+//
+//                                    <form action="{{ route('shop.takhfifs.destroy', $takhfif->id) }}"
+//                                          style="display: inline;"
+//                                          id="frm-delete-takhfif-value{{ $takhfif->id }}"
+//                                          method="post">
+//                                        {{ csrf_field() }}
+//                                        {{ method_field('delete') }}
+//                                        <a href="#" class="btn btn-circle btn-icon-only"
+//                                           onclick="deleteWithModal('frm-delete-takhfif-value', '{{ $takhfif->id }}', event)"><i
+//                                                class="fa fa-trash alert-danger"></i></a>
+//                                    </form>
+
+
+
+                $deleteRoute = route('shop.takhfifs.destroy', $query->id);
+                $csrf=csrf_field();
+                $deleteAction = "  <form action='$deleteRoute '
+                                          style='display: inline;'
+                                          id='frm-delete-takhfif$query->id'
+                                          method='post'>
+                                         $csrf
+                                        <input type='hidden' name='_method' value='delete'>
+                                        <a href='#' class='btn btn-circle btn-icon-only'
+                                           onclick='deleteWithModal(\"frm-delete-takhfif\", \"$query->id\", event)'><i
+                                                class='fa fa-trash alert-danger'></i></a>
+                                    </form>";
+
+                $showRoute = route('single', $query->slug);
+                $showAction = "<a href='$showRoute'  class='model-edit btn btn-circle btn-icon-only'>
                     <i class='fa fa-eye '></i></a>";
-            })
 
+                 $editRoute = route('shop.takhfifs.edit', $query->id);
+                $editAction = "<a href='$editRoute'  class='model-edit btn btn-circle btn-icon-only'>
+                    <i class='fa fa-pen fa-pencil '></i></a>";
+
+
+                return $showAction .$editAction.$deleteAction;
+            })
             ->addColumn('status', function ($query) {
                 return DataTableHelpers::toggleBottom($query, 'takhfifs');
             })->rawColumns(['status', 'image', 'action']);
