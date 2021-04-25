@@ -46,7 +46,9 @@ class ShopTransactionsDataTable extends DataTable
 
                 $route = route('single',$query->takhfif->slug);
 
-                return "<a href='$route'  class='model-edit btn btn-circle btn-icon-only'>
+                return "<a href='#' data-toggle='modal' class='btn btn-circle btn-icon-only'  data-target='#revoke-takhfif'>
+                    <i class='fa fa-times'></i></a>"
+                    . "<a href='$route' class='model-edit btn btn-circle btn-icon-only'>
                     <i class='fa fa-eye '></i></a>";
             })
             ->addColumn('status', function ($query) {

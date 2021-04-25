@@ -48,7 +48,7 @@ class RegisterController extends Controller
             $user = User::where('mobile', $mobile)->first();
         }
 
-        JsonResponse::sendJsonResponse(0,'موفق','مشکلی پیامده دوباره تلاش کنید','REDIRECT',route('home'));
+        JsonResponse::sendJsonResponse(0,'خطا','مشکلی پیامده دوباره تلاش کنید','REDIRECT',route('home'));
 
 
         $code = User::where('mobile', $user->mobile)->select('verify_mobile_code')->first();

@@ -94,6 +94,38 @@
 
     </div>
 
+    <div class="modal fade hide" id="revoke-takhfif" tabindex="-1" role="dialog"
+         aria-labelledby="formModalLabel" style=" padding-right: 15px;" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="formModalLabel">باطل کردن تخفیف</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{route('shop.revoke.coupon')}}" method="post" class="mb-4 ajax_validate">
+                    <div class="modal-body">
+
+                        @csrf
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-12  mb-0"> کد تخفیف (کد تخفیف تنها توسط خریدار ارایه میشود)</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="" class="form-control code" name="code"
+                                       aria-invalid="true">
+                                <div class="error_field text-danger"> </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">بستن</button>
+                        <button type="submit" class="btn btn-primary">باطل کردن تخفیف</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 
 @endsection

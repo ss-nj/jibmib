@@ -216,6 +216,7 @@ class BasketController extends Controller
                     'takhfif_price' => $basket->takhfif->price,
                     'takhfif_discount' => $basket->takhfif->discount_price,
                     'takhfif_count' => $basket->count,
+                    'status' => 0,
                 ]);
                 $basket->delete();
             }

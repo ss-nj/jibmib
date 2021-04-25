@@ -5,15 +5,13 @@ namespace App\Http\Shop\Models;
 use App\Http\Commerce\Models\Category;
 use App\Http\Core\Models\Comment;
 use App\Http\Core\Models\User;
-use App\Http\Shop\Models\Disapproves;
 use App\Http\Core\Models\Image;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use PayPal\Api\Transactions;
 
-class Takhfif extends Model
+class Takhfif extends Model  implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'tags',

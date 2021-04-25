@@ -25,6 +25,7 @@ class CreateOrderItemsTable extends Migration
             $table->bigInteger('takhfif_discount');
             $table->integer('takhfif_count');
             $table->integer('status');
+            $table->timestamp('revoke_date');
             $table->timestamps();
         });
     }

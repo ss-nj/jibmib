@@ -33,6 +33,7 @@ class OrderItem extends Model
         'takhfif_price',
         'takhfif_discount',
         'takhfif_count',
+        'revoke_date',
     ];
 
     public function user()

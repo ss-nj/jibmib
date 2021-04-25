@@ -7,6 +7,7 @@ use App\Http\Commerce\Models\Coupon;
 use App\Http\Controllers\Controller;
 
 use App\OrderItem;
+use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -65,5 +66,27 @@ class CouponController extends Controller
 //        return view('shop.coupons.index');
         return $datatable->render('shop.coupons.index');
 
+    }
+
+    public function revoke(Request $request)
+    {
+
+        $request->validate([
+            'code' => ['required', 'exists:order_items,code'],
+        ]);
+
+        $code = $request->code;
+
+        $coupon = OrderItem::where('code', $code)->first();
+
+        if (!$coupon)
+            return JsonResponse::sendJsonResponse(1, 'خطا', 'کد وارد شده نامعتبر است',);
+
+        if ($coupon->status)
+            return JsonResponse::sendJsonResponse(0, 'خطا',
+                sprintf('کد وارد شده" %s " قبلا  در تاریخ  %s باطل شده است',$code,$coupon->revoke_date));
+
+        $coupon->status = 1;
+        $coupon->save();
     }
 }

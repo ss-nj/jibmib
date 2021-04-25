@@ -176,13 +176,13 @@
                 if (result.action === "ACTION_ALERT") {
                     url = result.url.substr(0, 4) === "http" ? result.url : url + result.url;
                     if (result.mode === "swal") {
-                        swal("", result.msg, result.color);
+                        swal("", result.message, result.color);
                         $(".swal2-confirm").click(function () {
                             window.location.replace(url);
                         });
                         return;
                     } else if (result.mode === "toastr") {
-                        toastr[result.color](result.msg);
+                        toastr[result.color](result.message);
                         setTimeout(function () {
                             window.location.replace(url);
                         }, 800)
