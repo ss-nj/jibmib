@@ -124,7 +124,7 @@
             let Id = $(this).data("id");
             $.ajax({
                 type: "post",
-                url: "{{url('panel/crm/refund/ajax/edit')}}" + '/' + Id,
+                url: "{{url('panel/crm/refunds/ajax/edit')}}" + '/' + Id,
 
                 // data: {"id": Id},
                 success: function (response) {
@@ -188,7 +188,7 @@
             columns: [
                 {data: 'id', name: 'id', title: '#', 'className': 'text-center', orderable: false},
                 {data: 'shop_id', name: 'shop_id', title: 'فروشگاه', 'className': 'text-center', orderable: false},
-                {data: 'by_admin', name: 'by_admin', title: 'خودکار', 'className': 'text-center', orderable: false},
+                {data: 'by_admin', name: 'by_admin', title: 'توسط مدیر', 'className': 'text-center', orderable: false},
                 {data: 'amount', name: 'amount', title: 'مقدار', 'className': 'text-center', orderable: false},
                 {data: 'bank_id', name: 'bank_id', title: 'شماره حساب', 'className': 'text-center', orderable: false},
                 {data: 'description', name: 'description', title: 'توضیح', 'className': 'text-center', orderable: false},

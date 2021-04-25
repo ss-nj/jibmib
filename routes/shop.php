@@ -8,6 +8,7 @@ use App\Http\Shop\Controllers\LicencesController;
 use App\Http\Shop\Controllers\OpenTimesController;
 use App\Http\Shop\Controllers\ParameterController;
 use App\Http\Shop\Controllers\PhoneController;
+use App\Http\Shop\Controllers\RefundController;
 use App\Http\Shop\Controllers\ShopController;
 use App\Http\Shop\Controllers\ShopDashboardController;
 use App\Http\Shop\Controllers\TakhfifController;
@@ -122,6 +123,10 @@ Route::name('shop.')->prefix('shop')->middleware(['auth', 'confirmedMobile'])->g
     //coupon routes //for managing sold coupons
     Route::resource('coupon', CouponController::class)->only('index','update');
     Route::post('coupon', [CouponController::class,'revoke'])->name('revoke.coupon');
+
+
+    //coupon routes //for managing sold coupons
+    Route::resource('refund', RefundController::class)->only('index','update');
 
 
 

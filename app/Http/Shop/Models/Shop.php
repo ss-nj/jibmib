@@ -154,4 +154,9 @@ class Shop extends Model
         return $this->hasMany(Disapproves::class);
 
     }
+    public function refunds()
+    {
+        return $this->hasMany(Refund::class);
+
+    }
 }

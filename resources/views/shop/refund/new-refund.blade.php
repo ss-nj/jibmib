@@ -15,14 +15,8 @@
                         <label for="shop_id">فروشگاه</label>
 
                         <select name="shop_id" title="فروشگاه" class="form-control select2" style="width: 100%">
-                            <option value>انتخاب کنید</option>
-                            @foreach($shops as $shop)
-                                <option
-                                    value="{{$shop->id}}">{{$shop->shop_name}}</option>
-                            @endforeach
+                            <oprtion ></oprtion>
                         </select>
-                        <div class="error_field text-danger"> </div>
-
                         <div class="error_field text-danger">  </div>
                     </div>
                     <div class="form-group">
@@ -35,19 +29,6 @@
                                id="amount"
                                autocomplete="name" autofocus
                                placeholder="مقدار">
-                        <div class="error_field text-danger">  </div>
-                    </div>
-
-                   <div class="form-group">
-                        <label for="bank_id">شماره حساب</label>
-
-                        <input type="text"
-                               class="form-control bank_id"
-                               name="bank_id"
-                               title="شماره حساب"
-                               id="bank_id"
-                               autocomplete="bank_id" autofocus
-                               placeholder="شماره حساب">
                         <div class="error_field text-danger">  </div>
                     </div>
 

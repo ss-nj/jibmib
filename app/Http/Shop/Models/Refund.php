@@ -11,16 +11,21 @@ class Refund extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use SortableTrait;
 
     protected $fillable = [
 //        'shop_id',
         'amount',
-//        'bank_id',
+        'bank_id',
         'description',
 //        'approve_date',
 //        'pay_date',
 //        'by_admin',
+        'status',
+    ];
+
+    protected $casts = [
+        'by_admin' => 'boolean',
+
     ];
 
     public function shop()

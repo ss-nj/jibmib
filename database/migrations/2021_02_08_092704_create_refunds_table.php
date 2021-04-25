@@ -18,10 +18,11 @@ class CreateRefundsTable extends Migration
         Schema::create('refunds', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('shop_id');
-            $table->unsignedInteger('by_admin');
+            $table->tinyInteger('by_admin')->default(0);
             $table->unsignedBigInteger('amount');
             $table->string('bank_id')->nullable();
             $table->text('description');
+            $table->bigInteger('status');
             $table->timestamp('approve_date')->nullable();
             $table->timestamp('pay_date')->nullable();
             $table->timestamps();

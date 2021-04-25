@@ -236,6 +236,7 @@ return array(
         'icon' => 'آیکن',
         'email_address' => 'ادرس ایمیل',
         'comment' => 'متن پیام',
+        'amount' => 'مقدار',
 
     ),
 );

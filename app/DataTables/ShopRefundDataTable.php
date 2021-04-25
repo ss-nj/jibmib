@@ -8,7 +8,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class RefundDataTable extends DataTable
+class ShopRefundDataTable extends DataTable
 {
     protected $queryModel;
     protected $type;
@@ -31,11 +31,8 @@ class RefundDataTable extends DataTable
         return datatables()
             ->eloquent($query)
 
-            ->editColumn('shop_id', function ($query) {
-                return $query->shop->shop_name;//todo link this to shop page
-            })
              ->editColumn('by_admin', function ($query) {
-                return $query->by_admin?'بله':'خیر';
+                return $query->by_admin;
             })
             ->editColumn('approve_date', function ($query) {
                 return $query->approve_date?verta($query->approve_date)->timezone('Asia/Tehran')->format('Y-m-d H:i'):'';
@@ -44,7 +41,7 @@ class RefundDataTable extends DataTable
                 return $query->pay_date?verta($query->pay_date)->timezone('Asia/Tehran')->format('Y-m-d H:i'):'';
             })
             ->editColumn('created_at', function ($query) {
-                return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
+                return verta($query->created_at)->timezone('Asia/Tehran')->format('Y/m/d H:i');
             })
 
 
@@ -109,7 +106,6 @@ class RefundDataTable extends DataTable
         return [
             Column::make('id')->title('#'),
 
-            Column::make('shop_id', 'shop_id')->title('نام'),
             Column::make('by_admin', 'by_admin')->title('ایجاد خودکار'),
             Column::make('amount', 'amount')->title('مقدار'),
             Column::make('bank_id', 'bank_id')->title('شماره حساب'),

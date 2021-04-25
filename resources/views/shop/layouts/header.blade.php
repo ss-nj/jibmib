@@ -27,7 +27,7 @@
 
 <header id="header" class="side-header d-flex" style="">
     <div class="header-body">
-        <div class="header-container container d-flex h-100" style="overflow-x: hidden">
+        <div class="header-container container d-flex h-100" >
             <div class="header-column flex-row flex-lg-column justify-content-center h-100">
                 <div class="header-row flex-row justify-content-start justify-content-lg-center py-lg-5">
                     <h1 class="header-logo">
@@ -57,7 +57,7 @@
 
                                             داشبورد
                                         </a>
-                                        <ul class="dropdown-menu" style="position: fixed;">
+                                        <ul class="dropdown-menu" style="">
                                             <li>
                                                 <a class="dropdown-item" href="{{route('shop.profiles.index')}}">
                                                     پروفایل فروشگاه
@@ -83,7 +83,7 @@
 
                                             مدیریت تخفیفات
                                         </a>
-                                        <ul class="dropdown-menu" style="position: fixed;">
+                                        <ul class="dropdown-menu" style="">
                                             <li>
                                                 <a class="dropdown-item" data-toggle="modal"
                                                    data-target="#new-takhfif">
@@ -98,7 +98,7 @@
 
                                         </ul>
                                     </li>
-                                    <li class="">
+                                    <li class="dropdown">
                                         <img class="icon-animated" width="45"
                                              src="{{asset($path.'vendor/linea-icons/linea-ecommerce/icons/money.svg')}}"
                                              alt="" data-icon=""
@@ -109,7 +109,16 @@
 
                                             مدیریت مالی
                                         </a>
+                                        <ul class="dropdown-menu" style="">
 
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('shop.refund.index')}}">
+                                                    درخواست دریافت وجه
+
+                                                </a>
+                                            </li>
+
+                                        </ul>
                                     </li>
                                     <li class="">
                                         <img class="icon-animated" width="45"
