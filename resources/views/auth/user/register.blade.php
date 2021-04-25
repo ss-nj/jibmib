@@ -205,7 +205,7 @@
             }
         ).then(function (response) {
             //Success
-            console.log(response)
+
             //must get( message , title , action   , link)
             success(response)
 

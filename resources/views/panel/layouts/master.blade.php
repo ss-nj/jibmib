@@ -473,7 +473,7 @@
             }
         ).then(function (response) {
             //Success
-            console.log(response)
+
             //must get( message , title , action   , link)
             success(response)
 
@@ -529,7 +529,7 @@
             },
         ).then(function (response) {
             //Success
-            console.log(response)
+
             //must get( message , title , action   , link)
             success(response)
 

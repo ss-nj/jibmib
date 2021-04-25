@@ -27,7 +27,7 @@
 
 <header id="header" class="side-header d-flex" style="">
     <div class="header-body">
-        <div class="header-container container d-flex h-100">
+        <div class="header-container container d-flex h-100" style="overflow-x: hidden">
             <div class="header-column flex-row flex-lg-column justify-content-center h-100">
                 <div class="header-row flex-row justify-content-start justify-content-lg-center py-lg-5">
                     <h1 class="header-logo">
@@ -57,7 +57,7 @@
 
                                             داشبورد
                                         </a>
-                                        <ul class="dropdown-menu">
+                                        <ul class="dropdown-menu" style="position: fixed;">
                                             <li>
                                                 <a class="dropdown-item" href="{{route('shop.profiles.index')}}">
                                                     پروفایل فروشگاه
@@ -83,7 +83,7 @@
 
                                             مدیریت تخفیفات
                                         </a>
-                                        <ul class="dropdown-menu">
+                                        <ul class="dropdown-menu" style="position: fixed;">
                                             <li>
                                                 <a class="dropdown-item" data-toggle="modal"
                                                    data-target="#new-takhfif">
@@ -98,7 +98,7 @@
 
                                         </ul>
                                     </li>
-                                    <li class="dropdown">
+                                    <li class="">
                                         <img class="icon-animated" width="45"
                                              src="{{asset($path.'vendor/linea-icons/linea-ecommerce/icons/money.svg')}}"
                                              alt="" data-icon=""
@@ -111,7 +111,7 @@
                                         </a>
 
                                     </li>
-                                    <li class="dropdown">
+                                    <li class="">
                                         <img class="icon-animated" width="45"
                                              src="{{asset($path.'vendor/linea-icons/linea-ecommerce/icons/cart.svg')}}"
 
@@ -132,15 +132,15 @@
                     </div>
                 </div>
                 <div class="header-row justify-content-end pb-lg-3">
-                    <ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean d-sm-0">
-                        <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank"
-                                                             title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                        <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank"
-                                                            title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                        <li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank"
-                                                             title="Linkedin"><i class="fab fa-linkedin-in"></i></a>
-                        </li>
-                    </ul>
+{{--                    <ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean d-sm-0">--}}
+{{--                        <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank"--}}
+{{--                                                             title="Facebook"><i class="fab fa-facebook-f"></i></a></li>--}}
+{{--                        <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank"--}}
+{{--                                                            title="Twitter"><i class="fab fa-twitter"></i></a></li>--}}
+{{--                        <li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank"--}}
+{{--                                                             title="Linkedin"><i class="fab fa-linkedin-in"></i></a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
                     <p class="d-none d-lg-block text-1 pt-3">ارائه شده در وب‌سایت طراحان ایرانیان</p>
                     <button class="btn header-btn-collapse-nav" data-toggle="collapse"
                             data-target=".header-nav-main nav">
