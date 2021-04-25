@@ -19,20 +19,21 @@
                                 <label for="ajaxId" class="form-control-label">شماره:</label>
 
                                 <div class="form-group">
-                                    <input type="text" class="ajaxId form-control"  name="ajaxId">
-                                </div>
-                            </div>
-                             <div class="form-group col-md-4">
-
-                                <label for="ajaxName" class="form-control-label">نام فروشگاه:</label>
-
-                                <div class="form-group">
-                                    <input type="text" class="ajaxName form-control"  name="ajaxName">
+                                    <input type="text" class="ajaxId form-control" name="ajaxId">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
 
-                                <label for="ajaxOwner" class="form-control-label">نام صاحب فروشگاه یا شماره تلفن:</label>
+                                <label for="ajaxName" class="form-control-label">نام فروشگاه:</label>
+
+                                <div class="form-group">
+                                    <input type="text" class="ajaxName form-control" name="ajaxName">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+
+                                <label for="ajaxOwner" class="form-control-label">نام صاحب فروشگاه یا شماره
+                                    تلفن:</label>
 
                                 <div class="form-group">
                                     <input type="text" class="ajaxOwner form-control" name="ajaxOwner">
@@ -86,7 +87,8 @@
         <!-- end row -->
     </div>
 
-        @include('panel.refund.new-refund')
+    @include('panel.refund.new-refund')
+    @include('panel.refund.update-status')
 
 
     <div class="modal fade" id="model-edit">
@@ -108,6 +110,19 @@
 
 
 @push('scripts')
+
+    <script>
+        $(document).on('click', '.edit-status', function (e) {
+
+            let Id = $(this).data("id");
+            console.log(Id)
+            let form = $('#edit-status-form');
+            let Url = "{{url('panel/crm/refunds/ajax/update-status')}}" + '/' + Id
+
+            form.attr('action', Url);
+
+        });
+    </script>
     <script>
 
         $(document).ready(function () {
@@ -191,9 +206,14 @@
                 {data: 'by_admin', name: 'by_admin', title: 'توسط مدیر', 'className': 'text-center', orderable: false},
                 {data: 'amount', name: 'amount', title: 'مقدار', 'className': 'text-center', orderable: false},
                 {data: 'bank_id', name: 'bank_id', title: 'شماره حساب', 'className': 'text-center', orderable: false},
-                {data: 'description', name: 'description', title: 'توضیح', 'className': 'text-center', orderable: false},
-                {data: 'approve_date', name: 'approve_date', title: 'زمان تایید', 'className': 'text-center', orderable: false},
-                {data: 'pay_date', name: 'pay_date', title: 'زمان پرداخت', 'className': 'text-center', orderable: false},
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'توضیح',
+                    'className': 'text-center',
+                    orderable: false
+                },
+                {data: 'status', name: 'status', title: 'وضعیت', 'className': 'text-center', orderable: false},
 
                 {
                     data: 'created_at',

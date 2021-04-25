@@ -134,4 +134,20 @@ class RefundController extends Controller
 
         return view('panel.refund.refund-edit', compact('refund'))->render();
     }
+
+    public function updateStatus(Request $request,Refund $refund)
+    {
+        $request->validate([
+            'status' => ['required', 'integer'],
+        ]);
+
+        $refund->status=$request->status;
+        $refund->save();
+
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'درخوست برداشت با موفقیت روز رسانی گردید',
+            'DATATABLE_REFRESH');
+
+    }
+
+
 }

@@ -37,11 +37,31 @@ class RefundDataTable extends DataTable
              ->editColumn('by_admin', function ($query) {
                 return $query->by_admin?'بله':'خیر';
             })
-            ->editColumn('approve_date', function ($query) {
-                return $query->approve_date?verta($query->approve_date)->timezone('Asia/Tehran')->format('Y-m-d H:i'):'';
-            })
-            ->editColumn('pay_date', function ($query) {
-                return $query->pay_date?verta($query->pay_date)->timezone('Asia/Tehran')->format('Y-m-d H:i'):'';
+
+            ->editColumn('status', function ($query) {
+
+
+                $status_map = [
+                    0 => ['badge-warning', 'درانتظار بررسی'],
+                    1 => ['badge-success', 'تایید شده'],
+                    2 => ['badge-danger', 'رد شده'],
+                    3 => ['badge-warning', 'در حال بررسی'],
+                    4 => ['badge-secondary', 'پرداخت شده'],
+                ];
+
+
+                    $status = '<a href="#"  data-target="#edit-status" data-toggle="modal"
+                     data-id=' . $query->id
+                        . ' class="edit-status badge ' .
+                        ($status_map[$query->status][0])
+                        . '">' .
+                        ($status_map[$query->status][1])
+                        . '</a>';
+                    return $status;
+
+
+
+
             })
             ->editColumn('created_at', function ($query) {
                 return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
@@ -114,8 +134,7 @@ class RefundDataTable extends DataTable
             Column::make('amount', 'amount')->title('مقدار'),
             Column::make('bank_id', 'bank_id')->title('شماره حساب'),
             Column::make('description', 'description')->title('توضیح'),
-            Column::make('approve_date', 'approve_date')->title('زمان تایید'),
-            Column::make('pay_date', 'pay_date')->title('زمان پرداخت'),
+            Column::make('status', 'status')->title('زمان پرداخت'),
             Column::make('created_at', 'created_at')->title('زمان ایجاد'),
 
 

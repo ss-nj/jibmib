@@ -213,6 +213,10 @@
             swal('خطا', 'لطفا تمام فیلدهای اجباری را به طور صحیح تکمیل کنید', "error");
 
             $('.error_field').text('');
+            if(error.response.status===404)
+            {
+                sendMessage('خطا','موزد پیدا نشد');
+            }
             $.each(errors.response.data.errors, function (key, val) {
                 validate(key, val, form)
 

@@ -98,6 +98,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
 //places refunds
         Route::resource('refunds', RefundController::class)->except('show', 'edit');
         Route::post('refunds/ajax/edit/{refund}', [RefundController::class, 'ajaxEdit'])->name('panel.refund.ajax.edit');
+        Route::post('refunds/ajax/update-status/{refund}', [RefundController::class, 'updateStatus'])->name('panel.update.status.ajax.edit');
 
 
         //tickets routes
