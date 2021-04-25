@@ -24,10 +24,10 @@
                             </div>
                             <div class="form-group col-md-4">
 
-                                <label for="ajaxTitle" class="form-control-label">نام:</label>
+                                <label for="ajaxName" class="form-control-label">نام:</label>
 
                                 <div class="form-group">
-                                    <input type="text" class="ajaxTitle form-control" id="ajaxTitle" name="ajaxTitle">
+                                    <input type="text" class="ajaxName form-control" id="ajaxName" name="ajaxName">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">

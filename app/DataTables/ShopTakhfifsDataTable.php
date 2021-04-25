@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use function url;
 
-class TakhfifsDataTable extends DataTable
+class ShopTakhfifsDataTable extends DataTable
 {
     protected $queryModel;
     protected $type;
@@ -44,29 +44,29 @@ class TakhfifsDataTable extends DataTable
 
                 return verta($query->display_start_time)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
-           ->addColumn('display_end_time', function ($query) {
+            ->addColumn('display_end_time', function ($query) {
 
-               return verta($query->display_end_time)->timezone('Asia/Tehran')->format('Y-m-d H:i');
+                return verta($query->display_end_time)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
-          ->addColumn('start_time', function ($query) {
+            ->addColumn('start_time', function ($query) {
 
                 return verta($query->start_time)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
-           ->addColumn('expire_time', function ($query) {
+            ->addColumn('expire_time', function ($query) {
 
-               return verta($query->expire_time)->timezone('Asia/Tehran')->format('Y-m-d H:i');
+                return verta($query->expire_time)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
-           ->addColumn('price', function ($query) {
+            ->addColumn('price', function ($query) {
 
                 return $query->price;
             })
-           ->addColumn('discount_price', function ($query) {
+            ->addColumn('discount_price', function ($query) {
 
                 return $query->discount_price;
             })
-             ->addColumn('created_at', function ($query) {
+            ->addColumn('created_at', function ($query) {
 
-                 return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
+                return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
             ->addColumn('action', function ($query) {
                 $route = route('single',$query->slug);
@@ -74,19 +74,10 @@ class TakhfifsDataTable extends DataTable
                 return "<a href='$route'  class='model-edit btn btn-circle btn-icon-only'>
                     <i class='fa fa-eye '></i></a>";
             })
-            ->addColumn('approve', function ($query) {
-                if ($query->approved==2){
-                    $approved = '<span class="badge bg-warning">بررسی</span>';
-                }elseif ($query->approved==1){
-                    $approved = '<span class="badge bg-success">تایید</span>';
-                }else
-                    $approved = '<span class="badge bg-danger">رد</span>';
 
-                return $approved;
-            })
             ->addColumn('status', function ($query) {
                 return DataTableHelpers::toggleBottom($query, 'takhfifs');
-            })->rawColumns(['status', 'image', 'action', 'approve']);
+            })->rawColumns(['status', 'image', 'action']);
     }
 
     /**
@@ -143,7 +134,6 @@ class TakhfifsDataTable extends DataTable
             Column::make('price')->title('قیمت'),
             Column::computed('discount_price')->title('قیمت با تخفیف'),
             Column::computed('created_at')->title('قیمت با تخفیف'),
-            Column::computed('approve')->title('وضعیت'),
             Column::computed('status')->title('وضعیت'),
             Column::computed('action')->title('عملیات'),
         ];

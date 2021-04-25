@@ -2,6 +2,7 @@
 
 namespace App\Http\Shop\Controllers;
 
+use App\DataTables\ShopTakhfifsDataTable;
 use App\Http\Core\Models\Image;
 use App\Http\Shop\Models\Shop;
 use App\Http\Shop\Models\Takhfif;
@@ -33,15 +34,59 @@ class TakhfifController extends Controller
     /**
      *
      */
-    public function index()
+    public function index(Request $request)
     {
+//        if (!Auth::user()->can('create-slider')) {
+//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
+//        }
+//dd(1);
+        $query = Takhfif::with('shop', 'images', 'categories','disapprove');
+//        dd(Takhfif::find(1)->full_address);
+//dd($query->first());
 
-//        $datatable = new BannerDataTable($query);
+        if ($request->searchById) {
+            $query->where('id', 'LIKE', '%' . $request->searchById . '%');
+        }
 
-//        return $datatable->render('panel.banner.index');
-        $takhfifs = Takhfif::all();
-        return view('shop.takhfifs.index',compact('takhfifs'));
+        if ($request->searchByName) {
+            $query->where('name', 'LIKE', '%' . $request->searchByName . '%');
+        }
+        if ($request->searchBySlug) {
+            $query->where('slug', 'LIKE', '%' . $request->searchBySlug . '%');
+        }
+
+        if ($request->searchByCity) {
+            $query->whereHas('city', function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->searchByCity . '%');
+            });
+        }
+        if (isset($request->searchByStatus)) {
+            $query->where('approved', $request->searchByStatus);
+        }
+
+        if ($request->searchByAscDesc) {
+            $ascDesc = $request->searchByAscDesc;
+
+        } else {
+            $ascDesc = 'DESC';
+        }
+
+        if ($request->searchSortBy) {
+            $searchSortBy = $request->searchSortBy;
+            if ($ascDesc == 'DESC')
+                $query->latest($searchSortBy);
+            else
+                $query->oldest($searchSortBy);
+
+        } else
+            $query->latest('created_at');
+
+
+        $datatable = new ShopTakhfifsDataTable($query);
+//dd(1);
+        return $datatable->render('shop.takhfifs.index');
     }
+
 
     public function edit(Takhfif $takhfif)
     {
