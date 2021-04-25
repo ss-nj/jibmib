@@ -215,16 +215,4 @@
     </script>
 @endpush
 
-{{--@push('internal_js')--}}
-{{--    <script>--}}
 
-{{--        $(document).on('submit', '.ajax_validate', function (e) {--}}
-{{--            // console.log(1)--}}
-{{--            e.preventDefault();//Prevent from submitting--}}
-
-{{--            submiter($(this))--}}
-{{--        })--}}
-
-
-{{--    </script>--}}
-{{--@endpush--}}

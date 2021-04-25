@@ -293,7 +293,7 @@
     });
 </script>
 
-@include('layouts.submiter-js')
+@include('layouts.submitter-js')
 
 <script>
 

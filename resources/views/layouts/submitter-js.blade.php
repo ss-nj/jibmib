@@ -43,10 +43,10 @@
         // console.log(1)
         e.preventDefault();//Prevent from submitting
 
-        submiter($(this))
+        submitter($(this))
     })
 
-    function submiter(form) {
+    function submitter(form) {
         //get form
         //remove the invalid class
         $(document).find(':input').removeClass("is-invalid");
