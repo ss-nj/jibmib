@@ -36,10 +36,18 @@
             </div>
             <div class="form-group col-md-4">
 
-                <label for="ajaxTitle" class="form-control-label">نام:</label>
+                <label for="ajaxName" class="form-control-label">نام:</label>
 
                 <div class="form-group">
-                    <input type="text" class="ajaxTitle form-control" id="ajaxTitle" name="ajaxTitle">
+                    <input type="text" class="ajaxName form-control" id="ajaxName" name="ajaxName">
+                </div>
+            </div>
+             <div class="form-group col-md-4">
+
+                <label for="ajaxUserName" class="form-control-label">نام(بخشی از نام یا موبایل کاربر):</label>
+
+                <div class="form-group">
+                    <input type="text" class="ajaxUserName form-control" id="ajaxUserName" name="ajaxUserName">
                 </div>
             </div>
             <div class="form-group col-md-4">
@@ -47,8 +55,8 @@
                 <label for="ajaxApproved" class="form-control-label">وضعیت :</label>
                 <select name="ajaxApproved" id="ajaxApproved" class="form-control ajaxApproved ">
                     <option value="">انتخاب کنید</option>
-                    <option value="1">نمایش</option>
-                    <option value="0">عدم نمایش</option>
+                    <option value="1">فعال</option>
+                    <option value="0">استفاده شده</option>
 
                 </select>
             </div>
@@ -147,12 +155,14 @@
                 'data': function (data) {
                     // Read values
                     var ajaxName = $('.ajaxName').val();
+                    var ajaxUserName = $('.ajaxUserName').val();
                     var ajaxId = $('.ajaxId').val();
                     var ajaxSortBy = $('#ajaxSortBy').val();
                     var ajaxAscDesc = $('#ajaxAscDesc').val();
 
                     // Append to data
                     data.searchByName = ajaxName;
+                    data.searchByUserName = ajaxUserName;
                     data.searchById = ajaxId;
                     data.searchSortBy = ajaxSortBy;
                     data.searchByAscDesc = ajaxAscDesc;
@@ -188,7 +198,7 @@
 
 
         //select boxes
-        $('.ajaxName ,.ajaxId,.ajaxCode').keyup((event) => {
+        $('.ajaxName ,.ajaxUserName ,.ajaxId,.ajaxCode').keyup((event) => {
             dataTable.draw();
         });
 

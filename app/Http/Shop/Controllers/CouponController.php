@@ -16,7 +16,7 @@ class CouponController extends Controller
     {
 
         $id = auth()->id();
-        $query = OrderItem::with('transaction','takhfif')->whereHas('takhfif',function ($query) use($id){
+        $query = OrderItem::with('transaction', 'takhfif')->whereHas('takhfif', function ($query) use ($id) {
             $query->where('shop_id', $id);
         });
 
@@ -24,6 +24,18 @@ class CouponController extends Controller
         if ($request->searchById) {
             $query->where('id', 'LIKE', '%' . $request->searchById . '%');
         }
+
+        if ($request->searchByName) {
+            $query->where('takhfif_name', 'LIKE', '%' . $request->searchByName . '%');
+        }
+        if ($request->searchByUserName) {
+            $query->whereHas('user', function ($query) use ($request) {
+                $query->where('first_name', 'like', '%' . $request->searchByUserName . '%')
+                    ->orWhere('last_name', 'like', '%' . $request->searchByUserName . '%')
+                    ->orWhere('mobile', 'like', '%' . $request->searchByUserName . '%');
+            });
+        }
+
 
         if (isset($request->searchByStatus)) {
             $query->where('approved', $request->searchByStatus);
