@@ -31,3 +31,9 @@
 <link href="{{asset('plugins/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{asset('plugins/select2/select2.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('css/persian-datepicker.min.css') }}" rel="stylesheet">
+
+<style>
+    .swal-text {
+        text-align: center;
+    }
+</style>

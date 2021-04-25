@@ -84,9 +84,14 @@ class CouponController extends Controller
 
         if ($coupon->status)
             return JsonResponse::sendJsonResponse(0, 'خطا',
-                sprintf('کد وارد شده" %s " قبلا  در تاریخ  %s باطل شده است',$code,$coupon->revoke_date));
+                sprintf('کد وارد شده" %s " قبلا  در تاریخ  "%s" باطل شده است',
+                    $code,verta($coupon->$coupon)->timezone('Asia/Tehran')->format('Y/m/d H:i')));
 
         $coupon->status = 1;
+        $coupon->revoke_date = now();
         $coupon->save();
+
+        return JsonResponse::sendJsonResponse(1, 'موفق',
+            sprintf('کوپن به کد "%s" مربوط به خریدار "%s" و تخفیف "%s" باطل شد',$code,$coupon->user->full_name,$coupon->takhfif_name));
     }
 }
