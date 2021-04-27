@@ -67,7 +67,7 @@
 </div><!-- .ticket-section -->
 
 
-<form class="needs-validation modal fade ajax_validate" action="{{route('user.mess.store')}}" method="post"
+<form class="needs-validation modal fade ajax_validate" action="{{route('user.tickets.store')}}" method="post"
       id="open-ticket" tabindex="-1">
     {{ csrf_field() }}
     <div class="modal-dialog modal-lg">

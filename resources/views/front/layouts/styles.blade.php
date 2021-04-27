@@ -106,7 +106,7 @@
      }
 
     blockquote.alignright {
-        max-width: 50%;
+        max-width: 90%;
         float: right;
         color: #3d95d4;
         text-align: right;
@@ -115,7 +115,7 @@
     }
 
     blockquote.alignleft {
-        max-width: 50%;
+        max-width: 90%;
         float: left;
     }
 

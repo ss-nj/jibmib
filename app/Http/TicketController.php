@@ -68,7 +68,9 @@ class TicketController extends Controller
 
         $message = $thicket->messages()->create($request->all());
         $message->user_id = Auth::id();
+        $thicket->status = 0;
         $message->save();
+        $thicket->save();
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'با موفقیت ثبت شد', 'SHOW_AND_REFRESH');
 

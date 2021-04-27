@@ -5,6 +5,7 @@ namespace App\Http\Core\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Core\Models\Message;
 use App\Http\Core\Models\Ticket;
+use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,7 @@ class TicketController extends Controller
 //        }
 
         $tickets = Ticket::latest()->get();
-//       dd( $tickets[0]->latestMessage[0]->body);
+
         return view('panel.tickets.index', compact('tickets'));
 
     }
@@ -30,7 +31,7 @@ class TicketController extends Controller
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
         $messages = Message::where('ticket_id', $ticket->id)->oldest()->get();
-//dd($messages);
+
         return view('panel.tickets.show', compact('ticket', 'messages'));
     }
 
@@ -39,7 +40,9 @@ class TicketController extends Controller
 //        if (!Auth::user()->can('update-tickets')) {
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
-
+        $request->validate([
+            'body' => ['required','max:500'],
+        ]);
         $ticket->update($request->all());
         return view('panel.tickets.index', compact('tickets'))
             ->with(['alert_title' => 'موفق', 'alert_body' => 'تیکت با موفقیت به روزرسانی شد']);
@@ -50,9 +53,12 @@ class TicketController extends Controller
     {
 //        dd($request->all());
         $request->validate([
-            'ticket_id' => ['required'],
+            'ticket_id' => ['required','exists:tickets,id'],
             'body' => ['required'],
 
+        ]);
+        $request->validate([
+            'body' => ['required','max:500'],
         ]);
         $thicket =Ticket::findOrFail($request->ticket_id);
         $thicket->status = 1;
@@ -62,8 +68,10 @@ class TicketController extends Controller
 //        dd($request->all(), $thicket);
         $message = $thicket->messages()->create($request->all());
         $message->user_id = Auth::user()->id;
+        $message->from_admin = 1;
+        $thicket->status = 1;
         $message->save();
-        return back() ->with(['alert_title' => 'موفق', 'alert_body' => 'پیام با موفقیت ثبت شد']);
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'با موفقیت ثبت شد', 'SHOW_AND_REFRESH');
 
     }
 
@@ -82,7 +90,6 @@ class TicketController extends Controller
         $message = $thicket->messages()->create($request->all());
         $thicket->status = 1;
         $message->user_id = Auth::id();
-        $thicket->save();
         $message->save();
         return back()            ->with(['alert_title' => 'موفق', 'alert_body' => 'تیکت با موفقیت ثبت شد']);;
     }

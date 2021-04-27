@@ -18,7 +18,7 @@
                         <h2 class="h5 text-center text-right">{{ $ticket->title }}</h2>
                         <div class="d-sm-flex justify-content-between bg-secondary py-3 mb-3 text-white">
                             <div class="p-2 w-100 text-center"><strong class="d-block mb-1">تاریخ ارسال شده</strong><span>{{ verta($ticket->created_at)->format('Y/m/d') }}</span></div>
-                            <div class="py-2 w-100 text-center"><strong class="d-block mb-1">تاریخ پاسخ</strong><span>{{ $ticket->status!==0 ?  : 'در انتظار پاسخ' }}</span></div>
+                            <div class="py-2 w-100 text-center"><strong class="d-block mb-1">تاریخ پاسخ</strong><span>{{ $ticket->status!==0 ? verta($ticket->updated_at)->format('%A, %d %B %Y ساعت H:i') : 'در انتظار پاسخ' }}</span></div>
                             <div class="py-2 w-100 text-center"><strong class="d-block mb-1">وضعیت</strong>
                                 <span class="badge badge-{{ $ticket->answer_time != null ? 'success' : 'danger' }}">
                             {{ $ticket->answer_time != null ? 'پاسخ داده شده' : 'در انتظار پاسخ' }}
@@ -43,10 +43,10 @@
                                     <div class="testimonial-footer">
                                         </div>
                                         <div class="d-table-cell align-middle pl-2">
-                                            <div class="blockquote-footer"> {{$ticket->from_admin?'پشتیبانی': $ticket->user->full_name}}
+                                            <div class="blockquote-footer"> {{$message->from_admin?'پشتیبانی': $ticket->user->full_name}}
                                                 <cite> {{ verta($message->created_at)->format('%A, %d %B %Y ساعت H:i' ) }}</cite>
                                             </div>
-                                            <blockquote>{{ $message->body }}</blockquote>
+                                            <blockquote class="{{$message->from_admin?'alignleft': 'alignright'}}">{{ $message->body }}</blockquote>
                                         </div>
                                     </div>
                                 @endforeach
