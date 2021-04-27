@@ -55,8 +55,8 @@
                                                                     >
                                                                         {{ $ticket->title }}</a>
                                                                 </td>
-                                                                <td>{{ verta($ticket->created_at)->format('H:i Y/m/d') }}</td>
-                                                                <td>{{ $ticket->answer_time != null ? verta($ticket->answer_time)->format('H:i Y/m/d') : 'در انتظار پاسخ' }}</td>
+                                                                <td>{{ verta($ticket->created_at)->timezone('Asia/Tehran')->format('H:i Y/m/d') }}</td>
+                                                                <td>{{ $ticket->answer_time != null ? verta($ticket->answer_time)->timezone('Asia/Tehran')->format('H:i Y/m/d') : 'در انتظار پاسخ' }}</td>
                                                                 <td>
                                                              <span
                                                                  class="badge badge-{{ $ticket->answer_time != null ? 'success' : 'danger' }} m-0">

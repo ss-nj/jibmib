@@ -30,7 +30,7 @@ class CategoryDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', function ($query) {
-                return verta($query->created_at)->format('Y-m-d H:i');
+                return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
             })
             ->addColumn('image', function ($query) {
                 $photo = url($query->image->path);

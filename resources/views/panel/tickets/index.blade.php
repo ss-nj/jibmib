@@ -41,8 +41,8 @@
                                         <td><a href="{{route('panel.tickets.show',$ticket->id)}}">{{ $ticket->title }}</a></td>
                                         <td>{{ $ticket->user->name }}</td>
 
-                                        <td>{{Verta::instance($ticket->created_at)->timezone('Asia/Tehran')->format('%B %d، %Y H:i')}}</td>
-                                        <td>{{Verta::instance($ticket->updated_at)->timezone('Asia/Tehran')->format('%B %d، %Y H:i')}}</td>
+                                        <td>{{verta($ticket->created_at)->timezone('Asia/Tehran')->format('%B %d، %Y H:i')}}</td>
+                                        <td>{{verta($ticket->updated_at)->timezone('Asia/Tehran')->format('%B %d، %Y H:i')}}</td>
                                         <td>{{\Illuminate\Support\Str::limit($ticket->latestMessage->body,50)}}</td>
                                         <td class="text-center">
                                             <a href="" data-toggle="modal"

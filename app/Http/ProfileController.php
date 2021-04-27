@@ -5,17 +5,12 @@ namespace App\Http;
 
 use App\Http\Controllers\Controller;
 use App\Http\Core\Models\Image;
-use App\Http\Core\Models\Setting;
 use App\Http\Core\Models\Ticket;
 use App\Http\Core\Models\User;
-use App\Http\Shop\Models\Takhfif;
 use App\OrderItem;
-use App\Rules\UuidCheck;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {

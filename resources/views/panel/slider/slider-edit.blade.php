@@ -38,7 +38,7 @@
                                            id="start_time"
                                            placeholder="زمان شروع"
                                            title="زمان شروع"
-                                           value="{{verta($slider->start_time)->format('Y-m-d-H:s:i')}}"
+                                           value="{{verta($slider->start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:s:i')}}"
                                     >
                                     <div class="error_field text-danger"> </div>
                                 </div>
@@ -51,7 +51,7 @@
                                            id="expire_time"
                                            placeholder="زمان پایان"
                                            title="زمان پایان"
-                                           value="{{verta($slider->expire_time)->format('Y-m-d-H:s:i')}}"
+                                           value="{{verta($slider->expire_time)->timezone('Asia/Tehran')->format('Y-m-d-H:s:i')}}"
                                     >
                                     <div class="error_field text-danger"> </div>
                                 </div>
