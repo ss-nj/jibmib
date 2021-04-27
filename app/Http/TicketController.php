@@ -5,6 +5,7 @@ namespace App\Http;
 
 use App\Http\Controllers\Controller;
 use App\Http\Core\Models\Ticket;
+use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::Latest()->where('user_id', auth()->user()->id)->paginate(10);
-        return view( 'user.tickets.index', compact('tickets'));
+        return view( 'front.tickets.index', compact('tickets'));
     }
 
 
@@ -32,17 +33,16 @@ class TicketController extends Controller
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
         $request->validate([
-            'title' => ['required'],
-            'body' => ['required'],
-
+            'title' => ['required','max:80'],
+            'body' => ['required','max:500'],
         ]);
+
         $thicket = Auth::user()->tickets()->create($request->all());
         $message=  $thicket->messages()->create($request->all());
         $message->user_id = Auth::id();
+        $message->save();
 
-        return back()
-            ->with(['alert_title' => 'موفق', 'alert_body' => 'تیکت با موفقیت ثبت شد']);
-
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'با موفقیت ثبت شد', 'DATATABLE_REFRESH');
     }
 
     /**

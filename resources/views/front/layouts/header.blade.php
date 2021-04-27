@@ -39,6 +39,7 @@
                                         <li><a class="dropdown-item" href="{{route('panel.dashboard')}}">داشبورد</a></li>
                                     @endif
                                     <li><a class="dropdown-item" href="{{route('profile.index')}}">پروفایل</a></li>
+                                    <li><a class="dropdown-item" href="{{route('user.tickets.index')}}">پشتیبانی</a></li>
 
                                 </ul>
                             </div>

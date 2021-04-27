@@ -10,6 +10,7 @@ use App\Http\Commerce\Controllers\PlaceController;
 use App\Http\Commerce\Controllers\RefundController;
 use App\Http\Commerce\Controllers\ShopController;
 use App\Http\Commerce\Controllers\TransactionsController;
+use App\Http\Core\Controllers\NoticeController;
 use App\Http\Shop\Controllers\TakhfifController;
 use App\Http\Controllers\CartController;
 use App\Http\Core\Controllers\BannerController;
@@ -101,6 +102,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         Route::post('refunds/ajax/update-status/{refund}', [RefundController::class, 'updateStatus'])->name('panel.update.status.ajax.edit');
 
 
+
+
+
         //tickets routes
         Route::resource('tickets', TicketController::class)
             ->only('store', 'show', 'index', 'destroy')
@@ -150,10 +154,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         Route::get('takhfif-ajax-search', [TakhfifController::class, 'ajaxTakhfifList'])->name('ajax.takhfifs.list');
         Route::get('category-ajax-search', [TakhfifController::class, 'ajaxCategoriesList'])->name('ajax.categories.list');
 
-        Route::get('export', [ExcelController::class, 'export'])->name('export');
-        Route::get('excel', [ExcelController::class, 'importExportView'])->name('excel.index');;
-        Route::post('import', [ExcelController::class, 'import'])->name('import');
-
+        //mail list
+        Route::get('notice', [NoticeController::class, 'index'])->name('notice.index');
+        Route::get('notice-export', [NoticeController::class, 'export'])->name('notice.export');
 
         //category routes
         Route::resource('category', CategoryController::class)->except('show', 'create', 'edit');

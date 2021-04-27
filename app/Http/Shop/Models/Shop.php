@@ -159,4 +159,9 @@ class Shop extends Model
         return $this->hasMany(Refund::class);
 
     }
+
+    public function wallet()
+    {
+        return $this->hasone(Wallet::class,'shop_id');
+    }
 }

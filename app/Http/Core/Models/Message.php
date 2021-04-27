@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable =['body','from_admin','user_id'];
+    protected $fillable =['body','from_admin'];
  /*
 	|--------------------------------------------------------------------------
 	| EVENTS

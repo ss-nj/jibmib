@@ -79,12 +79,13 @@
             success(response)
 
         }).catch(function (errors) {
-            if(error.response.status===404)
+            if(errors.response.status===404)
             {
-                sendMessage('خطا','موزد پیدا نشد');
+                sendMessage('خطا','مورد پیدا نشد');
             }
             $('.error_field').text('');
             $.each(errors.response.data.errors, function (key, val) {
+                toast('خطا',val[0])
                 validate(key, val,form)
 
             });

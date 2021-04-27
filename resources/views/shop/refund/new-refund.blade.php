@@ -8,17 +8,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('refunds.store') }}" class="ajax_validate">
+            <form method="POST" action="{{ route('shop.refund.store') }}" class="ajax_validate">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="shop_id">فروشگاه</label>
 
-                        <select name="shop_id" title="فروشگاه" class="form-control select2" style="width: 100%">
-                            <oprtion ></oprtion>
-                        </select>
-                        <div class="error_field text-danger">  </div>
-                    </div>
                     <div class="form-group">
                         <label for="amount">مقدار</label>
 
@@ -33,9 +26,22 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="bank_id">شماره حساب</label>
+
+                        <input type="text"
+                               class="form-control bank_id"
+                               name="bank_id"
+                               title="شماره حساب"
+                               id="bank_id"
+                               autocomplete="bank_id" autofocus
+                               placeholder="شماره حساب">
+                        <div class="error_field text-danger">  </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="description">توضیحات</label>
 
-                        <textarea name="description" class="form-control description" cols="30" rows="10"></textarea>
+                        <textarea name="description" class="form-control description" cols="30" rows="5"></textarea>
                         <div class="error_field text-danger">  </div>
                     </div>
 

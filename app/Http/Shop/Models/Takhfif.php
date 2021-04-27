@@ -23,7 +23,7 @@ class Takhfif extends Model  implements \OwenIt\Auditing\Contracts\Auditable
         'usage_expire_time',
         'time_out',
         'capacity',
-        'vip',
+//        'vip',
 //        'shop_id',
         'description',
 //        'active',

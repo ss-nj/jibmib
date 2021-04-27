@@ -237,6 +237,7 @@ return array(
         'email_address' => 'ادرس ایمیل',
         'comment' => 'متن پیام',
         'amount' => 'مقدار',
+        'bank_id' => 'شماره حساب',
 
     ),
 );

@@ -159,7 +159,7 @@ class TakhfifController extends Controller
             'expire_time' => ['required_with:start_time', 'string', new DateCheck],
             'time_out' => ['required_without_all:expire_time,start_time', 'integer', 'max:999'],
             'capacity' => ['digits_between:0,999999999999'],
-            'vip' => ['in:0,1'],
+//            'vip' => ['in:0,1'],
 //            'shop_id' => ['required', 'string', 'max:999'],
             'description' => ['required', 'string', 'max:5000'],
             'active' => ['in:0,1'],

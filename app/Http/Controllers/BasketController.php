@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Basket;
+use App\Http\Shop\Models\Shop;
 use App\Http\Shop\Models\Transaction;
+use App\Http\Shop\Models\Wallet;
 use App\OrderItem;
 use App\Support\BasketHelpers;
 use App\Support\JsonResponse;
@@ -118,14 +120,14 @@ class BasketController extends Controller
 
         $price = $totalPrice * 10;
         return JsonResponse::sendJsonResponse(1, 'موفق', 'به زودی به درپاه بانکی منتقل خواهید شد .',
-            'REDIRECT',route('basket.bank',$price));
+            'REDIRECT', route('basket.bank', $price));
 
     }
 
     public function goToBank($price)
     {
 
-       return $this->payWithMellat($price);
+        return $this->payWithMellat($price);
 
     }
 
@@ -202,11 +204,11 @@ class BasketController extends Controller
                 return view('front.callback', compact('transaction', 'message'));
             }
 
-
+            //todo mange transaction rollback and admin report for errors
             //save basket to orders and order items
             foreach ($baskets as $basket) {
 
-                OrderItem::create([
+                $orderItem = OrderItem::create([
                     'transaction_id' => $transaction->id,
                     'takhfif_id' => $basket->takhfif_id,
                     'user_id' => $basket->user_id,
@@ -218,6 +220,13 @@ class BasketController extends Controller
                     'takhfif_count' => $basket->count,
                     'status' => 0,
                 ]);
+
+                $shop = Shop::find($orderItem->takhfif->shop_id);
+
+                $shop->wallet()->firstOrCreate();
+                $shop->wallet()->increment('amount', $orderItem->takhfif_discount * $basket->count);
+
+
                 $basket->delete();
             }
 

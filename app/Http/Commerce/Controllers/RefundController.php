@@ -78,7 +78,6 @@ class RefundController extends Controller
 
         $request->validate([
             'shop_id' => ['required', 'integer', 'exists:shops,id'],
-            'amount' => ['required', 'integer'],
             'bank_id' => ['required'],
             'description' => 'nullable', 'max:500',
 //            'approve_date' => 'integer',
@@ -86,13 +85,16 @@ class RefundController extends Controller
         ]);
 
         $shop = Shop::findOrFail($request->shop_id);
-
+        $request->validate([
+            'amount' => ['required', 'integer','max:'.($shop->wallet?$shop->wallet->amount:0)],
+        ]);
         $refund = $shop->refunds()->create([
             'amount' => $request->amount,
             'bank_id' => $request->bank_id,
             'description' => $request->description,
         ]);
-//        dd(1);
+
+        $shop->wallet()->decrement('amount', $refund->amount);
 
         $refund->by_admin = 1;
         $refund->save;
@@ -108,16 +110,26 @@ class RefundController extends Controller
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
 
+        if ($refund->status != 0)
+            return JsonResponse::sendJsonResponse(1, 'موفق', 'امکان ویرایش وجود ندارد',
+                'DATATABLE_REFRESH');
+
+        $maxAmount = $refund->shop->wallet ? ($refund->shop->wallet->amount+$refund->amount) : 0;
+
         $request->validate([
-            'amount' => ['required', 'integer'],
+            'amount' => ['required', 'integer','max:'.$maxAmount],
             'bank_id' => ['required'],
             'description' => 'nullable', 'max:500',
-//            'approve_date' => 'integer',
-//            'pay_date' => 'integer',
         ]);
 
-        $refund->update($request->all());
+        $refund->update([
+            'amount' => $request->amount,
+            'description' => $request->description,
+            'bank_id' => $request->bank_id,
+        ]);
 
+        $refund->shop->wallet()->increment('amount', $refund->amount);
+        $refund->shop->wallet()->decrement('amount', $request->amount);
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'درخوست برداشت با موفقیت روز رسانی گردید',
             'DATATABLE_REFRESH');
@@ -138,12 +150,18 @@ class RefundController extends Controller
     public function updateStatus(Request $request,Refund $refund)
     {
         $request->validate([
-            'status' => ['required', 'integer'],
+            'status' => ['required', 'integer','in:1,2,3,4'],
         ]);
+
+
 
         $refund->status=$request->status;
         $refund->save();
 
+        if ($request->status ==2)
+        {
+            $refund->shop->wallet()->increment('amount', $refund->amount);
+        }
         return JsonResponse::sendJsonResponse(1, 'موفق', 'درخوست برداشت با موفقیت روز رسانی گردید',
             'DATATABLE_REFRESH');
 

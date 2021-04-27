@@ -39,6 +39,7 @@
 <script src="{{ asset('js/persian-datepicker.min.js') }}"></script>
 <script src="{{ asset('js/persian-date.min.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+<script src="{{ asset('plugins/iziToast/dist/js/iziToast.min.js') }}"></script>
 
 @include('layouts.submitter-js')
 

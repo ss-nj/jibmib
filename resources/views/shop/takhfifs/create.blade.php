@@ -77,7 +77,7 @@
                         <label class=" font-weight-bold text-success text-2">برای جستجو و سئوی بهتر تعدادی از کلمات اصلی مرتبط با آگهی را وارد کنید.</label>
                         <select name="tags[]" class="form-control select2Tag" multiple>
                             @foreach(explode(',', $takhfif->tags ) as $tag)
-                                <option selected>{{$tag}}</option>
+                               @if(!empty($tag)) <option selected>{{$tag}}</option>@endif
                             @endforeach
                         </select>
                         <div class="error_field text-danger"></div>

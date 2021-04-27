@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="{{asset($path.'vendor/rs-plugin/css/settings.css?ver='.$ver)}}">
 <link rel="stylesheet" href="{{asset($path.'vendor/rs-plugin/css/layers.css?ver='.$ver)}}">
 <link rel="stylesheet" href="{{asset($path.'vendor/rs-plugin/css/navigation.css?ver='.$ver)}}">
+<link href="{{asset('plugins/iziToast/dist/css/iziToast.min.css')}}" rel="stylesheet" type="text/css"/>
 
 <!-- Demo CSS -->
 

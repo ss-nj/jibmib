@@ -27,6 +27,9 @@
     <div class="col-md-12 mb-5 mb-lg-0 appear-animation animated fadeInUpShorter appear-animation-visible"
          data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400" style="animation-delay: 400ms;">
         <div class="portlet light row ">
+            <div class="col-sm-12">
+                <h4 ><span class="text-danger">موجودی کیف پول شما  :</span> <span class="text-success">0</span></h4>
+            </div>
             <div class="form-group col-md-4">
 
                 <label for="ajaxId" class="form-control-label">شماره:</label>
@@ -80,7 +83,14 @@
 
     </div>
 
+@include('shop.refund.new-refund')
 
+
+    <div class="modal fade" id="model-edit">
+        <div class="modal-dialog modal-lg model-edit-body">
+
+        </div>
+    </div>
 
 @endsection
 
@@ -120,6 +130,34 @@
 @endpush
 
 @push('internal_js')
+    <script>
+        $(document).on('click', '.model-edit', function (e) {
+
+            let Id = $(this).data("id");
+            $.ajax({
+                type: "post",
+                url: "{{url('shop/refund/ajax/edit')}}" + '/' + Id,
+
+                // data: {"id": Id},
+                success: function (response) {
+
+                    if (response) {
+                        $('.model-edit-body').empty();
+                        $('.model-edit-body').append(response);
+                    } else {
+
+
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+
+            }).done(function (response) {
+            });
+        });
+
+    </script>
     <script>
 
         $.ajaxSetup({
@@ -171,20 +209,11 @@
                 {data: 'amount', name: 'amount', title: 'مقدار', 'className': 'text-center', orderable: false},
                 {data: 'bank_id', name: 'bank_id', title: 'شماره حساب', 'className': 'text-center', orderable: false},
                 {data: 'description', name: 'description', title: 'توضیح', 'className': 'text-center', orderable: false},
-                {data: 'approve_date', name: 'approve_date', title: 'زمان تایید', 'className': 'text-center', orderable: false},
-                {data: 'pay_date', name: 'pay_date', title: 'زمان پرداخت', 'className': 'text-center', orderable: false},
+                {data: 'status', name: 'status', title: 'وضعیت', 'className': 'text-center', orderable: false},
 
                 {data: 'created_at', name: 'created_at', title: 'تاریخ ایجاد', 'className': 'text-center', orderable: false},
-                // {
-                //     data: 'status',
-                //     name: 'status',
-                //     title: 'وضعیت',
-                //     'className': 'text-center',
-                //     'type': 'html',
-                //     orderable: false
-                // },
 
-                {data: 'action', title: 'عملیات', 'className': 'text-center', name: 'action', orderable: false}
+                {data: 'action', title: 'عملیات', 'className': 'text-center', name: 'action', printable: false, orderable: false}
             ],
             language: {
                 url: '{{url(asset('vendors/datatables/Persian.json'))}}'

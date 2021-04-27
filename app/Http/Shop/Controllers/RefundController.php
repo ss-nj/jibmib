@@ -6,6 +6,7 @@ use App\DataTables\ShopRefundDataTable;
 use App\Http\Shop\Models\Refund;
 use App\Http\Controllers\Controller;
 
+use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -60,28 +61,38 @@ class RefundController extends Controller
         //        if (!Auth::user()->can('read-slider')) {
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
+        $shop = Shop::findOrFail(1);
 
         $request->validate([
-            'shop_id' => ['required', 'integer', 'exists:shops,id'],
-            'amount' => ['nullable', 'integer'],
-//            'bank_id' => ['nullable', 'integer'],
-            'description' => 'integer',
-//            'approve_date' => 'integer',
-//            'pay_date' => 'integer',
+            'amount' => ['required', 'integer','max:'.($shop->wallet?$shop->wallet->amount:0)],
+            'bank_id' => ['required'],
+            'description' => 'nullable', 'max:500',
         ]);
 
-        $refund = Refund::create([
-            'shop_id'=>$request->shop_id,
-            'amount'=>$request->amount,
-            'description'=>$request->description,
+
+        $refund = $shop->refunds()->create([
+            'amount' => $request->amount,
+            'bank_id' => $request->bank_id,
+            'description' => $request->description,
         ]);
 
-        $refund->bank_id = '';
-        $refund->save;
+        $shop->wallet()->decrement('amount', $refund->amount);
 
-        return JsonResponse::sendJsonResponse(1, 'موفق', sprintf('درخوست برداشت  %s  با موفقیت ایجاد گردید', $refund->name),
+
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'درخوست برداشت با موفقیت روز رسانی گردید',
             'DATATABLE_REFRESH');
 
+    }
+
+    public function ajaxEdit(Refund $refund)
+    {
+//        if (!Auth::user()->can('read-users')) {
+////            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
+//            return response()->json(['message'=>'عدم دسترسی کافی'],419);
+//        }
+
+
+        return view('shop.refund.edit-refund', compact('refund'))->render();
     }
 
 
@@ -91,21 +102,25 @@ class RefundController extends Controller
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
 
+        if ($refund->status != 0)
+            return JsonResponse::sendJsonResponse(1, 'موفق', 'امکان ویرایش وجود ندارد',
+                'DATATABLE_REFRESH');
+        $maxAmount = $refund->shop->wallet ? ($refund->shop->wallet->amount+$refund->amount) : 0;
         $request->validate([
-//            'shop_id' => ['nullable', 'integer', 'exists:shops,id'],
-            'amount' => ['nullable', 'integer'],
-//            'bank_id' => ['nullable', 'integer'],
-            'description' => 'integer',
-//            'approve_date' => 'integer',
-//            'pay_date' => 'integer',
+            'amount' => ['required', 'integer','max:'.$maxAmount],
+            'bank_id' => ['required'],
+            'description' => 'nullable', 'max:500',
         ]);
 
-//        $refund = Refund::update([
-//            ''=>1,
-//            'amount'=>$request->amount,
-//            'description'=>$request->description,
-//        ]);
 
+        $refund->update([
+            'amount' => $request->amount,
+            'description' => $request->description,
+            'bank_id' => $request->bank_id,
+        ]);
+
+        $refund->shop->wallet()->increment('amount', $refund->amount);
+        $refund->shop->wallet()->decrement('amount', $request->amount);
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'درخوست برداشت با موفقیت روز رسانی گردید',
             'DATATABLE_REFRESH');

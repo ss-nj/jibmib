@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Core\Controllers\CityController;
 use App\Http\ProfileController;
 use App\Http\RateController;
+use App\Http\TicketController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +49,10 @@ Route::group(['middleware' => ['auth', 'confirmedMobile']], function () {
 
     Route::resource('profile', ProfileController::class)->only('index','update');
 
-    Route::get ('print/{code}', [ProfileController::class,'print'])->name('print');;
+    Route::get ('print/{code}', [ProfileController::class,'print'])->name('print');
+
+    Route::get ('tickets', [TicketController::class,'index'])->name('user.tickets.index');
+    Route::post ('tickets', [TicketController::class,'store'])->name('user.tickets.store');
 
 });
 

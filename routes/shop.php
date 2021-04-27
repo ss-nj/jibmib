@@ -126,7 +126,8 @@ Route::name('shop.')->prefix('shop')->middleware(['auth', 'confirmedMobile'])->g
 
 
     //coupon routes //for managing sold coupons
-    Route::resource('refund', RefundController::class)->only('index','update');
+    Route::resource('refund', RefundController::class)->only('index','update','store');
+    Route::post('refund/ajax/edit/{refund}', [RefundController::class, 'ajaxEdit'])->name('panel.refund.ajax.edit');
 
 
 

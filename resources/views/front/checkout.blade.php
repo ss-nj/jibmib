@@ -22,7 +22,7 @@
                             <?php for($i=1; $i<=1; $i++): ?>
                             <div class="bank-item col-12 pt-5 ">
                                 <div class="d-flex">
-                                    <input class="align-self-center mr-3" id="bank-<?php echo $i ?>" type="radio" name="bank">
+                                    <input class="align-self-center mr-3" id="bank-<?php echo $i ?>" type="radio" checked name="bank">
                                     <label class="w-100 d-flex" for="bank-<?php echo $i ?>">
                                         <img src="{{asset($path_user.'img/mellat-logo.png')}}" alt="">
                                         <div class="align-self-center ml-3">پرداخت اینترنتی - بانک ملت</div>

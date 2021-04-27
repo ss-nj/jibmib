@@ -40,6 +40,10 @@ class RefundDataTable extends DataTable
 
             ->editColumn('status', function ($query) {
 
+                if ($query->status==4){
+
+                    return '<span class="edit-status badge badge-secondary">پرداخت شده</span>';
+                }
 
                 $status_map = [
                     0 => ['badge-warning', 'درانتظار بررسی'],
@@ -48,7 +52,6 @@ class RefundDataTable extends DataTable
                     3 => ['badge-warning', 'در حال بررسی'],
                     4 => ['badge-secondary', 'پرداخت شده'],
                 ];
-
 
                     $status = '<a href="#"  data-target="#edit-status" data-toggle="modal"
                      data-id=' . $query->id
@@ -59,9 +62,6 @@ class RefundDataTable extends DataTable
                         . '</a>';
                     return $status;
 
-
-
-
             })
             ->editColumn('created_at', function ($query) {
                 return verta($query->created_at)->timezone('Asia/Tehran')->format('Y-m-d H:i');
@@ -69,6 +69,9 @@ class RefundDataTable extends DataTable
 
 
             ->addColumn('action', function ($query) {
+
+                if ($query->status!=0)
+                    return '';
 
                 $fastEdit = "<a href='' data-toggle='modal' data-target='#model-edit' class='model-edit btn btn-circle btn-icon-only'
                       data-id=$query->id>

@@ -32,20 +32,37 @@ class ShopRefundDataTable extends DataTable
             ->eloquent($query)
 
              ->editColumn('by_admin', function ($query) {
-                return $query->by_admin;
+                 return $query->by_admin?'بله':'خیر';
             })
-            ->editColumn('approve_date', function ($query) {
-                return $query->approve_date?verta($query->approve_date)->timezone('Asia/Tehran')->format('Y-m-d H:i'):'';
+            ->editColumn('status', function ($query) {
+
+
+                $status_map = [
+                    0 => ['badge-warning', 'درانتظار بررسی'],
+                    1 => ['badge-success', 'تایید شده'],
+                    2 => ['badge-danger', 'رد شده'],
+                    3 => ['badge-warning', 'در حال بررسی'],
+                    4 => ['badge-secondary', 'پرداخت شده'],
+                ];
+
+
+                return '<span class="edit-status badge ' .
+                    ($status_map[$query->status][0])
+                    . '">' .
+                    ($status_map[$query->status][1])
+                    . '</span>';
+
             })
-            ->editColumn('pay_date', function ($query) {
-                return $query->pay_date?verta($query->pay_date)->timezone('Asia/Tehran')->format('Y-m-d H:i'):'';
-            })
+
             ->editColumn('created_at', function ($query) {
                 return verta($query->created_at)->timezone('Asia/Tehran')->format('Y/m/d H:i');
             })
 
 
             ->addColumn('action', function ($query) {
+
+                if ($query->status!=0)
+                    return '';
 
                 $fastEdit = "<a href='' data-toggle='modal' data-target='#model-edit' class='model-edit btn btn-circle btn-icon-only'
                       data-id=$query->id>
@@ -110,8 +127,7 @@ class ShopRefundDataTable extends DataTable
             Column::make('amount', 'amount')->title('مقدار'),
             Column::make('bank_id', 'bank_id')->title('شماره حساب'),
             Column::make('description', 'description')->title('توضیح'),
-            Column::make('approve_date', 'approve_date')->title('زمان تایید'),
-            Column::make('pay_date', 'pay_date')->title('زمان پرداخت'),
+            Column::make('status', 'status')->title('وضعیت'),
             Column::make('created_at', 'created_at')->title('زمان ایجاد'),
 
 

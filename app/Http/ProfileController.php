@@ -43,8 +43,9 @@ class ProfileController extends Controller
 
         $user = auth()->user();
         $orders = OrderItem::with('takhfif')->where('user_id',auth()->id())->get();
+        $tickets = Ticket::with('user','messages')->where('user_id',auth()->id())->get();
 
-        return view( 'front.profile', compact('user','orders'));
+        return view( 'front.profile', compact('user','orders','tickets'));
     }
 
 

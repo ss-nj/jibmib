@@ -211,7 +211,7 @@ class HomeController extends Controller
     {
 
         $request->validate([
-            'email_address' => ['required', 'string', 'email', 'max:255'],
+            'email_address' => ['required','unique:mails', 'string', 'email', 'max:255'],
 
         ]);
         Mail::create($request->all());

@@ -5,7 +5,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="row">ویرایش وضعیت ارسال (لطفا قبل از تغییر دفت کنید)</h5>
+                    <h5 class="d-block">ویرایش وضعیت ارسال (لطفا قبل از تغییر دفت کنید)</h5>
                     <h5 class="row">تمام تعییرات در تاریخچه ذخیره میشود</h5>
                 </div>
                 <div class="modal-body text-center p-lg">
@@ -13,7 +13,7 @@
                         <label for="status" class="form-control-label col-md-3">وضعیت  :</label>
                         <div class="col-md-9">
                             <select name="status" id="status" class="form-control status" dir="rtl">
-                                <option value="0">درانتظار بررسی</option>
+{{--                                <option value="0">درانتظار بررسی</option>--}}
                                 <option value="1">تایید شده</option>
                                 <option value="2">رد شده</option>
                                 <option value="3">در حال بررسی</option>
