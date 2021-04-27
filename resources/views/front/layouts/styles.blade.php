@@ -96,6 +96,29 @@
     .swal-text {
         text-align: center;
     }
+
+     blockquote {
+         padding: 10px 20px;
+         margin: 0 0 20px;
+         font-size: 18px;
+         border-left: 5px solid #3d95d4;
+         color: #3d95d4;
+     }
+
+    blockquote.alignright {
+        max-width: 50%;
+        float: right;
+        color: #3d95d4;
+        text-align: right;
+        border-right: 5px solid #3d95d4;
+        border-left: transparent;
+    }
+
+    blockquote.alignleft {
+        max-width: 50%;
+        float: left;
+    }
+
 </style>
 
 

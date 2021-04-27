@@ -53,19 +53,26 @@ class TicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        return view( 'user.tickets.show', compact('ticket'));
+        return view( 'front.tickets.show', compact('ticket'));
     }
 
-
-    public function change_user_seen(Request $request)
+    public function storeMessage(Request $request,Ticket $ticket)
     {
-//        dd($request->all());
-        $result = Ticket::where([['id', $request->id], ['answer_time', '!=', null]])
-            ->update(['user_seen' => '1']);
 
-        if ($result)
-            return response()->json(['message' => true], 200);
-        else
-            return response()->json(['message' => false]);
+        //check if user own it
+        $thicket = Auth::user()->tickets()->findOrFail($ticket->id);
+
+        $request->validate([
+            'body' => ['required','max:500'],
+        ]);
+
+        $message = $thicket->messages()->create($request->all());
+        $message->user_id = Auth::id();
+        $message->save();
+
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'با موفقیت ثبت شد', 'SHOW_AND_REFRESH');
+
     }
+
+
 }

@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth', 'confirmedMobile']], function () {
 
     Route::get ('tickets', [TicketController::class,'index'])->name('user.tickets.index');
     Route::post ('tickets', [TicketController::class,'store'])->name('user.tickets.store');
+    Route::get ('tickets/{ticket}', [TicketController::class,'show'])->name('user.tickets.show');
+    Route::post ('message/{ticket}', [TicketController::class,'storeMessage'])->name('user.messages.store');
 
 });
 

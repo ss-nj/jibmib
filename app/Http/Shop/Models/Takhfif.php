@@ -61,7 +61,7 @@ class Takhfif extends Model  implements \OwenIt\Auditing\Contracts\Auditable
 
     public function getImageFirstAttribute()
     {
-        return $this->images()->count() ? $this->images()->first()->path : Image::NO_IMAGE_PATH;
+        return $this->images->count() ? $this->images->first()->path : Image::NO_IMAGE_PATH;
     }
 
 

@@ -44,7 +44,7 @@
                 <div class="off-item-title d-flex flex-column">
                     <div class="off-item-title d-flex flex-column">
                         <div>
-                            <span>اولین پیام: </span>
+                            <span>متن پیام: </span>
                             <blockquote>{!! $ticket->messages[0]->body!!}</blockquote>
                         </div>
                     </div>
@@ -57,6 +57,9 @@
                             @endif
                         </div>
                     </div>
+                    <a href="{{route('user.tickets.show',$ticket->id)}}" class="align-self-center theme-btn green-btn ml-auto " >
+                        مشاهده ی تیکت
+                    </a>
                 </div>
             </div>
         </div><!-- .ticket-section -->
@@ -64,7 +67,7 @@
 </div><!-- .ticket-section -->
 
 
-<form class="needs-validation modal fade ajax_validate" action="{{route('user.tickets.store')}}" method="post"
+<form class="needs-validation modal fade ajax_validate" action="{{route('user.mess.store')}}" method="post"
       id="open-ticket" tabindex="-1">
     {{ csrf_field() }}
     <div class="modal-dialog modal-lg">
@@ -99,28 +102,3 @@
 
 
 
-@push('internal_css')
-    <style>
-        blockquote {
-            padding: 10px 20px;
-            margin: 0 0 20px;
-            font-size: 18px;
-            border-left: 5px solid #3d95d4;
-            color: #3d95d4;
-        }
-
-        blockquote.alignright {
-            max-width: 50%;
-            float: right;
-            color: #3d95d4;
-            text-align: right;
-            border-right: 5px solid #3d95d4;
-            border-left: transparent;
-        }
-
-        blockquote.alignleft {
-            max-width: 50%;
-            float: left;
-        }
-    </style>
-@endpush

@@ -102,6 +102,15 @@
                     location.reload();
                     return;
                 }
+               if (result.action === "SHOW_AND_REFRESH") {
+                   swal(result.title, result.message, result.color);
+                   $(".swal-button--confirm").click(function () {
+                       location.reload();
+                       return;
+                   });
+                   return;
+
+                }
                 if (result.action === "DATATABLE_REFRESH") {
                     $('.close-modal').click();
                     $('.buttons-reset').click();
