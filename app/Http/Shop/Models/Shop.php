@@ -8,13 +8,16 @@ use App\Http\Commerce\Models\Violation;
 use App\Http\Core\Models\City;
 use App\Http\Core\Models\Image;
 use App\Http\Core\Models\Province;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\Imagable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Shop extends Model
+class Shop extends Authenticatable implements Auditable
 {
-
-    use HasFactory;
+    use Notifiable;
+    use Imagable;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
 //        'owner_name',

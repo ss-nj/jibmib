@@ -83,6 +83,12 @@
             {
                 sendMessage('خطا','مورد پیدا نشد');
             }
+
+            if(errors.response.status!==420)
+            {
+                sendMessage('خطا','مشکلی پیش آمده لطفا صفحه را رفرش کنید و در صورت ادامه مشکل با پشتیبانی تماس بگیرید');
+            }
+
             $('.error_field').text('');
             $.each(errors.response.data.errors, function (key, val) {
                 toast('خطا',val[0])

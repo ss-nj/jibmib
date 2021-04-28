@@ -73,12 +73,12 @@ class LoginController extends Controller
         $user = User::where('mobile', $request->mobile)->first();
         //user not found
         if (!$user) {
-            return JsonResponse::sendJsonResponse(1, 'موفق', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.',);
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
         //user not active
         if ($user->active === 0) {
-            return JsonResponse::sendJsonResponse(1, 'موفق',
-                'حساب کاربری شما توسط مدیریت مسدود میباشد، با پشتیبانی سایت تماس بگیرید.',);
+            return JsonResponse::sendJsonResponse(0, 'خطا',
+                'حساب کاربری شما توسط مدیریت مسدود میباشد، با پشتیبانی سایت تماس بگیرید.');
         }
 
         //mobile isn't verifies
@@ -86,16 +86,17 @@ class LoginController extends Controller
             //            auth()->login($user);
             $request->session()->put('mobile', $user->mobile);
 
-            return JsonResponse::sendJsonResponse(1, 'موفق',
+            return JsonResponse::sendJsonResponse(0, 'خطا',
                 'موبایل شما تایید نشده است. شما میتوانید از بازیابی رمز عبور استفاده کنید .');
 
         }
 
         $credentials = $request->only('mobile', 'password');
-        if (!auth()->attempt($credentials, $request->remember)) {
-            return JsonResponse::sendJsonResponse(1, 'موفق', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.',);
+        if (!Auth::guard('web')->attempt($credentials, $request->remember)) {
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
 
+//dd(\auth()->user());
         return $this->redirect_map();
 
     }
@@ -155,7 +156,7 @@ class LoginController extends Controller
     /**
      * @param Request $request
      */
-    public function getValidate(Request $request): void
+    public function getValidate(Request $request)
     {
         $request->validate([
             'password' => 'required|string|min:6',

@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'confirmedMobile' => \App\Http\Middleware\RedirectIfMobileConfirmed::class,
 //        'selectProvince' => selectProvince::class,
         'is_active' => isActive::class,
+        'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
 
     ];
 }

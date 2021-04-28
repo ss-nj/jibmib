@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Core\Models\Setting;
 use App\Http\Core\Models\User;
 use App\Services\Sms;
+use App\Support\BasketHelpers;
+use App\Support\JsonResponse;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -41,6 +43,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+//        dd(1);
         $this->middleware('guest')->except('logout');
     }
 
@@ -51,22 +54,13 @@ class LoginController extends Controller
 
         }
 
-        return view('auth.login');
+        return view('auth.user.login');
     }
 
     public function login(Request $request)
     {
 
-        $request->validate([
-            'password' => 'required|string|min:6',
-            'mobile' => 'required|digits:11',
-        ], [
-            'password.required' => 'رمز عبور الزامی است.',
-            'password.string' => 'رمز عبور نامعتبر میباشد.',
-            'password.min' => 'تعداد حروف رمز عبور حداقل 6 کاراکتر میباشد.',
-            'mobile.required' => 'موبایل الزامی است.',
-            'mobile.digits' => 'موبایل باید بصورت عددی و 11 رقمی باشد.',
-        ]);
+        $this->getValidate($request);
 
         if (method_exists($this, 'hasTooManyLoginAttempts') &&
             $this->hasTooManyLoginAttempts($request)) {
@@ -76,82 +70,32 @@ class LoginController extends Controller
         }
 
         $user = User::where('mobile', $request->mobile)->first();
-
+        //user not found
         if (!$user) {
-//            dd(1);
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.']);
-
+            return JsonResponse::sendJsonResponse(1, 'موفق', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
-
+        //user not active
         if ($user->active === 0) {
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'حساب کاربری شما توسط مدیریت مسدود میباشد، با پشتیبانی سایت تماس بگیرید.']);
-
+            return JsonResponse::sendJsonResponse(1, 'موفق',
+                'حساب کاربری شما توسط مدیریت مسدود میباشد، با پشتیبانی سایت تماس بگیرید.');
         }
 
+        //mobile isn't verifies
         if (!$user->mobile_verified_at) {
-//            auth()->login($user);
+            //            auth()->login($user);
             $request->session()->put('mobile', $user->mobile);
 
-            return redirect()->route('verify.mobile.form')
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'موبایل شما تایید نشده است. اگر کد برای شما ارسال نشده از بازیابی رمز عبور استفاده کنید .']);
+            return JsonResponse::sendJsonResponse(1, 'موفق',
+                'موبایل شما تایید نشده است. شما میتوانید از بازیابی رمز عبور استفاده کنید .');
 
         }
 
         $credentials = $request->only('mobile', 'password');
-        if (!auth()->attempt($credentials, true)) {
-//            dd(2);
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.']);
-
+        if (!auth()->guard('user')->attempt($credentials, $request->remember)) {
+            return JsonResponse::sendJsonResponse(1, 'موفق', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
 
         return $this->redirect_map();
-
-
-    }
-
-    public function showRegisterForm()
-    {
-        return view('auth.register');
-    }
-
-    public function showPasswordConfirmForm()
-    {
-        return view('auth.re-enter-password');
-    }
-
-    public function userConfirm(Request $request)
-    {
-//        dd($request->all());
-
-        $user = User::where('mobile', $request->mobile)->first();
-        if (!$user)
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'شما قبلا ثبت نام نکرده اید .']);
-
-        $user->update([
-            'verify_mobile_code' => rand(11111, 99999),
-
-        ]);
-        $code = $user->verify_mobile_code;
-        $mobile = $request->mobile;
-//        try {
-
-        $this->sendsmsWithPattern($code, $mobile);
-
-        Session::put('mobile', $mobile);
-        return view('auth.forgotten-password-verify', compact('mobile'))
-            ->withErrors(['alert_title' => 'موفق', 'alert_body' => 'کد فعال سازی برای تلفن همراه شما ارسال گردید']);
-
-//        } catch (\Exception $exception) {
-//            Log::channel('auth')->info($exception);
-//            return '/';
-//
-//        }
-        return redirect()->route('home');
-
 
     }
 
@@ -164,70 +108,6 @@ class LoginController extends Controller
         return $result;
     }
 
-    public function verifyMobile(Request $request)
-    {
-
-        $request->validate([
-            'code' => 'required'
-        ]);
-        $user = User::where('mobile', Session::get('mobile'))->first();
-
-        if (!$user)
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'کاربر پیدا نشد لطفا از گزینه ی فراموشی رمز عبور استفاده کنید']);
-
-        if ($user->verify_mobile_code != $request->code) {
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'کد وارد شده اشتباه است، مجددا تلاش کنید.']);
-
-        }
-
-        $reg_sms = Setting::where('key', 'register_sms')->first();
-        if ($reg_sms->value_fa == 1 && $user->expire_date < now()->subMinutes(2)) {
-            return back()
-                ->withErrors(['alert_title' => 'خطا', 'alert_body' => 'کد وارد شده منقضی شده است ']);
-        }
-
-        $user->update([
-            'mobile_verified_at' => now(),
-            'verify_mobile_code' => rand(11111, 99999),
-        ]);
-
-        return view('auth.change-password');
-
-    }
-
-    public function newPassword(Request $request)
-    {
-
-        $request->validate([
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ], [
-            'password.required' => 'رمز عبور الزامی است.',
-            'password.string' => 'رمز عبور نامعتبر میباشد.',
-            'password.min' => 'تعداد حروف رمز عبور حداقل 6 کاراکتر میباشد.',
-        ]);
-
-        $user = User::where('mobile', Session::get('mobile'))->firstOrFail();
-
-        $user->password = Hash::make($request['password']);
-        $user->save();
-
-        auth()->login($user, true);
-
-        if ($user->active === 0) {
-            return back()->with('error-message', 'حساب کاربری شما توسط مدیریت مسدود میباشد، با پشتیبانی سایت تماس بگیرید.');
-        }
-
-        if (!$user->mobile_verified_at) {
-            return redirect()->route('verify.mobile.form')->with('error-message', 'موبایل شما تایید نشده است.');
-        }
-
-        return $this->redirect_map();
-
-    }
-
-
     public function logout(Request $request)
     {
         auth()->logout();
@@ -238,10 +118,15 @@ class LoginController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
-    public function redirect_map(): \Illuminate\Http\RedirectResponse
+    public function redirect_map()
     {
+        try {
+            BasketHelpers::setSessionCartToDatabase();
+        }catch (\Exception $exception){
+            Log::alert($exception);
+        }
         if (Auth::user()->hasRole(['super_administrator'])) {
             $reg_redirect = Setting::where('key', 'login_admin_redirect_path')->first();
             $route = Setting::MAP_ADMIN_LOGIN_REDIRECTS[$reg_redirect->value_fa];
@@ -252,11 +137,34 @@ class LoginController extends Controller
 
         $intended = Setting::where('key', 'login_redirect_intended')->first();
 
-        if ($intended->value_fa)
-            return redirect()->intended($route)
-                ->withErrors(['alert_title' => 'موفق', 'alert_body' => 'کاربر گرامی شما با موفقیت وارد شدید']);
+        if ($intended->value_fa) {
+            $route = Session::get('url.intended', $route);
+            Session::forget('url.intended');
 
-        return redirect()->route($route)
-            ->withErrors(['alert_title' => 'موفق', 'alert_body' => 'کاربر گرامی شما با موفقیت وارد شدید']);
+            return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',
+                'REDIRECT', route($route));
+        }
+
+        return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',
+            'REDIRECT', route($route));
+
+
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function getValidate(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|min:6',
+            'mobile' => 'required|digits:11',
+        ], [
+            'password.required' => 'رمز عبور الزامی است.',
+            'password.string' => 'رمز عبور نامعتبر میباشد.',
+            'password.min' => 'تعداد حروف رمز عبور حداقل 6 کاراکتر میباشد.',
+            'mobile.required' => 'موبایل الزامی است.',
+            'mobile.digits' => 'موبایل باید بصورت عددی و 11 رقمی باشد.',
+        ]);
     }
 }

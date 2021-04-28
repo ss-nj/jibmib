@@ -6,6 +6,9 @@
         body{
             background: url(images/bg1.jpg);
         }
+        .swal-text {
+            text-align: center;
+        }
     </style>
 @endsection
 

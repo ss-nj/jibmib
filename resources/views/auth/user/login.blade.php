@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="{{asset($path_user.'css/style.css').'?ver='.$ver}}" type='text/css' media='all'/>
     <link rel="stylesheet" href="{{asset($path_user.'style.css').'?ver='.$ver}}" type='text/css' media='all'/>
     <script src="{{ asset($path_user.'js/jquery.min.js').'?ver='.$ver}}"></script>
-
+    <style>
+        .swal-text {
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="gray-bg">
 <article class="w-100 position-relative gray-bg login-page-container">
