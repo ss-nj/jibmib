@@ -157,7 +157,7 @@ return array(
         'ball' => 'توپ',
         'price' => 'مبلغ',
         'count' => 'تعداد',
-        'code' => ' کد کوپن',
+        'code' => ' کد',
         'logo' => 'لوگو',
         'bank' => 'بانک',
         'value' => 'مقدار',
@@ -238,6 +238,7 @@ return array(
         'comment' => 'متن پیام',
         'amount' => 'مقدار',
         'bank_id' => 'شماره حساب',
+        'policy' => 'حریم خصوصی',
 
     ),
 );

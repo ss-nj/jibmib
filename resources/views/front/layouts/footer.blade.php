@@ -67,8 +67,9 @@
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                 </ul>
                             </div><!--footer-menus-container-->
+                            <div class="img-nemad-container text-center"><img src="{{asset($path_user.'img/nemad.png').'?ver='.$ver}}" alt="" width="80"></div>
 
-                            <div class="img-nemad-container text-center"><a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=207613&amp;Code=fgsOSyeaciNUuhEul30U"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=207613&amp;Code=fgsOSyeaciNUuhEul30U" alt="" style="cursor:pointer" id="fgsOSyeaciNUuhEul30U"></a></div>
+{{--                            <div class="img-nemad-container text-center"><a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=207613&amp;Code=fgsOSyeaciNUuhEul30U"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=207613&amp;Code=fgsOSyeaciNUuhEul30U" alt="" style="cursor:pointer" id="fgsOSyeaciNUuhEul30U"></a></div>--}}
 {{--                            <div class="img-nemad-container text-center"><img src="{{asset($path_user.'img/nemad-2.png').'?ver='.$ver}}" alt="" width="80"></div>--}}
 
                         </div><!--footer-cols-container-->

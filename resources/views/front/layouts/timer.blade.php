@@ -4,6 +4,6 @@
           class='timer'>
      </span>
 @else
-    <span id='timer_0'>گذشته</span>
+    <span id='timer_0'>پایان یافته</span>
 @endif
 

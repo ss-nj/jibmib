@@ -137,7 +137,7 @@ class BasketController extends Controller
      */
     public function payWithMellat($price)
     {
-
+//dd(1);
         $gateway = Gateway::make(new Mellat());
         $gateway->setCallback(route('callback')); // You can also change the callback
         $gateway->price($price)
@@ -170,9 +170,14 @@ class BasketController extends Controller
 
     }
 
-    public function callback()
+    public function getCallback()
     {
+        return view('front.callback', compact('transaction'));
 
+    }
+    public function callback(Request $request)
+    {
+//dd($request);
         try {
 
             $gateway = Gateway::verify();

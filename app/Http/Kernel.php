@@ -68,6 +68,5 @@ class Kernel extends HttpKernel
 //        'selectProvince' => selectProvince::class,
         'is_active' => isActive::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
-
     ];
 }

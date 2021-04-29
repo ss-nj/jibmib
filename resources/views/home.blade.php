@@ -1,10 +1,8 @@
-<?php $path = 'thems/front/' ?>
-<?php $ver = '0.01' ?>
-@extends('layouts.master')
-@section('title')
+{{--@extends('layouts.master')--}}
+{{--@section('title')--}}
     پروفایل
-@endsection
-@section('content')
+{{--@endsection--}}
+{{--@section('content')--}}
     <section id="overview" class="section custom-bg-color-1 custom-background-style-1 m-0">
         <div class="container">
             <div class="row">
@@ -21,5 +19,5 @@
         </div>
     </section>
 
-@endsection
+{{--@endsection--}}
 

@@ -144,7 +144,7 @@ class LoginController extends Controller
             Session::forget('url.intended');
 
             return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',
-                'REDIRECT', route($route));
+                'REDIRECT', $route);
         }
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',
