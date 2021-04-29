@@ -82,7 +82,6 @@
 
         }).catch(function (errors) {
 
-
             switch (errors.response.status) {
                 case 404:
                     sendMessage('خطا', 'مورد پیدا نشد');
@@ -104,7 +103,6 @@
                 default:
                     sendMessage('خطا', 'مشکلی پیش آمده لطفا صفحه را رفرش کنید و در صورت ادامه مشکل با پشتیبانی تماس بگیرید');
             }
-
 
         });
     }

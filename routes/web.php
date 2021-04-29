@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Auth\User\ForgotPasswordController;
 use App\Http\Auth\User\LoginController;
 use App\Http\Auth\User\RegisterController;
 use App\Http\CommentController;
@@ -31,7 +32,7 @@ Route::fallback(function(){
 
 Route::group(['namespace' => 'Auth\User',], function () {
 
-    Route::middleware('throttle:3,1')->group(function () {
+    Route::middleware('throttle:5,1')->group(function () {
 
         Route::post('user-login', [LoginController::class,'login'])->name('user.login');
         Route::post('user-register', [RegisterController::class,'register'])->name('user.register');
@@ -39,6 +40,9 @@ Route::group(['namespace' => 'Auth\User',], function () {
     });
     Route::get('login', [LoginController::class,'showLoginForm'])->name('login.form');
     Route::get('register', [RegisterController::class,'showRegisterForm'])->name('register.form');
+
+    Route::get('forgot-password', [ForgotPasswordController::class,'forgotPasswordForm'])->name('forgot.password.form');
+    Route::post('forgot-password', [ForgotPasswordController::class,'forgotPassword'])->name('forgot.password.new.password');
 
     Route::get('user-logout', [LoginController::class,'logout'])->name('logout');
 

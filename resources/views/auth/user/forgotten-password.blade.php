@@ -35,70 +35,40 @@
             </div>
             <div class="col-md-8">
                 <div class="login-form-container register-form-container">
-                    <form method="POST" action="{{ route('user.register') }}" class="ajax_validate" id="register-form">
+                    <form method="POST" action="{{ route('forgot.password.new.password') }}" class="ajax_validate"
+                          id="register-form">
                         @csrf
                         <div class="row">
+
                             <div class="col-12">
-                                <input type="text" class="first_name" name="first_name"
-                                       placeholder="نام و نام خانوادگی">
-                                <div class="error_field text-danger"></div>
-                            </div>
-                            <div class="col-12">
-                                <input type="text" class="mobile" name="mobile" value="" id="mobile"
+                                <input type="text" class="mobile only_en_numbers" name="mobile" value="" id="mobile"
                                        maxlength="11" minlength="10"
                                        pattern="^09[0-9]{9}$"
                                        title="شماره موبایل را به صورت صحیح وارد کنید."
                                        placeholder="شماره موبایل خود را وارد نمایید"
-
-                                       oninput="
-                           this.value = this.value.replace('۰', '0')  ;
-                           this.value = this.value.replace('۱', '1')  ;
-                           this.value = this.value.replace('۲', '2')  ;
-                           this.value = this.value.replace('۳', '3')  ;
-                           this.value = this.value.replace('۴', '4')  ;
-                           this.value = this.value.replace('۵', '5')  ;
-                           this.value = this.value.replace('۶', '6')  ;
-                           this.value = this.value.replace('۷', '7')  ;
-                           this.value = this.value.replace('۸', '8')  ;
-                           this.value = this.value.replace('۹', '9')  ;
-                           this.value = this.value.replace('٤', '4')  ;
-                           this.value = this.value.replace('٥', '5')  ;
-                           this.value = this.value.replace('٦', '6')  ;
-                           this.value = this.value.replace(/[^0-9۰-۹.]/g, '');
-                           this.value = this.value.replace(/(\..*)\./g, '$1');"
-
-                                >
+                                       oninput="">
                                 <div class="error_field text-danger"></div>
                             </div>
-                            <div class="col-12">
-                                <input type="password" name="password" class="password"
-                                       placeholder="گذرواژه خود را وارد نمائید">
-                                <div class="error_field text-danger"></div>
-                            </div>
+
                             <div class="col-sm-8">
-                                <input type="text" class="code verify-field" name="code"
+                                <input type="text" class="code verify-field" name="code" value=" "
                                        placeholder="کد ارسال شده به تلفن همراه خود را وارد کنید">
                                 <div class="error_field text-danger"></div>
                             </div>
                             <div class="col-sm-4 text-center pt-2">
                                 <input type="hidden" value="1" id="verify-field" name="request_verify" disabled>
-                                <button style="width: 100%" type="button" id="verify-field-bot" class="btn btn-success ">
+                                <button style="width: 100%" type="button" id="verify-field-bot"
+                                        class="btn btn-success ">
                                     <i class="">درخواست کد تایید</i></button>
                             </div>
 
-
-                            <div class="col-sm-12">
-                                <label class="checkbox-container  login-new-user">
-                                    <input type="hidden" name="policy" value="0">
-                                    <input type="checkbox" name="policy" class="policy" value="1">
-                                    <span class="checkmark"></span>
-                                    <span class="text-danger"><a
-                                            href="{{route('policy')}}"> حریم خصوصی و شرایط و قوانین</a></span>
-                                    <span> استفاده از سرویس های سایت  را مطالعه نمودم و با کلیه موارد آن موافقم</span>
-                                </label>
+                            <div class="col-12 password" style="display: none">
+                                <input type="password" name="password" class="password" disabled
+                                       placeholder="گذرواژه خود را وارد نمائید">
                                 <div class="error_field text-danger"></div>
-
                             </div>
+
+
                             <div class="login-new-user col-sm-7 text-center">
                                 <p><span>قبلا در سایت ثبت نام کردید ؟ </span>
                                     <span class="text-danger"><a href="{{route('login.form')}}"> وارد شوید</a></span>
@@ -106,7 +76,7 @@
                             </div>
                             <div class="col-sm-5">
                                 <input class="btn btn-warning" id="register-bot" type="submit" name=""
-                                       value="ثبت نام سایت">
+                                       value="تغییر رمز عبور">
                             </div>
 
                         </div>
@@ -129,28 +99,27 @@
 
 @include('layouts.submitter-js')
 <script>
+
     $(document).on('input change keyup past propertychange', '.only_en_numbers', function () {
 
-        this.value = this.value.replace('۰', '0')  ;
-        this.value = this.value.replace('۱', '1')  ;
-        this.value = this.value.replace('۲', '2')  ;
-        this.value = this.value.replace('۳', '3')  ;
-        this.value = this.value.replace('۴', '4')  ;
-        this.value = this.value.replace('۵', '5')  ;
-        this.value = this.value.replace('۶', '6')  ;
-        this.value = this.value.replace('۷', '7')  ;
-        this.value = this.value.replace('۸', '8')  ;
-        this.value = this.value.replace('۹', '9')  ;
-        this.value = this.value.replace('٤', '4')  ;
-        this.value = this.value.replace('٥', '5')  ;
-        this.value = this.value.replace('٦', '6')  ;
+        this.value = this.value.replace('۰', '0');
+        this.value = this.value.replace('۱', '1');
+        this.value = this.value.replace('۲', '2');
+        this.value = this.value.replace('۳', '3');
+        this.value = this.value.replace('۴', '4');
+        this.value = this.value.replace('۵', '5');
+        this.value = this.value.replace('۶', '6');
+        this.value = this.value.replace('۷', '7');
+        this.value = this.value.replace('۸', '8');
+        this.value = this.value.replace('۹', '9');
+        this.value = this.value.replace('٤', '4');
+        this.value = this.value.replace('٥', '5');
+        this.value = this.value.replace('٦', '6');
         this.value = this.value.replace(/[^0-9۰-۹.]/g, '');
         this.value = this.value.replace(/(\..*)\./g, '$1');
 
     })
-</script>
 
-<script>
     function verifySent() {
 
         let verifyBot = $('#verify-field-bot');
@@ -162,6 +131,19 @@
             verifyBot.prop('disabled', false);
             verifyBot.text('درخواست کد تایید');
         }, 120000)
+
+    }
+
+    function showPasswordInput() {
+
+        let verifyBot = $('#verify-field-bot');
+
+        verifyBot.prop('disabled', true);
+        verifyBot.text('تلاش دوباره');
+
+        $('.password').prop('disabled', false);
+        $('.password').css('display', 'block');
+
 
     }
 

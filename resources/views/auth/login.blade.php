@@ -87,7 +87,7 @@
                                 در صورتی که ثبت نام نکرده اید <a href="{{route('register.form')}}" class="link-for-register">اینجا</a> کلیک کنید
                             </span>
                             <br>
-                            <a href="{{url('user-confirm')}}" class="link-for-register"> گذرواژه را فراموش کردید؟</a>
+                            <a href="{{route('forgot.password.form')}}" class="link-for-register"> گذرواژه را فراموش کردید؟</a>
                         </div>
                     </form>
                 </div>

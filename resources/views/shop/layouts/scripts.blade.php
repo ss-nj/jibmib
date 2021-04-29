@@ -44,6 +44,28 @@
 @include('layouts.submitter-js')
 
 <script>
+    $(document).on('input change keyup past propertychange', '.only_en_numbers', function () {
+
+        this.value = this.value.replace('۰', '0')  ;
+        this.value = this.value.replace('۱', '1')  ;
+        this.value = this.value.replace('۲', '2')  ;
+        this.value = this.value.replace('۳', '3')  ;
+        this.value = this.value.replace('۴', '4')  ;
+        this.value = this.value.replace('۵', '5')  ;
+        this.value = this.value.replace('۶', '6')  ;
+        this.value = this.value.replace('۷', '7')  ;
+        this.value = this.value.replace('۸', '8')  ;
+        this.value = this.value.replace('۹', '9')  ;
+        this.value = this.value.replace('٤', '4')  ;
+        this.value = this.value.replace('٥', '5')  ;
+        this.value = this.value.replace('٦', '6')  ;
+        this.value = this.value.replace(/[^0-9۰-۹.]/g, '');
+        this.value = this.value.replace(/(\..*)\./g, '$1');
+
+    })
+</script>
+
+<script>
 
 
     $('.select2').select2({
