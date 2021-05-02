@@ -237,6 +237,8 @@ return array(
         'email_address' => 'ادرس ایمیل',
         'comment' => 'متن پیام',
         'amount' => 'مقدار',
+        'owner_name' => 'نام صاحل فروشگاه',
+        'shop_name' => 'نام فروشگاه',
         'bank_id' => 'شماره حساب',
         'policy' => 'حریم خصوصی',
 

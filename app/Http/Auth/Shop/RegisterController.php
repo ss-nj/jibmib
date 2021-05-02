@@ -5,6 +5,7 @@ namespace App\Http\Auth\Shop;
 use App\Http\Controllers\Controller;
 use App\Http\Core\Models\Setting;
 use App\Http\Core\Models\User;
+use App\Http\Shop\Models\Shop;
 use App\Services\Sms;
 use App\Support\JsonResponse;
 use Illuminate\Auth\Events\Registered;
@@ -35,7 +36,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'Profile';
+    protected $redirectTo = 'home';
 
 
     /**
@@ -50,7 +51,8 @@ class RegisterController extends Controller
 
     public function showRegisterForm()
     {
-        return view('auth.user.register');
+
+        return view('auth.shop.register');
     }
 
     /**
@@ -62,9 +64,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'mobile' => ['required', 'digits:11', 'unique:users,mobile'],
-            'invite_id' => ['nullable', 'exists:users,affiliate_code'],
+            'owner_name' => ['required', 'string', 'max:255'],
+            'shop_name' => ['required', 'string', 'max:255'],
+            'mobile' => ['required', 'digits:11', 'unique:shops,phone'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'place_id' => ['required', 'integer', 'exists:places,id'],
             'policy' => ['required', 'integer', 'in:1'],
             'password' => ['required', 'string', 'min:6'],
         ]);
@@ -80,10 +84,15 @@ class RegisterController extends Controller
             return $this->registerlogin($request);
         }
 
+        $request->merge([
+            'code' => fa_to_en($request->code),
+        ]);
+
         $retry = Session::get('retry-time');
-//todo check this code posibly a bug
+
+//todo check this code possibly a bug
         if (!$request->code && $retry && $retry > now())
-            return JsonResponse::sendJsonResponse(1, 'خطا',
+            return JsonResponse::sendJsonResponse(0, 'خطا',
                 'در هر دو دقیقه تنها یک بار میتوانید در خواست ارسال کد تایید بدهید', '', '',
                 'verifySent');
 
@@ -102,6 +111,7 @@ class RegisterController extends Controller
             return JsonResponse::sendJsonResponse(1, 'خطا',
                 sprintf('کد وارد شده برای شماره موبایل شما %s صحیح نمیباشد', $request->code));
         }
+
         return $this->registerlogin($request);
 
     }
@@ -114,30 +124,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if (isset($data['invite_id']))
-            $user = User::where('affiliate_code', $data['invite_id'])->first();
-        return User::create([
-            'first_name' => $data['first_name'] ?? '',
-            'last_name' => $data['last_name'] ?? '',
-            'affiliate_code' => $this->generateAffLink(),
-            'mobile' => $data['mobile'],
-            'parent_id' => isset($user) ? $user->id : null,
-            'verify_mobile_code' => rand(11111, 99999),
+        return Shop::create([
+            'owner_name' => $data['owner_name'] ,
+            'shop_name' => $data['shop_name'] ,
+            'phone' => $data['mobile'],
+            'category_id' => $data['category_id'],
+            'place_id' => $data['place_id'],
             'password' => Hash::make($data['password']),
         ]);
     }
 
-    private function generateAffLink()
-    {
-        do {
-            $code = rand(1111111, 9999999);
-            $status = User::where('affiliate_code', $code)->count();
-        } while ($status);
-
-        return $code;
-
-
-    }
 
     public function sendSmsWithPattern($code, $name, $mobile)
     {
@@ -155,7 +151,7 @@ class RegisterController extends Controller
     public function registerlogin(Request $request)
     {
         event(new Registered($user = $this->create($request->all())));
-        $this->guard()->login($user);
+        Auth::guard('shop')->login($user);
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت به عضویت جیب میب در آمدید',
             'REDIRECT', route('home'));

@@ -2,24 +2,20 @@
 
 @section('content')
 
-    <section class="page-top page-header-7">
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumbs-wrap text-center">
-                        <ul class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
-                            <li class="home" itemprop="itemListElement" itemscope=""
-                                itemtype="http://schema.org/ListItem"><a itemtype="http://schema.org/Thing"
-                                                                         itemprop="item"
-                                                                         href="{{route('home')}}"
-                                                                         title="خانه"><span itemprop="name">/خانه</span>
-                                    <meta itemprop="position" content="1">
-                                </a><i class="delimiter delimiter-2"></i></li>
-                            <li>داشبورد</li>
-                        </ul>
-                    </div>
-                    <div class="text-center"><h1 class="page-title">داشبورد</h1></div>
+
+                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                    <h1 class="text-dark mb-n2 mb-md-0">داشبورد</h1>
                 </div>
+
+                <div class="col-md-4 order-1 order-md-2 align-self-center mb-1 mb-md-0">
+                    <ul class="breadcrumb d-block text-md-right">
+                        <li><a href="{{route('shop.dashboard')}}">داشبورد</a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </section>
@@ -150,6 +146,7 @@
 
 @push('internal_js')
     <script>
+        @if (count($chart))
         window.onload = function () {
                 {{--console.log({{$chart}})--}}
             var ctx = document.getElementById('myChart').getContext('2d');
@@ -173,6 +170,7 @@
             });
 
         }
+        @endif
     </script>
 
 @endpush

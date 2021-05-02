@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Auth\Shop\ForgotPasswordController;
 use App\Http\Auth\Shop\LoginController;
 use App\Http\Auth\Shop\RegisterController;
 use App\Http\Shop\Controllers\CouponController;
@@ -14,7 +15,6 @@ use App\Http\Shop\Controllers\ShopDashboardController;
 use App\Http\Shop\Controllers\TakhfifController;
 use App\Http\Shop\Controllers\TransactionsController;
 use App\Http\Shop\Controllers\UsageTermController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,27 +35,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => 'shop'], function () {
-    Route::middleware('throttle:3,1')->group(function () {
+    Route::middleware('throttle:5,1')->group(function () {
 
-        Route::post('user-register', [RegisterController::class,'register'])->name('shop.register');
-        Route::post('user-login', [LoginController::class,'login'])->name('shop.login');
-        Route::post('mobile-verify', [RegisterController::class,'verifyMobile'])->name('shop.verify.mobile');
-        Route::post('user-confirm', [LoginController::class,'userConfirm'])->name('shop.confirm');
-        Route::post('verify-mobile-user', [LoginController::class,'verifyMobile'])->name('shop.forgotten-password.verify.mobile');
+        Route::post('shop-login', [LoginController::class,'login'])->name('shop.login');
+        Route::post('shop-register', [RegisterController::class,'register'])->name('shop.register');
 
     });
-
-    Route::get('user-confirm', [LoginController::class,'showPasswordConfirmForm'])->name('shop.confirm.form');
-    Route::get('mobile-verify', [LoginController::class,'showPasswordConfirmForm']);
-    Route::post('new-password', [LoginController::class,'newPassword'])->name('shop.new.password');
-
     Route::get('login', [LoginController::class,'showLoginForm'])->name('shop.login.form');
+    Route::get('register', [RegisterController::class,'showRegisterForm'])->name('shop.register.form');
 
-    Route::get('register', [LoginController::class,'showRegisterForm'])->name('shop.register.user');
-    Route::post('forget-password-user', [LoginController::class,'forgetPassword'])->name('shop.forgot.password')->middleware('auth');
+    Route::get('forgot-password', [ForgotPasswordController::class,'forgotPasswordForm'])->name('shop.forgot.password.form');
+    Route::post('forgot-password', [ForgotPasswordController::class,'forgotPassword'])->name('shop.forgot.password.new.password');
 
-    Route::get('verify-mobile-user', [RegisterController::class,'verifyMobileForm'])->name('shop.verify.mobile.form') ;
-    Route::get('send-sms', [RegisterController::class,'sendSms'])->name('shop.send.sms');
     Route::get('user-logout', [LoginController::class,'logout'])->name('shop.logout');
 
 });

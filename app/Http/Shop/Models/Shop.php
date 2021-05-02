@@ -21,8 +21,8 @@ class Shop extends Authenticatable implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
-//        'owner_name',
-//        'shop_name',
+        'owner_name',
+        'shop_name',
 //        'slug',
         'category_id',
         'lat',
@@ -32,7 +32,7 @@ class Shop extends Authenticatable implements Auditable
         'address',
         'place_id',
         'description',
-//        'phone',//for login
+        'phone',//for login
         'uuid',
         'isbn',
         'bank_id',

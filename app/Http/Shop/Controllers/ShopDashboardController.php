@@ -25,10 +25,10 @@ class ShopDashboardController extends Controller
     public function index()
     {
 
-    
+
         $takhfifs = $this->shop->takhfifs;
         $takhfifs_count = $this->shop->takhfifs->count();
-        $wallet = $this->shop->wallet->amount;
+        $wallet = $this->shop->wallet?$this->shop->wallet->amount:0;
         $orders = $this->shop->orders;
         $orders_count = $this->shop->orders->count();
         $orders_sum = $this->shop->orders->sum('takhfif_discount');
@@ -40,28 +40,22 @@ class ShopDashboardController extends Controller
         $orders = $this->shop->orders->where('created_at', '>', now()->subYear())->groupBy(function ($order) {
             return Carbon::parse($order->created_at)->format('Y m d'); // grouping by day
         });
-//        dd($orders);
+
         $chart = [];
         $i = 0;
 
         foreach ($orders as $key => $day) {
-//dd($day,$key);
+
             $changed = $day->sum('takhfif_discount');
-//            dd($changed);
 
             if (!$changed)
                 continue;
 
-
             $chart['label'][$i] = verta($day[0]->created_at)->format('Y/m/d');
-//            if (collect($day->pluck('old_values'))->median('sell_price'))
             $chart['y'][$i] = $changed;
 
             $i++;
         }
-//
-//dd($chart);
-
 
         return view('shop.dashboard.dashboard', compact(
             'takhfifs', 'takhfifs_count',

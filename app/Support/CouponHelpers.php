@@ -28,7 +28,6 @@ class CouponHelpers
         }
 
         // check count and start and end time of coupon
-//dd($coupon,Carbon::now() , $coupon->end_time);
         if (Carbon::now() < $coupon->start_time) {
             $data['message'] = ' زمان استفاده از این کد تخفیف فرا نرسیده .';
             $data['status'] = 420;

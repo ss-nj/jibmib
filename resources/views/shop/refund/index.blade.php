@@ -23,7 +23,6 @@
     </section>
 
 
-
     <div class="col-md-12 mb-5 mb-lg-0 appear-animation animated fadeInUpShorter appear-animation-visible"
          data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400" style="animation-delay: 400ms;">
         <div class="portlet light row ">

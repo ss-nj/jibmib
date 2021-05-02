@@ -11,6 +11,7 @@ use App\Support\JsonResponse;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -54,7 +55,7 @@ class LoginController extends Controller
 
         }
 
-        return view('auth.user.login');
+        return view('auth.shop.login');
     }
 
     public function login(Request $request)
@@ -72,11 +73,11 @@ class LoginController extends Controller
         $user = User::where('mobile', $request->mobile)->first();
         //user not found
         if (!$user) {
-            return JsonResponse::sendJsonResponse(1, 'موفق', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
         //user not active
         if ($user->active === 0) {
-            return JsonResponse::sendJsonResponse(1, 'موفق',
+            return JsonResponse::sendJsonResponse(0, 'خطا',
                 'حساب کاربری شما توسط مدیریت مسدود میباشد، با پشتیبانی سایت تماس بگیرید.');
         }
 
@@ -85,16 +86,17 @@ class LoginController extends Controller
             //            auth()->login($user);
             $request->session()->put('mobile', $user->mobile);
 
-            return JsonResponse::sendJsonResponse(1, 'موفق',
+            return JsonResponse::sendJsonResponse(0, 'خطا',
                 'موبایل شما تایید نشده است. شما میتوانید از بازیابی رمز عبور استفاده کنید .');
 
         }
 
         $credentials = $request->only('mobile', 'password');
-        if (!auth()->guard('user')->attempt($credentials, $request->remember)) {
-            return JsonResponse::sendJsonResponse(1, 'موفق', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
+        if (!Auth::guard('web')->attempt($credentials, $request->remember)) {
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
 
+//dd(\auth()->user());
         return $this->redirect_map();
 
     }
@@ -142,7 +144,7 @@ class LoginController extends Controller
             Session::forget('url.intended');
 
             return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',
-                'REDIRECT', route($route));
+                'REDIRECT', $route);
         }
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',
