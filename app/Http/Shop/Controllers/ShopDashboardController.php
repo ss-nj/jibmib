@@ -29,14 +29,19 @@ class ShopDashboardController extends Controller
         //income
         //wallet
         //refunds
-        $this->shop->takhfifs;
-        $this->shop->takhfifs->count();
-        $this->shop->wallet;
-        $this->shop->orders;
-        $this->shop->orders->count();
-        $this->shop->orders->sum('takhfif_discount');
-        $this->shop->refunds;
-        $this->shop->refunds->sum('amount');
-        return view('shop.dashboard.dashboard',['shop'=>$this->shop]);
+        $takhfifs = $this->shop->takhfifs;
+        $takhfifs_count = $this->shop->takhfifs->count();
+        $wallet = $this->shop->wallet->amount;
+        $orders = $this->shop->orders;
+        $orders_count = $this->shop->orders->count();
+        $orders_sum = $this->shop->orders->sum('takhfif_discount');
+        $refunds_count = $this->shop->refunds->count();
+        $refunds_approved_count = $this->shop->approvedRefunds->count();
+        $refunds_approved_sum = $this->shop->approvedRefunds->sum('amount');
+        return view('shop.dashboard.dashboard', compact(
+            'takhfifs', 'takhfifs_count',
+            'refunds_count', 'refunds_approved_sum', 'refunds_approved_count', 'wallet',
+            'orders', 'orders_count', 'orders_sum',
+        ));
     }
 }

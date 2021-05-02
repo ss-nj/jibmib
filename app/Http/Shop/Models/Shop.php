@@ -49,10 +49,10 @@ class Shop extends Authenticatable implements Auditable
         'active' => 'boolean',
 
     ];
-/* The accessors to append to the model's array form.
-     *
-     * @var array
-     */
+    /* The accessors to append to the model's array form.
+         *
+         * @var array
+         */
     protected $appends = [
         'full_address'
     ];
@@ -65,10 +65,10 @@ class Shop extends Authenticatable implements Auditable
 
     public function getFullAddressAttribute()
     {
-       $a= ($this->province ?
-               $this->province->name : '')
-           . '-' . ($this->city ? $this->city->name : '')
-           . '-' . ($this->address);
+        $a = ($this->province ?
+                $this->province->name : '')
+            . '-' . ($this->city ? $this->city->name : '')
+            . '-' . ($this->address);
         return $a;
     }
 
@@ -153,24 +153,32 @@ class Shop extends Authenticatable implements Auditable
         return $this->hasOne(Disapproves::class, 'shop_id')->latest();
 
     }
+
     public function disapproves()
     {
         return $this->hasMany(Disapproves::class);
 
     }
+
     public function refunds()
     {
         return $this->hasMany(Refund::class);
 
     }
 
+    public function approvedRefunds()
+    {
+        return $this->hasMany(Refund::class)->where('status', 4);
+
+    }
+
     public function wallet()
     {
-        return $this->hasone(Wallet::class,'shop_id');
+        return $this->hasone(Wallet::class, 'shop_id');
     }
 
     public function orders()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasManyThrough(OrderItem::class, Takhfif::class);
     }
 }

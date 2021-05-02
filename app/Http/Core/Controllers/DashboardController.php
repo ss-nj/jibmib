@@ -33,19 +33,22 @@ class DashboardController extends Controller
         $activeVerifiedUsersCount=User::active()->whereNotNull('mobile_verified_at')->count();
         $activeNotAnswerdTicketCount=Ticket:: where('status',0)->count();
 
+        $today = Carbon::today();
+
+        $todayUsersCount = User::where('created_at', '>=', $today)->count();
+        $todaySells = Transaction::where('created_at', '>=', $today)->where('status', 1)->sum('amount');
+        $todayTransactions = Transaction::where('created_at', '>=', $today)->count();
 
 
         $success = DB::table('transactions')
             ->select(DB::raw('DATE(created_at) as date'))
-            ->where('status', true)
+            ->where('status', 1)
             ->where('created_at', '>=', Carbon::now()->subMonth())
-            ->where('type', 'creditor')
             ->get();
         $failed = DB::table('transactions')
             ->select(DB::raw('DATE(created_at) as date'))
-            ->where('status', false)
+            ->where('status', 0)
             ->where('created_at', '>=', Carbon::now()->subMonth())
-            ->where('type', 'creditor')
             ->get();
         foreach (range(30, 0) as $item) {
             $transactions['days'][] = verta()->subDays($item)->format('Y-m-d');
@@ -54,12 +57,6 @@ class DashboardController extends Controller
         }
 
 
-
-        $today = Carbon::today();
-
-        $todayUsersCount = User::where('created_at', '>=', $today)->count();
-        $todaySells = Transaction::where('created_at', '>=', $today)->where('status', true)->where('type', 'creditor')->sum('amount');
-        $todayTransactions = Transaction::where('created_at', '>=', $today)->count();
 
         $users = DB::table('users')
             ->select(DB::raw('DATE(created_at) as date'))
@@ -74,6 +71,8 @@ class DashboardController extends Controller
 
         return view('panel.dashboard.index',compact(
         'usersCount','notActiveUsersCount','verifiedUsersCount', 'notVerifiedUsersCount','activeVerifiedUsersCount',
+        'todayUsersCount','todaySells','todayTransactions',
+        'income','transactions',
         'activeNotAnswerdTicketCount'));
 
     }

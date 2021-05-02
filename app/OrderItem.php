@@ -27,6 +27,7 @@ class OrderItem extends Model
     protected $fillable = [
         'takhfif_id',
         'user_id',
+        'shop_id',
         'takhfif_name',
         'transaction_id',
         'code',

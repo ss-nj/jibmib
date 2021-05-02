@@ -18,6 +18,7 @@
 <div class="body">
 
     @include('shop.layouts.header')
+
     <div role="main" class="main">
         @yield('content')
     </div>

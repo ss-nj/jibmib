@@ -11,7 +11,10 @@ class Refund extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
-
+// value="1">تایید شده
+// value="2">رد شده
+// value="3">در حال بررسی
+// value="4">پرداخت شده
     protected $fillable = [
 //        'shop_id',
         'amount',
