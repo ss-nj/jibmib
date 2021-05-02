@@ -34,9 +34,17 @@ class OrdersDataTable extends DataTable
 
                 return $query->user->full_name;
             })
+            ->addColumn('shop_name', function ($query) {
+
+                return $query->takhfif->shop->shop_name;
+            })
             ->addColumn('takhfif_name', function ($query) {
 
                 return $query->takhfif_name;
+            })
+             ->addColumn('takhfif_discount', function ($query) {
+
+                return number_format($query->takhfif_discount);
             })
             ->addColumn('payment_date', function ($query) {
 
@@ -46,9 +54,7 @@ class OrdersDataTable extends DataTable
 
                 $route = route('single',$query->takhfif->slug);
 
-                return "<a href='#' data-toggle='modal' class='btn btn-circle btn-icon-only'  data-target='#revoke-takhfif'>
-                    <i class='fa fa-times'></i></a>"
-                    . "<a href='$route' class='model-edit btn btn-circle btn-icon-only'>
+                return  "<a href='$route' class='model-edit btn btn-circle btn-icon-only'>
                     <i class='fa fa-eye '></i></a>";
             })
             ->addColumn('status', function ($query) {
@@ -80,7 +86,7 @@ class OrdersDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('orders-table')
-            ->columns($this->getColumns())
+//            ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->orderBy(1)
@@ -105,6 +111,7 @@ class OrdersDataTable extends DataTable
             Column::make('id')->title('#'),
             Column::make('name', 'name')->title('نام'),
             Column::make('takhfif_name', 'takhfif_name')->title('نام'),
+            Column::make('shop_name', 'shop_name')->title( ' نام فروشگاه'),
             Column::make('count', 'count')->title('تعداد'),
             Column::make('takhfif_discount', 'takhfif_discount')->title('قیمت'),
             Column::make('payment_date', 'payment_day')->title('زمان پرداخت'),

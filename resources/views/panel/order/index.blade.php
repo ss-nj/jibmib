@@ -177,6 +177,7 @@
                 {data: 'name', name: 'name', title: 'نام ', 'className': 'text-center', orderable: false},
                 {data: 'takhfif_name', name: 'takhfif_name', title: 'نام تخفیف', 'className': 'text-center', orderable: false},
                 {data: 'takhfif_count', name: 'takhfif_count', title: 'تعداد', 'className': 'text-center', orderable: false},
+                {data: 'shop_name', name: 'shop_name', title: 'نام فروشگاه', 'className': 'text-center', orderable: false},
 
                 {data: 'takhfif_discount', name: 'takhfif_discount', title: 'قیمت', 'className': 'text-center', orderable: false},
                 {data: 'status', name: 'status', title: 'وضعیت', 'className': 'text-center', orderable: false},

@@ -163,7 +163,7 @@ class HomeController extends Controller
      */
     public function changePosition(Request $request)
     {
-//        dd('exists:'.$request->table,);
+
         $request->validate([
             'type' => array('required', 'in:moveAfter,moveBefore'), // type of move, moveAfter or moveBefore
             'table' => ['required', 'string', 'in:places,categories,sliders,coupons,attributes'],

@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 
 use App\Basket;
+use App\Http\Commerce\Models\Attribute;
+use App\Http\Commerce\Models\Category;
+use App\Http\Commerce\Models\Place;
+use App\Http\Core\Models\Banner\Banner;
 use App\Http\Core\Models\Image;
+use App\Http\Core\Models\Slider;
 use App\Http\Shop\Models\Takhfif;
 use App\Support\BasketHelpers;
+use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -210,6 +217,60 @@ class CartController extends Controller
 
         if ($request->ajax()) return response()->json(['success' => true, 'cart' => $cart], 200);
         return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @param string $type
+     * @param [] $table
+     * @param integer $position
+     * @param integer $id
+     * @return false|string
+     */
+    public function changePosition(Request $request)
+    {
+
+        $request->validate([
+            'type' => array('required', 'in:moveAfter,moveBefore'), // type of move, moveAfter or moveBefore
+            'table' => ['required', 'string', 'in:places,categories,sliders,coupons,attributes'],
+            'position' => 'exists:' . $request->table . ',id', // id of relative entity
+            'id' => 'required|numeric|exists:' . $request->table // entity id
+        ]);
+
+        $table = $request->table;
+        $model_id = $request->id;
+        $type = $request->type;
+        $position = $request->position;
+        $sortableEntities = [
+            'categories' => Category::class, //
+            'places' => Place::class, //
+            'banners' => Banner::class, //
+            'sliders' => Slider::class, //
+            'attributes' => Attribute::class, //
+        ];
+        $model = $sortableEntities[$table];
+        $record = $model::find($model_id);
+        $positionEntity = $model::find($position);
+//dd($record,$positionEntity);
+        if (!$record || !$positionEntity)
+            return JsonResponse::sendJsonResponse(0, 'نا موفق', 'پیدا نشد لطفا دوباره تلاش کنید', 'REFRESH');
+
+        try {
+//            $record=   Slider::find(3);
+//            $record->position=10;
+//            $record->save();
+//            $p=$record->position;
+//            dd($record,$positionEntity);
+            $record->$type($positionEntity);
+//            $record->save();
+//            dd($p,$p=$record->position  );
+            return JsonResponse::sendJsonResponse(1, ' موفق', 'با موفقیت تفییر کرد', 'DATATABLE_REFRESH');
+
+        } catch (\Exception $exception) {
+            Log::alert($exception);
+            return JsonResponse::sendJsonResponse(0, 'نا موفق', 'مشکلی پیش آمده دوباره تلاش کنید', 'REFRESH');
+        }
+
     }
 
 }

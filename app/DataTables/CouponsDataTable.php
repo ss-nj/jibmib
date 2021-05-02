@@ -82,7 +82,7 @@ class CouponsDataTable extends DataTable
     {
         return $this->builder()
             ->setTableId('coupons-table')
-            ->columns($this->getColumns())
+//            ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->orderBy(1)
