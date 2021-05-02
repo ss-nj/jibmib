@@ -119,8 +119,24 @@
         float: left;
     }
 
-</style>
+    .carousel-item img {
+        height: 339px !important;
+    }
 
+    .b {
+        position: fixed;
+        top: 20px;
+    }
+
+    .a {
+        position: absolute;
+        top: 230px;
+    }
+
+
+
+
+</style>
 
 @yield('style')
 @stack('style')

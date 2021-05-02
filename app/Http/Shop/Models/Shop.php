@@ -8,6 +8,7 @@ use App\Http\Commerce\Models\Violation;
 use App\Http\Core\Models\City;
 use App\Http\Core\Models\Image;
 use App\Http\Core\Models\Province;
+use App\OrderItem;
 use App\Traits\Imagable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -166,5 +167,10 @@ class Shop extends Authenticatable implements Auditable
     public function wallet()
     {
         return $this->hasone(Wallet::class,'shop_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

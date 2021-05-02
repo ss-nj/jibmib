@@ -144,6 +144,7 @@
 
     });
 </script>
+
 <script>
     $(document).on('input change keyup past propertychange', '.only_en_numbers', function () {
 
@@ -165,5 +166,47 @@
 
     })
 </script>
+
+<script>
+
+    document.addEventListener("scroll", trackScrolling);
+    // document.addEventListener("scroll", trackScrollingFooter);
+
+    function trackScrolling() {
+        const el = document.querySelector(".cat-fixed-container");
+        const header = document.querySelector(".primary-header");
+        let sticky = el.getBoundingClientRect();
+        // offsetHeight
+// console.log(header.offsetHeight,sticky)
+        if (window.pageYOffset >= (sticky.top + header.offsetHeight)) {
+            el.classList.remove("a");
+            el.classList.add("b");
+        } else {
+            el.classList.add("a");
+            el.classList.remove("b")
+        }
+    }
+
+    // theme-footer w-100
+    function trackScrollingFooter() {
+        const el = document.querySelector(".cat-fixed-container");
+        const footer = document.querySelector(".theme-footer");
+        let sticky = el.getBoundingClientRect();
+
+        // console.log(window.pageYOffset, (document.body.clientHeight -(sticky.bottom +footer.offsetHeight)))
+        if (window.pageYOffset >=(document.body.clientHeight -(sticky.bottom +footer.offsetHeight)) ) {
+
+            console.log(1)
+            el.classList.remove("b");
+            el.classList.add("a");
+        } else {
+            console.log(2)
+            el.classList.add("b");
+            el.classList.remove("a")
+        }
+    }
+
+</script>
+
 @include('layouts.submitter-js')
 
