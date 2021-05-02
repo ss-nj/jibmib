@@ -19,7 +19,7 @@ class OpenTimesController extends Controller
 
     public function index(Shop $shop)
     {
-        $openTimes = OpenTimes::where('shop_id', $shop)->get();
+        $openTimes = OpenTimes::where('shop_id', $shop->id)->get();
         return response()->json(['times' => $openTimes], 200);
     }
 

@@ -17,6 +17,8 @@ class User extends Authenticatable implements Auditable
     use Imagable;
     use \OwenIt\Auditing\Auditable;
 
+    protected $primaryKey = 'id';
+
     public const MAN = 0;
     public const woman = 1;
     public const OTHER = 2;

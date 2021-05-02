@@ -53,7 +53,7 @@ Route::group(['prefix' => 'shop'], function () {
 
 
 
-Route::name('shop.')->prefix('shop')->middleware(['auth', 'confirmedMobile'])->group( function () {
+Route::name('shop.')->prefix('shop')->middleware(['auth:shop'])->group( function () {
 
     //takhfif routes
     Route::resource('takhfifs', TakhfifController::class);

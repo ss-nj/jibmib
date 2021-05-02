@@ -38,6 +38,12 @@ class CreateShopsTable extends Migration
             $table->timestamp('service_time')->nullable();
             $table->timestamp('service_week_days')->nullable();
             $table->tinyInteger('approved')->default(2);
+
+            $table->string('password');
+            $table->string('verify_mobile_code')->nullable();
+            $table->timestamp('mobile_verified_at')->default(now());
+            $table->rememberToken();
+
             $table->timestamps();
         });
     }

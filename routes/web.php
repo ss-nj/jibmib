@@ -49,7 +49,7 @@ Route::group(['namespace' => 'Auth\User',], function () {
 });
 
 
-Route::group(['middleware' => ['auth', 'confirmedMobile']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('profile', ProfileController::class)->only('index','update');
 

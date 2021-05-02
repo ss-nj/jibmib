@@ -78,7 +78,7 @@ class ForgotPasswordController extends Controller
         $code = Session::get('code');
 
         if ($request->code != $code || $request->mobile != $mobile) {
-            return JsonResponse::sendJsonResponse(1, 'خطا',
+            return JsonResponse::sendJsonResponse(0, 'خطا',
                 sprintf('کد وارد شده برای شماره موبایل شما %s صحیح نمیباشد', $request->code));
         }
 

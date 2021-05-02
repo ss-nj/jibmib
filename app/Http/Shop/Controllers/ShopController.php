@@ -8,6 +8,7 @@ use App\Http\Core\Models\Image;
 use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -31,7 +32,7 @@ class ShopController extends Controller
 
     public function index()
     {
-        $shop = Shop::find(1);
+        $shop = Auth::guard('shop')->user();
         $phones = $shop->phones;
         $times = $shop->times;
         return view('shop.profile.profile', compact('shop', 'phones', 'times'));

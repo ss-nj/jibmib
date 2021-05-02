@@ -19,6 +19,8 @@ class Shop extends Authenticatable implements Auditable
     use Notifiable;
     use Imagable;
     use \OwenIt\Auditing\Auditable;
+//    protected $primaryKey = 'id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'owner_name',
@@ -43,6 +45,7 @@ class Shop extends Authenticatable implements Auditable
 //        'service_week_days',
 //        'approved',
 //        'active',
+        'password',
 
     ];
     protected $casts = [

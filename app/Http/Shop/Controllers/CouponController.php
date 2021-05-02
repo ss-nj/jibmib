@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\OrderItem;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CouponController extends Controller
 {
@@ -14,7 +15,7 @@ class CouponController extends Controller
     public function index(Request $request)
     {
 
-        $id = auth()->id();
+        $id =Auth::guard('shop')->id();
         $query = OrderItem::with('transaction', 'takhfif')->whereHas('takhfif', function ($query) use ($id) {
             $query->where('shop_id', $id);
         });

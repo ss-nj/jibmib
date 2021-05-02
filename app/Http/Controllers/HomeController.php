@@ -12,9 +12,11 @@ use App\Http\Core\Models\Image;
 use App\Http\Core\Models\Setting;
 use App\Http\Core\Models\Slider;
 use App\Http\Shop\Models\Rate;
+use App\Http\Shop\Models\Shop;
 use App\Http\Shop\Models\Takhfif;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -73,6 +75,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        $user = Shop::where('phone', '09377394549')->first();
+//        Auth::guard('shop')->login($user);
+//
+//        dd($user,auth()->user());
         $city = collect(request()->segments())->last();
         if ($city) {
             $city = $this->getCity($city);

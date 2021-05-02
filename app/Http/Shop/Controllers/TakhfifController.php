@@ -11,6 +11,7 @@ use App\Rules\DateCheck;
 use App\Support\JsonResponse;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -36,13 +37,9 @@ class TakhfifController extends Controller
      */
     public function index(Request $request)
     {
-//        if (!Auth::user()->can('create-slider')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
-//dd(1);
-        $query = Takhfif::with('shop', 'images', 'categories','disapprove');
-//        dd(Takhfif::find(1)->full_address);
-//dd($query->first());
+
+
+        $query = Takhfif::where('shop_id',Auth::guard('shop')->id())->with('shop', 'images', 'categories','disapprove');
 
         if ($request->searchById) {
             $query->where('id', 'LIKE', '%' . $request->searchById . '%');
@@ -90,8 +87,7 @@ class TakhfifController extends Controller
 
     public function edit(Takhfif $takhfif)
     {
-//        dd($takhfif);
-        $shop = Shop::find(1);
+        $shop = Auth::guard('shop')->user();
         $parameters = $takhfif->parameters;
         $terms = $takhfif->terms;
         return view('shop.takhfifs.create', compact('takhfif', 'shop', 'parameters', 'terms'));
@@ -108,7 +104,7 @@ class TakhfifController extends Controller
             'name' => ['required', 'string', 'max:999'],
 
         ]);
-        $shop = Shop::find(1);
+        $shop = Auth::guard('shop')->user();
 
         $takhfif = $shop->takhfifs()->create($request->all());
 
@@ -214,10 +210,6 @@ class TakhfifController extends Controller
 
     public function toggle(Request $request, Takhfif $takhfif)
     {
-//        dd($takhfif);
-//        if (!Auth::user()->can('update-takhfif')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
 
         $takhfif->active = !$takhfif->active;
         $takhfif->save();

@@ -18,8 +18,8 @@ class ShopDashboardController extends Controller
 
     public function __construct()
     {
-//        $this->shop = Auth::user();
-        $this->shop = Shop::find(1);
+
+        $this->shop = Auth::guard('shop')->user();
     }
 
     public function index()

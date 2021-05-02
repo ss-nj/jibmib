@@ -10,6 +10,7 @@ use App\Http\Core\Models\Image;
 use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ShopController extends Controller
@@ -21,7 +22,7 @@ class ShopController extends Controller
 //        }
 //dd(1);
         $query = Shop::with('city', 'province', 'category', 'licence', 'userid', 'disapprove');
-//        dd(Shop::find(1)->full_address);
+//        dd(Auth::guard('shop')->user()->full_address);
 //dd($query->first());
 
         if ($request->searchById) {

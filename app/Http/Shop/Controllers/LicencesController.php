@@ -8,6 +8,7 @@ use App\Http\Core\Models\Image;
 use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class LicencesController extends Controller
@@ -29,7 +30,7 @@ class LicencesController extends Controller
 
     public function index()
     {
-        $shop = Shop::find(1);
+        $shop = Auth::guard('shop')->user();
         $licence = $shop->licence;
         $userid = $shop->userid;
         return view('shop.licence.index', compact('shop', 'licence', 'userid'));

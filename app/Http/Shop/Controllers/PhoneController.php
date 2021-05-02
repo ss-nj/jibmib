@@ -21,7 +21,7 @@ class PhoneController extends Controller
 
     public function index(Shop $shop)
     {
-        $phones = Phone::where('shop_id', $shop)->get();
+        $phones = Phone::where('shop_id', $shop->id)->get();
         return response()->json(['phones' => $phones], 200);
     }
 

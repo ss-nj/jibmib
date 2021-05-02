@@ -79,8 +79,8 @@ return [
         ],
 
          'shops' => [
-             'driver' => 'database',
-             'table' => Shop::class,
+             'driver' => 'eloquent',
+             'model' => Shop::class,
          ],
     ],
 

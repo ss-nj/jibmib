@@ -77,7 +77,7 @@ class RegisterController extends Controller
 
         $reg_sms = Setting::where('key', 'register_sms')->first();
         if ($reg_sms && $reg_sms->value_fa == 0) {
-            return $this->registerlogin($request);
+            return $this->registerLogin($request);
         }
 
         $request->merge([
@@ -104,11 +104,11 @@ class RegisterController extends Controller
         $code = Session::get('code');
 
         if ($request->code != $code || $request->mobile != $mobile) {
-            return JsonResponse::sendJsonResponse(1, 'خطا',
+            return JsonResponse::sendJsonResponse(0, 'خطا',
                 sprintf('کد وارد شده برای شماره موبایل شما %s صحیح نمیباشد', $request->code));
         }
 
-        return $this->registerlogin($request);
+        return $this->registerLogin($request);
 
     }
 
@@ -158,7 +158,7 @@ class RegisterController extends Controller
      * @param Request $request
      * @return false|string
      */
-    public function registerlogin(Request $request)
+    public function registerLogin(Request $request)
     {
         event(new Registered($user = $this->create($request->all())));
         $this->guard()->login($user);
