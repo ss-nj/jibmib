@@ -3,6 +3,73 @@
     داشبورد
 @endsection
 @section('content')
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $todayUsersCount }}">0</span>
+                    </div>
+                    <div class="desc">ثبت نام امروز</div>
+                </div>
+                <a class="more" href="{{ route('users.index') }}"> جزئیات بیشتر<i class="fa fa-arrow-left"></i></a>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat blue">
+                <div class="visual">
+                    <i class="fa fa-cart-arrow-down"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $todayTransactions }}">0</span>
+                    </div>
+                    <div class="desc">تراکنش های امروز</div>
+                </div>
+                <a class="more" href="{{ route('transaction.index') }}"> جزئیات بیشتر<i class="fa fa-arrow-left"></i></a>
+            </div>
+        </div>
+        {{--        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+        {{--            <div class="dashboard-stat purple">--}}
+        {{--                <div class="visual">--}}
+        {{--                    <i class="fa fa-dollar"></i>--}}
+        {{--                </div>--}}
+        {{--                <div class="details">--}}
+        {{--                    <div class="number">--}}
+        {{--                        <span data-counter="counterup" data-value="{{ number_format($todaySells) }}">0</span>--}}
+        {{--                    </div>--}}
+        {{--                    <div class="desc">درآمد امروز</div>--}}
+        {{--                </div>--}}
+        {{--                <a class="more" href="{{ route('panel.reports.index') }}"> جزئیات بیشتر<i class="fa fa-arrow-left"></i></a>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject bold">آمار ماه گذشته</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="income-chart"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div id="transactions-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
@@ -96,72 +163,6 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green">
-                <div class="visual">
-                    <i class="fa fa-user"></i>
-                </div>
-                <div class="details">
-                    <div class="number">
-                        <span data-counter="counterup" data-value="{{ $todayUsersCount }}">0</span>
-                    </div>
-                    <div class="desc">ثبت نام امروز</div>
-                </div>
-                <a class="more" href="{{ route('users.index') }}"> جزئیات بیشتر<i class="fa fa-arrow-left"></i></a>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat blue">
-                <div class="visual">
-                    <i class="fa fa-cart-arrow-down"></i>
-                </div>
-                <div class="details">
-                    <div class="number">
-                        <span data-counter="counterup" data-value="{{ $todayTransactions }}">0</span>
-                    </div>
-                    <div class="desc">تراکنش های امروز</div>
-                </div>
-                <a class="more" href="{{ route('transaction.index') }}"> جزئیات بیشتر<i class="fa fa-arrow-left"></i></a>
-            </div>
-        </div>
-{{--        <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--            <div class="dashboard-stat purple">--}}
-{{--                <div class="visual">--}}
-{{--                    <i class="fa fa-dollar"></i>--}}
-{{--                </div>--}}
-{{--                <div class="details">--}}
-{{--                    <div class="number">--}}
-{{--                        <span data-counter="counterup" data-value="{{ number_format($todaySells) }}">0</span>--}}
-{{--                    </div>--}}
-{{--                    <div class="desc">درآمد امروز</div>--}}
-{{--                </div>--}}
-{{--                <a class="more" href="{{ route('panel.reports.index') }}"> جزئیات بیشتر<i class="fa fa-arrow-left"></i></a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <span class="caption-subject bold">آمار ماه گذشته</span>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div id="income-chart"></div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div id="transactions-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('internal_js')
@@ -210,6 +211,10 @@
                     {
                         name: 'کاربر',
                         data: {!! json_encode($income['users']) !!}
+                    },
+                    {
+                        name: 'فروشگاه',
+                        data: {!! json_encode($income['shops']) !!}
                     }
                 ]
             });

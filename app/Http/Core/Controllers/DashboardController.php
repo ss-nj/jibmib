@@ -26,12 +26,12 @@ class DashboardController extends Controller
 //        if (!Auth::user()->can('read-dashboard')) {
 //            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
 //        }
-        $usersCount=User::count();
-        $notActiveUsersCount=User::where('active',0)->count();
-        $notVerifiedUsersCount=User::whereNull('mobile_verified_at')->count();
-        $verifiedUsersCount=User::whereNotNull('mobile_verified_at')->count();
-        $activeVerifiedUsersCount=User::active()->whereNotNull('mobile_verified_at')->count();
-        $activeNotAnswerdTicketCount=Ticket:: where('status',0)->count();
+        $usersCount = User::count();
+        $notActiveUsersCount = User::where('active', 0)->count();
+        $notVerifiedUsersCount = User::whereNull('mobile_verified_at')->count();
+        $verifiedUsersCount = User::whereNotNull('mobile_verified_at')->count();
+        $activeVerifiedUsersCount = User::active()->whereNotNull('mobile_verified_at')->count();
+        $activeNotAnswerdTicketCount = Ticket:: where('status', 0)->count();
 
         $today = Carbon::today();
 
@@ -57,8 +57,11 @@ class DashboardController extends Controller
         }
 
 
-
         $users = DB::table('users')
+            ->select(DB::raw('DATE(created_at) as date'))
+            ->where('created_at', '>=', Carbon::now()->subMonth())
+            ->get();
+        $shops = DB::table('shops')
             ->select(DB::raw('DATE(created_at) as date'))
             ->where('created_at', '>=', Carbon::now()->subMonth())
             ->get();
@@ -66,14 +69,15 @@ class DashboardController extends Controller
         foreach (range(30, 0) as $item) {
             $income['days'][] = verta()->subDays($item)->format('Y-m-d');
             $income['users'][] = count($users->whereIn('date', Carbon::now()->subDays($item)->toDateString()));
+            $income['shops'][] = count($shops->whereIn('date', Carbon::now()->subDays($item)->toDateString()));
         }
 
 
-        return view('panel.dashboard.index',compact(
-        'usersCount','notActiveUsersCount','verifiedUsersCount', 'notVerifiedUsersCount','activeVerifiedUsersCount',
-        'todayUsersCount','todaySells','todayTransactions',
-        'income','transactions',
-        'activeNotAnswerdTicketCount'));
+        return view('panel.dashboard.index', compact(
+            'usersCount', 'notActiveUsersCount', 'verifiedUsersCount', 'notVerifiedUsersCount', 'activeVerifiedUsersCount',
+            'todayUsersCount', 'todaySells', 'todayTransactions',
+            'income', 'transactions',
+            'activeNotAnswerdTicketCount'));
 
     }
 
