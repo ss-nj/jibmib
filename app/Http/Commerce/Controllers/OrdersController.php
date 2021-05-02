@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Shop\Controllers;
+namespace App\Http\Commerce\Controllers;
 
+use App\DataTables\OrdersDataTable;
 use App\DataTables\ShopTransactionsDataTable;
 use App\Http\Controllers\Controller;
 use App\OrderItem;
-use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 
-class CouponController extends Controller
+class OrdersController extends Controller
 {
-    //
+
     public function index(Request $request)
     {
 
@@ -58,38 +58,12 @@ class CouponController extends Controller
             $query->latest('created_at');
 
 
-        $datatable = new ShopTransactionsDataTable($query);
+        $datatable = new OrdersDataTable($query);
 
 //        dd($query->get());
 //        return view('shop.coupons.index');
-        return $datatable->render('shop.coupons.index');
+        return $datatable->render('panel.order.index');
 
     }
 
-    public function revoke(Request $request)
-    {
-
-        $request->validate([
-            'code' => ['required', 'exists:order_items,code'],
-        ]);
-
-        $code = $request->code;
-
-        $coupon = OrderItem::where('code', $code)->first();
-
-        if (!$coupon)
-            return JsonResponse::sendJsonResponse(1, 'خطا', 'کد وارد شده نامعتبر است',);
-
-        if ($coupon->status)
-            return JsonResponse::sendJsonResponse(0, 'خطا',
-                sprintf('کد وارد شده" %s " قبلا  در تاریخ  "%s" باطل شده است',
-                    $code,verta($coupon->$coupon)->timezone('Asia/Tehran')->format('Y/m/d H:i')));
-
-        $coupon->status = 1;
-        $coupon->revoke_date = now();
-        $coupon->save();
-
-        return JsonResponse::sendJsonResponse(1, 'موفق',
-            sprintf('کوپن به کد "%s" مربوط به خریدار "%s" و تخفیف "%s" باطل شد',$code,$coupon->user->full_name,$coupon->takhfif_name));
-    }
 }

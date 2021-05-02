@@ -12,7 +12,7 @@
                                 itemtype="http://schema.org/ListItem"><a itemtype="http://schema.org/Thing"
                                                                          itemprop="item"
                                                                          href="{{route('home')}}"
-                                                                         title="Go to Home Page"><span itemprop="name">Home</span>
+                                                                         title="خانه"><span itemprop="name">/خانه</span>
                                     <meta itemprop="position" content="1">
                                 </a><i class="delimiter delimiter-2"></i></li>
                             <li>داشبورد</li>

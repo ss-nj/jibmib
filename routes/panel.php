@@ -6,6 +6,7 @@ use App\Http\Commerce\Controllers\CategoryController;
 use App\Http\Commerce\Controllers\CouponController;
 use App\Http\Commerce\Controllers\ExcelController;
 use App\Http\Commerce\Controllers\LogoController;
+use App\Http\Commerce\Controllers\OrdersController;
 use App\Http\Commerce\Controllers\PlaceController;
 use App\Http\Commerce\Controllers\RefundController;
 use App\Http\Commerce\Controllers\ShopController;
@@ -136,6 +137,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         Route::resource('transaction', TransactionsController::class)->except('show', 'destroy');
         Route::post('transaction/approve/{transaction}', [TransactionsController::class, 'approveTransaction'])->name('transaction.approve');
         Route::get('transaction/toggle/{transaction}', [TransactionsController::class, 'activeToggle'])->name('transaction.toggle.active');
+
+       //shops routes
+        Route::resource('order', OrdersController::class)->except('show', 'destroy');
 
         //coupons routes
         Route::get('coupons/toggle/{coupon}', [CouponController::class, 'activeToggle'])->name('coupons.toggle.active');

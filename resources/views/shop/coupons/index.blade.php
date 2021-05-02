@@ -244,7 +244,7 @@
         function format(d) {
             var base = "{{url('/')}}";
             // `d` is the original data object for the row
-            var data = '<h6>لیست خرید</h6>'
+            var data = '<h6>مشخصات تخفیف</h6>'
                 +'<table class="detail" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px">'
 
                 + '<tr>'
