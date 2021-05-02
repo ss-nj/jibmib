@@ -36,8 +36,15 @@ class DashboardController extends Controller
         $today = Carbon::today();
 
         $todayUsersCount = User::where('created_at', '>=', $today)->count();
+
         $todaySells = Transaction::where('created_at', '>=', $today)->where('status', 1)->sum('amount');
         $todayTransactions = Transaction::where('created_at', '>=', $today)->count();
+
+        $weekSells = Transaction::where('created_at', '>=', $today->subWeek())->where('status', 1)->sum('amount');
+        $weekTransactions = Transaction::where('created_at', '>=', $today->subWeek())->count();
+
+        $monthSells = Transaction::where('created_at', '>=', $today->subMonth())->where('status', 1)->sum('amount');
+        $monthTransactions = Transaction::where('created_at', '>=', $today->subMonth())->count();
 
 
         $success = DB::table('transactions')
@@ -75,7 +82,10 @@ class DashboardController extends Controller
 
         return view('panel.dashboard.index', compact(
             'usersCount', 'notActiveUsersCount', 'verifiedUsersCount', 'notVerifiedUsersCount', 'activeVerifiedUsersCount',
-            'todayUsersCount', 'todaySells', 'todayTransactions',
+            'todayUsersCount',
+            'todaySells', 'todayTransactions',
+            'weekSells', 'weekTransactions',
+            'monthSells', 'monthTransactions',
             'income', 'transactions',
             'activeNotAnswerdTicketCount'));
 

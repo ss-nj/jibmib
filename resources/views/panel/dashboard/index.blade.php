@@ -89,7 +89,7 @@
                     </div>
                     <div class="text-dark">
                         تعداد افراد عضو شده :
-                        <span class="m-0 font-600 h3">{{$usersCount}}</span>
+                        <span class="m-0 font-600 h3">{{number_format($usersCount)}}</span>
                     </div>
                 </div>
             </a>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="text-dark">
                         تعداد افراد غیر فعال توسط مدیر :
-                        <span class="m-0 font-600 h3">{{$notActiveUsersCount}}</span>
+                        <span class="m-0 font-600 h3">{{number_format($notActiveUsersCount)}}</span>
                     </div>
                 </div>
             </a>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="text-dark">
                         تعداد افراد با شماره تایید شده :
-                        <span class="m-0 font-600 h3">{{$verifiedUsersCount}}</span>
+                        <span class="m-0 font-600 h3">{{number_format($verifiedUsersCount)}}</span>
                     </div>
                 </div>
             </a>
@@ -128,7 +128,7 @@
                     </div>
                     <div class="text-dark">
                         تعداد افراد با شماره تایید نشده :
-                        <span class="m-0 font-600 h3">{{$notVerifiedUsersCount}}</span>
+                        <span class="m-0 font-600 h3">{{number_format($notVerifiedUsersCount)}}</span>
                     </div>
                 </div>
             </a>
@@ -141,7 +141,7 @@
                     </div>
                     <div class="text-dark">
                         تعداد اعضا فعال :
-                        <span class="m-0 font-600 h3">{{$activeVerifiedUsersCount}}</span>
+                        <span class="m-0 font-600 h3">{{number_format($activeVerifiedUsersCount)}}</span>
                     </div>
                 </div>
             </a>
@@ -154,7 +154,99 @@
                     </div>
                     <div class="text-dark">
                         تیکتهای پاسخ داده نشده :
-                        <span class="m-0 font-600 h3">{{$activeNotAnswerdTicketCount}}</span>
+                        <span class="m-0 font-600 h3">{{number_format($activeNotAnswerdTicketCount)}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+ <div class="row">
+        <div class="col-sm-12">
+            <div class="btn-group pull-right m-t-15">
+            </div>
+            <h4 class="page-title">آمار فروش</h4>
+            <p class="text-muted page-title-alt"></p>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-6 col-md-3 kt-margin-t-15 ">
+            <a target="_blank" href="{{route('transaction.index')}}">
+
+                <div class="widget-panel dashboard-boxes">
+                    <div class="font-bold m-t-5 text-b-Jibmib">
+                        <i class="mdi mdi-account-plus mdi-36px"></i>
+                    </div>
+                    <div class="text-dark">
+                        مجموع خرید های امروز :
+                        <span class="m-0 font-600 h3">{{number_format($todaySells)}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-3 kt-margin-t-15 ">
+            <a target="_blank" href="{{route('transaction.index')}}">
+                <div class="widget-panel dashboard-boxes">
+                    <div class="font-bold m-t-5 text-b-Jibmib">
+                        <i class="mdi mdi-account-off mdi-36px "></i>
+                    </div>
+                    <div class="text-dark">
+                        خرید های امروز :
+                        <span class="m-0 font-600 h3">{{number_format($todayTransactions)}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-3 kt-margin-t-15 ">
+            <a target="_blank" href="{{route('transaction.index')}}">
+                <div class="widget-panel dashboard-boxes">
+                    <div class="font-bold m-t-5 text-b-Jibmib">
+                        <i class="mdi mdi-account-check mdi-36px"></i>
+                    </div>
+                    <div class="text-dark">
+                        خرید های هفته :
+                        <span class="m-0 font-600 h3">{{number_format($weekSells)}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-3 kt-margin-t-15 ">
+            <a target="_blank" href="{{route('transaction.index')}}">
+                <div class="widget-panel dashboard-boxes">
+                    <div class="font-bold m-t-5 text-b-Jibmib">
+                        <i class="mdi mdi-account-remove mdi-36px"></i>
+                    </div>
+                    <div class="text-dark">
+                        مجموع خرید های هفته :
+                        <span class="m-0 font-600 h3">{{number_format($weekTransactions)}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-3 kt-margin-t-15 ">
+            <a target="_blank" href="{{route('transaction.index')}}">
+                <div class="widget-panel dashboard-boxes">
+                    <div class="font-bold m-t-5 text-b-Jibmib">
+                        <i class="mdi mdi-account-multiple mdi-36px"></i>
+                    </div>
+                    <div class="text-dark">
+                        خرید های ماه :
+                        <span class="m-0 font-600 h3">{{number_format($monthSells)}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-3 kt-margin-t-15 ">
+            <a target="_blank" href="{{route('transaction.index')}}">
+                <div class="widget-panel dashboard-boxes">
+                    <div class="font-bold m-t-5 text-b-Jibmib">
+                        <i class="mdi mdi-account-multiple mdi-36px"></i>
+                    </div>
+                    <div class="text-dark">
+                        مجموع خرید های ماه :
+                        <span class="m-0 font-600 h3">{{number_format($monthTransactions)}}</span>
                     </div>
                 </div>
             </a>
