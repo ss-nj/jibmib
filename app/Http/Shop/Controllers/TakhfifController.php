@@ -89,6 +89,7 @@ class TakhfifController extends Controller
     {
         if ($takhfif->shop_id != Auth::guard('shop')->id())
             return back()->with('error-message', 'کد وارد شده متعلق به فروشگاه شما نیست !!');
+
         $shop = Auth::guard('shop')->user();
         $parameters = $takhfif->parameters;
         $terms = $takhfif->terms;

@@ -37,7 +37,7 @@ class ParameterController extends Controller
 
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'ویژگی با موفقیت ثبت گردید',
-            'DATATABLE_REFRESH', '',
+            '', '',
             'addParameter', [$parameter->id, $parameter->value,
             ]);
 

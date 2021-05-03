@@ -39,7 +39,7 @@ class UsageTermController extends Controller
 
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'ویژگی با موفقیت ثبت گردید',
-            'DATATABLE_REFRESH', '',
+            '', '',
             'addTerm', [$addTerm->id, $addTerm->value,
             ]);
 

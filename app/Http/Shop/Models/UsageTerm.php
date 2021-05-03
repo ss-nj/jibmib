@@ -13,4 +13,9 @@ class UsageTerm extends Model
         'value',
 
     ];
+
+    public function takhfif()
+    {
+        return $this->belongsTo(Takhfif::class);
+    }
 }

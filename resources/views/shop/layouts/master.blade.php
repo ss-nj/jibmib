@@ -59,8 +59,11 @@
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 text-left text-sm-right mb-0">عنوان تخفیف</label>
                         <div class="col-sm-9">
-                            <input type="text" value="" class="form-control " name="name"
+                            <input type="text" value="" class="form-control name" name="name"
                                    aria-invalid="true">
+                            <div class="error_field text-danger"> </div>
+
+
                         </div>
                     </div>
 

@@ -84,7 +84,7 @@
                                         </a>
                                         <ul class="dropdown-menu" style="">
                                             <li>
-                                                <a class="dropdown-item" data-toggle="modal"
+                                                <a class="dropdown-item" data-toggle="modal" href="#"
                                                    data-target="#new-takhfif">
                                                     ایجاد تخفیف
                                                 </a>

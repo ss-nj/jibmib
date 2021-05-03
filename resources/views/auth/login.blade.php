@@ -60,11 +60,7 @@
                            this.value = this.value.replace(/[^0-9۰-۹.]/g, '');
                            this.value = this.value.replace(/(\..*)\./g, '$1');"
                             >
-                            <div class="error_field text-danger">
-                                @error('mobile')
-                                {{ $message }}
-                                @enderror
-                            </div>
+                            <div class="error_field text-danger"> </div>
                         </div>
                         <div class="col-xs-12 form-group">
                             <label for="password-field"><i class="mdi mdi-key"></i> گذرواژه</label>

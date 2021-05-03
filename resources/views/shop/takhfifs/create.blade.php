@@ -46,9 +46,9 @@
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">دسته بندی های محصول </label>
                             <select name="categories[]" class="form-control select2 categories" multiple>
-                                @foreach($cached_categories as $cached_category)
+                                @foreach($cached_categories->where('category_id',$shop->category_id) as $cached_category)
                                     <option value="{{$cached_category->id}}"
-                                    {{in_array($cached_category->id ,$takhfif->categories->pluck('id')->toArray() )?'selected':''}}
+                                        {{in_array($cached_category->id ,$takhfif->categories->pluck('id')->toArray() )?'selected':''}}
                                     >{{$cached_category->name}}</option>
                                 @endforeach
                             </select>
@@ -61,7 +61,8 @@
                     <div class="form-row">
                         <div class="form-group col-lg-12">
                             <label class=" font-weight-bold text-dark text-2">عنوان</label>
-                            <input type="text" value="{{$takhfif->name}}" class="form-control name" name="name" aria-invalid="true">
+                            <input type="text" value="{{$takhfif->name}}" class="form-control name" name="name"
+                                   aria-invalid="true">
                             <div class="error_field text-danger"></div>
                         </div>
                         <div class="form-group col">
@@ -74,10 +75,12 @@
 
                     <div class="form-group col-lg-12">
                         <label class=" font-weight-bold text-dark text-2">تگها</label>
-                        <label class=" font-weight-bold text-success text-2">برای جستجو و سئوی بهتر تعدادی از کلمات اصلی مرتبط با آگهی را وارد کنید.</label>
+                        <label class=" font-weight-bold text-success text-2">برای جستجو و سئوی بهتر تعدادی از کلمات اصلی
+                            مرتبط با آگهی را وارد کنید.</label>
                         <select name="tags[]" class="form-control select2Tag" multiple>
                             @foreach(explode(',', $takhfif->tags ) as $tag)
-                               @if(!empty($tag)) <option selected>{{$tag}}</option>@endif
+                                @if(!empty($tag))
+                                    <option selected>{{$tag}}</option>@endif
                             @endforeach
                         </select>
                         <div class="error_field text-danger"></div>
@@ -117,16 +120,18 @@
 
                     <div class="form-row">
                         <div class="form-group col-lg-5">
-                            <label class=" font-weight-bold text-dark text-2">قیمت اصلی</label>
-                            <input type="number" min="0"  value="{{$takhfif->price}}" class="form-control price price_input" name="price"
+                            <label class=" font-weight-bold text-dark text-2">قیمت اصلی(تومان)</label>
+                            <input type="number" min="0" value="{{$takhfif->price}}"
+                                   class="form-control price price_input" name="price"
                                    aria-invalid="true">
                             <div class="error_field text-danger"></div>
                             <div class="price-persian text-success"></div>
                         </div>
                         <label class=" col-lg-2 "><i class="arrow hrb d-inline-block"></i></label>
                         <div class="form-group col-lg-5">
-                            <label class=" font-weight-bold text-dark text-2">قیمت با تخفیف</label>
-                            <input type="number" min="0"  value="{{$takhfif->discount_price}}" class="form-control text-left price_input discount_price"
+                            <label class=" font-weight-bold text-dark text-2">قیمت با تخفیف (تومان)</label>
+                            <input type="number" min="0" value="{{$takhfif->discount_price}}"
+                                   class="form-control text-left price_input discount_price"
                                    name="discount_price" dir="ltr">
                             <div class="error_field text-danger"></div>
                             <div class="price-persian text-success"></div>
@@ -137,11 +142,14 @@
                     <div class="form-row">
 
                         <div class="form-group col-lg-5">
-                            <label class=" font-weight-bold text-dark text-2">میزان کمیسیون تخفیفان</label>
+                            <label class=" font-weight-bold text-primary  ">میزان کمیسیون جیب
+                                میب {{$siteSettings['commission']->value_fa}}%</label>
+                            <label class=" font-weight-bold text-success commission">0</label>
                         </div>
-                        <div class="col-lg-2"></div>
+                        <div class="col-lg-2 text-primary"></div>
                         <div class="form-group col-lg-5">
-                            <label class=" font-weight-bold text-dark text-2">درآمد کسب و کار از هر فروش</label>
+                            <label class=" font-weight-bold text-success">درآمد کسب و کار از هر فروش</label>
+                            <label class=" font-weight-bold text-success income">0</label>
                         </div>
                     </div>
                 </div>
@@ -159,13 +167,16 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">تاریخ شروع</label>
-                            <input type="text"  value="{{verta($takhfif->display_start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}"  class="range-from-example form-control display_start_time"
+                            <input type="text"
+                                   value="{{verta($takhfif->display_start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}"
+                                   class="range-from-example form-control display_start_time"
                                    name="display_start_time" aria-invalid="true">
                             <div class="error_field text-danger"></div>
                         </div>
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">تاریخ پایان</label>
-                            <input type="text"  value="{{verta($takhfif->display_end_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}"
+                            <input type="text"
+                                   value="{{verta($takhfif->display_end_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}"
                                    class="range-to-example form-control text-left display_end_time"
                                    name="display_end_time" dir="ltr">
                             <div class="error_field text-danger"></div>
@@ -190,13 +201,17 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">تاریخ شروع استفاده</label>
-                            <input type="text" value="{{verta($takhfif->usage_start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}" class="usage_start_time form-control start_time"
+                            <input type="text"
+                                   value="{{verta($takhfif->usage_start_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}"
+                                   class="usage_start_time form-control start_time"
                                    name="start_time" aria-invalid="true">
                             <div class="error_field text-danger"></div>
                         </div>
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">تاریخ پایان</label>
-                            <input type="text" value="{{verta($takhfif->usage_expire_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}" class="usage_expire_time form-control text-left expire_time"
+                            <input type="text"
+                                   value="{{verta($takhfif->usage_expire_time)->timezone('Asia/Tehran')->format('Y-m-d-H:i')}}"
+                                   class="usage_expire_time form-control text-left expire_time"
                                    name="expire_time" dir="ltr">
                             <div class="error_field text-danger"></div>
                         </div>
@@ -207,13 +222,15 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6">
                             <label class=" font-weight-bold text-dark text-2">مهلت استفاده(روز)</label>
-                            <input type="number" min="0" value="{{$takhfif->time_out}}"  class="form-control time_out" name="time_out"
+                            <input type="number" min="0" value="{{$takhfif->time_out}}" class="form-control time_out"
+                                   name="time_out"
                                    aria-invalid="true">
                             <div class="error_field text-danger"></div>
                         </div>
                         <div class="form-group col-lg-6">
-                            <label class=" font-weight-bold text-dark text-2">ظرفیت فروش</label>
-                            <input type="number" min="0" value="{{$takhfif->capacity}}" class="form-control text-left capacity"
+                            <label class=" font-weight-bold text-dark text-2">ظرفیت فروش(0 یعنی بی نهایت)</label>
+                            <input type="number" min="0" value="{{$takhfif->capacity}}"
+                                   class="form-control text-left capacity"
                                    name="capacity" dir="ltr">
                             <div class="error_field text-danger"></div>
                         </div>
@@ -815,6 +832,45 @@
             tags: true,
             tokenSeparators: [',', ' ']
         })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            calcIncom();
+        });
+
+        function calcIncom() {
+            let discount_price = $('.discount_price').val();
+            let commission = {{$siteSettings['commission']->value_fa}} ;
+
+
+            if (isNaN(discount_price)) {
+                $('.commission').text(0);
+                $('.income').text(0);
+            } else {
+                let jibmibIncome = discount_price * commission / 100;
+                $('.commission').text(englishNumber(jibmibIncome.toLocaleString('us',)));
+                $('.income').text(englishNumber((discount_price - (jibmibIncome)).toLocaleString('us',)));
+            }
+        }
+
+        $('.discount_price').keyup(function () {
+            calcIncom();
+
+        });
+
+        function englishNumber(value) {
+            if (!value) {
+                return;
+            }
+            var englishNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                persianNumbers = ["۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹", "۰"];
+
+            for (var i = 0, numbersLen = englishNumbers.length; i < numbersLen; i++) {
+                value = value.replace(new RegExp(englishNumbers[i], "g"), persianNumbers[i]);
+            }
+            return value;
+        }
     </script>
 
 @endpush
