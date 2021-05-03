@@ -16,16 +16,14 @@ class RedirectIfNotAdmin
      * @param \Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = "admin")
+    public function handle(Request $request, Closure $next)
     {
-        $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (!auth()->guard($guard)->check()) {
-                return redirect(route('admin.login'));
-            }
+        if (auth()->guard('shop')->check()) {
+            return $next($request);
         }
 
-        return $next($request);
+
+        return redirect(route('shop.login.form'));
     }
 }

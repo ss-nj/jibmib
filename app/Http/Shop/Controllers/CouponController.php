@@ -79,7 +79,7 @@ class CouponController extends Controller
 
         $coupon = OrderItem::where('code', $code)->first();
 
-        if ($coupon->takhfif->shop_id !== Auth::guard('shop')->id())
+        if ($coupon->takhfif->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         if (!$coupon)

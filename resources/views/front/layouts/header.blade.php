@@ -26,38 +26,63 @@
                                 <input type="submit" value="جستجو">
                             </form>
                         </div>
-                        @auth()
-                        <div class="primary-header-btn">
-                            <div class="text-center"><span><i class="fas fa-phone"></i></span> شماره تماس ویژه</div>
-
-                            <div class="align-self-center dropdown">
-                                <button class="theme-btn orange-btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span style="margin: 0 3px;"><i class="fas fa-user"></i></span> پروفایل
-                                </button>
-                                <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                    @if (Auth::check()&& Auth::user()->hasRole(['super_administrator']))
-                                        <li><a class="dropdown-item" href="{{route('panel.dashboard')}}">داشبورد</a></li>
-                                    @endif
-                                    <li><a class="dropdown-item" href="{{route('profile.index')}}">پروفایل</a></li>
-                                    <li><a class="dropdown-item" href="{{route('user.tickets.index')}}">پشتیبانی</a></li>
-
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="primary-header-btn">
-                            <div class="text-center">031 - 35 144</div>
-                            <a href="{{route('logout')}}"><div class="theme-btn green-btn">خروج</div></a>
-                        </div>
-                        @endauth
-                        @guest()
+                        @if(auth()->guard('shop')->check())
                             <div class="primary-header-btn">
                                 <div class="text-center"><span><i class="fas fa-phone"></i></span> شماره تماس ویژه</div>
+
                                 <div class="align-self-center dropdown">
                                     <button class="theme-btn orange-btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span style="margin: 0 3px;"><i class="fas fa-user"></i></span> پروفایل
                                     </button>
                                     <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                        <li><a class="dropdown-item" href="{{route('login.form')}}">ورود به سامانه</a></li>
+                                        @if(auth()->guard('web')->check())
+                                            @if ( auth()->user()->hasRole(['super_administrator']))
+                                                <li><a class="dropdown-item" href="{{route('panel.dashboard')}}">داشبورد مدیریت</a></li>
+                                            @endif
+                                            <li><a class="dropdown-item" href="{{route('profile.index')}}">پروفایل کاربری</a></li>
+                                            <li><a class="dropdown-item" href="{{route('user.tickets.index')}}">پشتیبانی</a></li>
+                                        @endif
+                                        <li><a class="dropdown-item" href="{{route('shop.dashboard')}}">داشبورد</a></li>
+                                        <li><a class="dropdown-item" href="{{route('shop.profiles.index')}}">پروفایل کسب و کار</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="primary-header-btn">
+                                <div class="text-center">031 - 35 144</div>
+                                <a href="{{route('logout')}}"><div class="theme-btn green-btn">خروج</div></a>
+                            </div>
+                        @elseif(auth()->guard('web')->check())
+                            <div class="primary-header-btn">
+                                <div class="text-center"><span><i class="fas fa-phone"></i></span> شماره تماس ویژه</div>
+
+                                <div class="align-self-center dropdown">
+                                    <button class="theme-btn orange-btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span style="margin: 0 3px;"><i class="fas fa-user"></i></span> پروفایل
+                                    </button>
+                                    <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                        @if ( auth()->user()->hasRole(['super_administrator']))
+                                            <li><a class="dropdown-item" href="{{route('panel.dashboard')}}">داشبورد</a></li>
+                                        @endif
+                                        <li><a class="dropdown-item" href="{{route('profile.index')}}">پروفایل</a></li>
+                                        <li><a class="dropdown-item" href="{{route('user.tickets.index')}}">پشتیبانی</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="primary-header-btn">
+                                <div class="text-center">031 - 35 144</div>
+                                <a href="{{route('logout')}}"><div class="theme-btn green-btn">خروج</div></a>
+                            </div>
+                        @else
+                            <div class="primary-header-btn">
+                                <div class="text-center"><span><i class="fas fa-phone"></i></span> شماره تماس ویژه</div>
+                                <div class="align-self-center dropdown">
+                                    <button class="theme-btn orange-btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span style="margin: 0 3px;"><i class="fas fa-user"></i></span> ورود به سامانه
+                                    </button>
+                                    <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                        <li><a class="dropdown-item" href="{{route('login.form')}}">بخش کاربری</a></li>
                                         <li><a class="dropdown-item" href="{{route('shop.login.form')}}">ورود به کسب و کار</a></li>
 
                                     </ul>
@@ -68,7 +93,7 @@
                                 <a href="{{route('register.form')}}"><div class="theme-btn green-btn">ثبت نام</div></a>
                             </div>
 
-                        @endguest
+                        @endif
 
                     </div>
 

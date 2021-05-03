@@ -18,7 +18,7 @@ class UsageTermController extends Controller
 
     public function index(Takhfif $takhfif)
     {
-        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+        if ($takhfif->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $terms = UsageTerm::where('takhfif_id', $takhfif)->get();
@@ -27,7 +27,7 @@ class UsageTermController extends Controller
 
     public function store(Request $request, Takhfif $takhfif)
     {
-        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+        if ($takhfif->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
@@ -48,7 +48,7 @@ class UsageTermController extends Controller
 
     public function destroy(UsageTerm $usage_term)
     {
-        if ($usage_term->takhfif->shop_id !== Auth::guard('shop')->id())
+        if ($usage_term->takhfif->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $usage_term->delete();

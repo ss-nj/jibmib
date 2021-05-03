@@ -25,7 +25,7 @@ class ParameterController extends Controller
 
     public function store(Request $request, Takhfif $takhfif)
     {
-        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+        if ($takhfif->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
@@ -46,7 +46,7 @@ class ParameterController extends Controller
 
     public function destroy(Parameter $parameter)
     {
-        if ($parameter->takhfif->shop_id !== Auth::guard('shop')->id())
+        if ($parameter->takhfif->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
 

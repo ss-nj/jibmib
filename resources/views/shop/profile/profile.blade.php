@@ -308,7 +308,7 @@
                                     <label><input type="checkbox" name="days[]" value="5">چهارشنبه</label>
                                     <label><input type="checkbox" name="days[]" value="6">پنجشنبه</label>
                                     <label><input type="checkbox" name="days[]" value="7">جمعه</label>
-                                    <label><input type="checkbox" name="days[]" value="8">روزهای تعطیل رسمی</label>
+                                    <label><input type="checkbox" name="days[]" class="days" value="8">روزهای تعطیل رسمی</label>
                                     <div class="error_field text-danger"></div>
 
                                 </div>
@@ -770,6 +770,8 @@ $week_day_map=[
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         // console.log('error: ' + data.success);
+                        alert(XMLHttpRequest.responseJSON[0]);
+
                     }
                 });
 
@@ -1002,7 +1004,7 @@ $week_day_map=[
 
                 $.ajax({
                     type: 'POST',
-                    url: "{{url('shop/destroy-image')}}" + '/' + id,
+                    url: "{{url('shop/destroy-licences')}}" + '/' + id,
                     data: {_token: CSRF_TOKEN},
                     success: function (data) {
                         // console.log('success: ' + data.success);
@@ -1010,7 +1012,8 @@ $week_day_map=[
                         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        // console.log('error: ' + data.success);
+                       alert(XMLHttpRequest.responseJSON[0]);
+
                     }
                 });
 
@@ -1224,7 +1227,7 @@ $week_day_map=[
 
                 },
                 error: function (data) {
-
+console.log(response)
                 }
 
             }).done(function (response) {

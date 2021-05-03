@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Core\Models\Image;
 use App\Http\Shop\Models\Shop;
+use App\Rules\UuidCheck;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ShopController extends Controller
@@ -33,6 +35,7 @@ class ShopController extends Controller
     public function index()
     {
         $shop = Auth::guard('shop')->user();
+//        dd($shop);
         $phones = $shop->phones;
         $times = $shop->times;
         return view('shop.profile.profile', compact('shop', 'phones', 'times'));
@@ -54,10 +57,10 @@ class ShopController extends Controller
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'address' => ['required', 'string', 'max:999'],
             'place_id' => ['required', 'integer', 'exists:places,id'],
-            'description' => ['required', 'string', 'max:5000'],
-            'uuid' => ['required', 'integer', 'digits:11'],
+            'description' => ['required', 'string','min:8', 'max:5000'],
+            'uuid' => ['required', 'integer','min:8', 'digits:10',new UuidCheck()],
             'isbn' => ['required', 'string', 'max:30'],
-            'bank_id' => ['required', 'string', 'max:20'],
+            'bank_id' => ['required', 'string','min:8', 'max:20'],
             'bank_account_owner_name' => ['required', 'string', 'max:80'],
             'bank_account_owner_last_name' => ['required', 'string', 'max:80'],
             'bank_account_type' => ['required', 'string', 'max:80'],
@@ -110,8 +113,8 @@ class ShopController extends Controller
 
     public function loadImages(Shop $shop)
     {
-        if ($shop->id !== Auth::guard('shop')->id())
-            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+        if ($shop->id != Auth::guard('shop')->id())
+            return response()->json(['کد وارد شده متعلق به فروشگاه شما نیست !!'],419);
 
         return $shop->images;
     }
@@ -119,11 +122,9 @@ class ShopController extends Controller
     public function uploadImages(Request $request, Shop $shop)
     {
 
-        if ($shop->id !== Auth::guard('shop')->id())
-            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
-//todo set it in settings
-//        if ($shop->images->count() >= 5)
-//            return response('حداکثر تعداد فایل اپلودی رد شده است .', 400);
+        if ($shop->id != Auth::guard('shop')->id())
+            return response()->json(['کد وارد شده متعلق به فروشگاه شما نیست !!'],419);
+
 
         $image = $this->ajaxSaveImage($request, $shop);
 
@@ -132,8 +133,8 @@ class ShopController extends Controller
 
     public function destroyImage(Image $image)
     {
-        if ($image->imagable_id !== Auth::guard('shop')->id())
-            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
+        if ($image->imagable_id != Auth::guard('shop')->id())
+            return response()->json(['کد وارد شده متعلق به فروشگاه شما نیست !!'],419);
 
         $path = $image->path;
         $thumbnail = $image->thumbnail;
@@ -184,19 +185,17 @@ class ShopController extends Controller
     public function loadLicences(Shop $shop)
     {
 
-        if ($shop->id !== Auth::guard('shop')->id())
-            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
+        if ($shop->id != Auth::guard('shop')->id())
+            return response()->json(['کد وارد شده متعلق به فروشگاه شما نیست !!'],419);
 
         return $shop->licences;
     }
 
     public function uploadLicences(Request $request, Shop $shop)
     {
-        if ($shop->id !== Auth::guard('shop')->id())
-            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
-//todo set it in settings
-//        if ($shop->images->count() >= 5)
-//            return response('حداکثر تعداد فایل اپلودی رد شده است .', 400);
+
+        if ($shop->id != Auth::guard('shop')->id())
+            return response()->json(['کد وارد شده متعلق به فروشگاه شما نیست !!'],419);
 
         $image = $this->ajaxSaveLicence($request, $shop);
 
@@ -205,8 +204,9 @@ class ShopController extends Controller
 
     public function destroyLicence(Image $image)
     {
-        if ($image->imagable_id !== Auth::guard('shop')->id())
-            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
+        if ($image->imagable_id == Auth::guard('shop')->id())
+            return response()->json(['کد وارد شده متعلق به فروشگاه شما نیست !!'],419);
+
         $path = $image->path;
         $thumbnail = $image->thumbnail;
         $image->delete();

@@ -655,6 +655,8 @@
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         // console.log('error: ' + data.success);
+                        alert(XMLHttpRequest.responseJSON[0]);
+
                     }
                 });
 

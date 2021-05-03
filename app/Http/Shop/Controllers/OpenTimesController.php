@@ -27,14 +27,14 @@ class OpenTimesController extends Controller
     public function store(Request $request, Shop $shop)
     {
 
-        if ($shop->id !== Auth::guard('shop')->id())
+        if ($shop->id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
-            'time' => ['array'],// 'unique:times,number,' . auth()->id()
-            'time.*' => ['digits_between:0,59'],// 'unique:times,number,' . auth()->id()
-            'days' => ['array'],// 'unique:times,number,' . auth()->id()
-            'days.*' => ['digits_between:0,8'],// 'unique:times,number,' . auth()->id()
+            'time' => ['required','array'],// 'unique:times,number,' . auth()->id()
+            'time.*' => ['required','digits_between:0,59'],// 'unique:times,number,' . auth()->id()
+            'days' => ['required','array'],// 'unique:times,number,' . auth()->id()
+            'days.*' => ['required','digits_between:0,8'],// 'unique:times,number,' . auth()->id()
         ]);
 
         $time = $shop->times()->create([
@@ -71,8 +71,8 @@ class OpenTimesController extends Controller
     public function destroy(OpenTimes $openTimes)
     {
 
-        if ($openTimes->shop_id !== Auth::guard('shop')->id())
-            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+        if ($openTimes->shop_id != Auth::guard('shop')->id())
+            return response()->json(['data' => ['success' => false, 'message' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']]);
 
         $openTimes->delete();
 

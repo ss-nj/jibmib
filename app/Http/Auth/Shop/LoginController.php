@@ -83,7 +83,6 @@ class LoginController extends Controller
 
         //mobile isn't verifies
         if (!$user->mobile_verified_at) {
-            //            auth()->login($user);
             $request->session()->put('mobile', $user->mobile);
 
             return JsonResponse::sendJsonResponse(0, 'خطا',
@@ -92,7 +91,7 @@ class LoginController extends Controller
         }
 
         $credentials = $request->only('mobile', 'password');
-        if (!Auth::guard('web')->attempt($credentials, $request->remember)) {
+        if (!Auth::guard('shop')->attempt(['phone'=>$request->mobile,'password'=>$request->password], $request->remember)) {
             return JsonResponse::sendJsonResponse(0, 'خطا', 'موبایل یا رمز عبور نادرست میباشد، مجددا تلاش کنید.');
         }
 
@@ -101,14 +100,6 @@ class LoginController extends Controller
 
     }
 
-    public function sendsmsWithPattern($code, $mobile)
-    {
-
-        $message = array("verification-code" => $code);
-        $sms = new Sms();
-        $result = $sms->sendwithpattern($message, $mobile, '06bnqaqeiq');
-        return $result;
-    }
 
     public function logout(Request $request)
     {
@@ -129,18 +120,13 @@ class LoginController extends Controller
         }catch (\Exception $exception){
             Log::alert($exception);
         }
-        if (Auth::user()->hasRole(['super_administrator'])) {
-            $reg_redirect = Setting::where('key', 'login_admin_redirect_path')->first();
-            $route = Setting::MAP_ADMIN_LOGIN_REDIRECTS[$reg_redirect->value_fa];
-        } else {
-            $reg_redirect = Setting::where('key', 'login_redirect_path')->first();
-            $route = Setting::MAP_LOGIN_REDIRECTS[$reg_redirect->value_fa];
-        }
+
+        $route = 'home';
 
         $intended = Setting::where('key', 'login_redirect_intended')->first();
 
         if ($intended->value_fa) {
-            $route = Session::get('url.intended', $route);
+            $route = Session::get('url.intended',  route($route));
             Session::forget('url.intended');
 
             return JsonResponse::sendJsonResponse(1, 'موفق', 'کاربر گرامی شما با موفقیت وارد شدید',

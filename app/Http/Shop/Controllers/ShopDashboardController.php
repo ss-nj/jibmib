@@ -11,33 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopDashboardController extends Controller
 {
-    /**
-     * @var \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    private $shop;
-
-    public function __construct()
-    {
-
-        $this->shop = Auth::guard('shop')->user();
-    }
 
     public function index()
     {
 
+        $shop = Auth::guard('shop')->user();
+//        $shop = Shop::find(1);
 
-        $takhfifs = $this->shop->takhfifs;
-        $takhfifs_count = $this->shop->takhfifs->count();
-        $wallet = $this->shop->wallet?$this->shop->wallet->amount:0;
-        $orders = $this->shop->orders;
-        $orders_count = $this->shop->orders->count();
-        $orders_sum = $this->shop->orders->sum('takhfif_discount');
-        $refunds_count = $this->shop->refunds->count();
-        $refunds_approved_count = $this->shop->approvedRefunds->count();
-        $refunds_approved_sum = $this->shop->approvedRefunds->sum('amount');
+        $takhfifs = $shop->takhfifs;
+        $takhfifs_count = $shop->takhfifs->count();
+        $wallet = $shop->wallet?$shop->wallet->amount:0;
+        $orders = $shop->orders;
+        $orders_count = $shop->orders->count();
+        $orders_sum = $shop->orders->sum('takhfif_discount');
+        $refunds_count = $shop->refunds->count();
+        $refunds_approved_count = $shop->approvedRefunds->count();
+        $refunds_approved_sum = $shop->approvedRefunds->sum('amount');
 
 
-        $orders = $this->shop->orders->where('created_at', '>', now()->subYear())->groupBy(function ($order) {
+        $orders = $shop->orders->where('created_at', '>', now()->subYear())->groupBy(function ($order) {
             return Carbon::parse($order->created_at)->format('Y m d'); // grouping by day
         });
 

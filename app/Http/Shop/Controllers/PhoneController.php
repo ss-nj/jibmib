@@ -23,7 +23,7 @@ class PhoneController extends Controller
     public function index(Shop $shop)
     {
 
-        if ($shop->id !== Auth::guard('shop')->id())
+        if ($shop->id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $phones = Phone::where('shop_id', $shop->id)->get();
@@ -32,7 +32,7 @@ class PhoneController extends Controller
 
     public function store(Request $request, Shop $shop)
     {
-        if ($shop->id !== Auth::guard('shop')->id())
+        if ($shop->id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
@@ -52,8 +52,10 @@ class PhoneController extends Controller
 
     public function update(Request $request, Phone $phone)
     {
-        if ($phone->shop_id !== Auth::guard('shop')->id())
-            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
+        if ($phone->shop_id != Auth::guard('shop')->id())
+            return response()->json(['data' => ['success' => false, 'message' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']]);
+
 
         $request->validate([
             'number' => ['required','digits_between:6,11'],// 'unique:phones,number,' . auth()->id()
@@ -66,8 +68,8 @@ class PhoneController extends Controller
 
     public function destroy(Phone $phone)
     {
-        if ($phone->shop_id !== Auth::guard('shop')->id())
-            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+        if ($phone->shop_id != Auth::guard('shop')->id())
+            return response()->json(['data' => ['success' => false, 'message' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']]);
 
         $phone->delete();
         return response()->json(['data' => ['success' => true, 'message' => 'با موفقیت حذف شد']]);

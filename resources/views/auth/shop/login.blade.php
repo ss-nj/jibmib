@@ -31,33 +31,15 @@
             </div>
             <div class="col-md-8">
                 <div class="login-form-container">
-                    <form action="{{ route('shop.user.login') }}" method="post" class="pt-5 ajax_validate">
+                    <form action="{{ route('shop.login') }}" method="post" class="pt-5 ajax_validate">
                         @csrf
                         <div class="row">
                             <div class="col-12">
                                 <input type="text"  name="mobile" value=""
-                                       maxlength="11" minlength="10"
+                                       maxlength="11" minlength="10" class="only_en_numbers"
                                        pattern="^09[0-9]{9}$"
                                        title="شماره موبایل را به صورت صحیح وارد کنید."
                                        placeholder="شماره موبایل خود را وارد نمایید"
-
-                                       oninput="
-                           this.value = this.value.replace('۰', '0')  ;
-                           this.value = this.value.replace('۱', '1')  ;
-                           this.value = this.value.replace('۲', '2')  ;
-                           this.value = this.value.replace('۳', '3')  ;
-                           this.value = this.value.replace('۴', '4')  ;
-                           this.value = this.value.replace('۵', '5')  ;
-                           this.value = this.value.replace('۶', '6')  ;
-                           this.value = this.value.replace('۷', '7')  ;
-                           this.value = this.value.replace('۸', '8')  ;
-                           this.value = this.value.replace('۹', '9')  ;
-                           this.value = this.value.replace('٤', '4')  ;
-                           this.value = this.value.replace('٥', '5')  ;
-                           this.value = this.value.replace('٦', '6')  ;
-                           this.value = this.value.replace(/[^0-9۰-۹.]/g, '');
-                           this.value = this.value.replace(/(\..*)\./g, '$1');"
-
                                 >
                                 <div class="error_field text-danger"></div>
                             </div>

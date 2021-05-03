@@ -82,7 +82,7 @@ class RefundController extends Controller
 
     public function ajaxEdit(Refund $refund)
     {
-        if ($refund->shop_id !== Auth::guard('shop')->id())
+        if ($refund->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         return view('shop.refund.edit-refund', compact('refund'))->render();
@@ -91,7 +91,7 @@ class RefundController extends Controller
 
     public function update(Request $request, Refund $refund)
     {
-        if ($refund->shop_id !== Auth::guard('shop')->id())
+        if ($refund->shop_id != Auth::guard('shop')->id())
             return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
 
