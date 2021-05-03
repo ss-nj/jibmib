@@ -31,6 +31,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-4">
+
+                                <label for="ajaxCity" class="form-control-label">محل:</label>
+                                <select name="ajaxCity" id="ajaxCity" class="form-control ajaxCity">
+                                    @foreach($cached_places as $cached_place)
+                                        <option value="{{$cached_place->id}}">{{$cached_place->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
                             <div class="form-group col-md-4">
 
@@ -131,14 +141,16 @@
                 'url': '{!! route('shops.index') !!}',
                 'data': function (data) {
                     // Read values
-                    var ajaxName = $('.ajaxName').val();
+                    var ajaxTitle = $('.ajaxTitle').val();
+                    var ajaxCity = $('.ajaxCity').val();
                     var ajaxId = $('.ajaxId').val();
                     var ajaxApproved = $('#ajaxApproved').val();
                     var ajaxSortBy = $('#ajaxSortBy').val();
                     var ajaxAscDesc = $('#ajaxAscDesc').val();
 
                     // Append to data
-                    data.searchByName = ajaxName;
+                    data.searchByName = ajaxTitle;
+                    data.searchByCity = ajaxCity;
                     data.searchById = ajaxId;
                     data.searchByStatus = ajaxApproved;
                     data.searchSortBy = ajaxSortBy;
@@ -190,7 +202,7 @@
         });
 
         //inputs
-        $('#ajaxApproved ,#ajaxSortBy ,#ajaxAscDesc').change((event) => {
+        $('#ajaxApproved ,#ajaxSortBy ,#ajaxAscDesc,#ajaxCity').change((event) => {
             dataTable.draw();
         });
 

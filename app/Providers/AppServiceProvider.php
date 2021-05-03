@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
 
         try {
 
-            View::composer( ['front.layouts.cart'], function ($view) {
+            View::composer(['front.layouts.cart'], function ($view) {
                 if (auth()->check()) {
                     $baskets = \auth()->user()->baskets;
                     $cart_count = $baskets->count();
@@ -76,7 +76,33 @@ class AppServiceProvider extends ServiceProvider
                     $cart_sum = 0;
                     $baskets = [];
                 }
-                $view->with(['cart_count'=>$cart_count, 'cart_sum'=>$cart_sum, 'baskets'=>$baskets]);
+                $view->with(['cart_count' => $cart_count, 'cart_sum' => $cart_sum, 'baskets' => $baskets]);
+
+            });
+
+            //user cart
+            View::composer(['front.layouts.cart'], function ($view) {
+                if (auth()->check()) {
+                    $baskets = \auth()->user()->baskets;
+                    $cart_count = $baskets->count();
+                    $cart_sum = Basket::where('user_id', auth()->id())->sum(DB::raw('baskets.discount_price * baskets.count'));;
+                } else {
+                    $cart_count = 0;
+                    $cart_sum = 0;
+                    $baskets = [];
+                }
+                $view->with(['cart_count' => $cart_count, 'cart_sum' => $cart_sum, 'baskets' => $baskets]);
+
+            });
+
+            //shop notifs
+            View::composer(['shop.layouts.header'], function ($view) {
+                if (auth()->guard('shop')->check()) {
+                    $cached_notification = Auth::guard('shop')->user()->notifications;
+                } else {
+                    $cached_notification= [];
+                }
+                $view->with(['cached_notification' => $cached_notification]);
 
             });
 
@@ -85,7 +111,6 @@ class AppServiceProvider extends ServiceProvider
                 ['*'],
                 SharedDataComposer::class
             );
-
 
 
         } catch (Exception $exception) {

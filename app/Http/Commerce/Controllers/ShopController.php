@@ -22,11 +22,9 @@ class ShopController extends Controller
 //        }
 //dd(1);
         $query = Shop::with('city', 'province', 'category', 'licence', 'userid', 'disapprove');
-//        dd(Auth::guard('shop')->user()->full_address);
-//dd($query->first());
 
         if ($request->searchById) {
-            $query->where('id', 'LIKE', '%' . $request->searchById . '%');
+            $query->where('id', $request->searchById);
         }
 
         if ($request->searchByName) {
@@ -37,10 +35,9 @@ class ShopController extends Controller
         }
 
         if ($request->searchByCity) {
-            $query->whereHas('city', function ($query) use ($request) {
-                $query->where('name', 'LIKE', '%' . $request->searchByCity . '%');
-            });
+            $query->where('place_id', 'LIKE', '%' . $request->searchByCity . '%');
         }
+
         if (isset($request->searchByStatus)) {
             $query->where('approved', $request->searchByStatus);
         }
@@ -77,6 +74,16 @@ class ShopController extends Controller
 
         $shop->active = !$shop->active;
         $shop->save();
+
+        $messageMap = [
+            '0'=>'فروشگاه شما به حالت غیر فعال در آمد',
+            '1'=>'فروشگاه شما فعال شد',
+        ];
+
+        $shop->notifications()->create([
+            'message'=>$messageMap[$shop->active],
+        ]);
+
         if ($request->ajax()) return response()->json(['message' => 'با موفقیت ذخیره شد .', 'active' => $shop->active]);
         return back();
     }
@@ -92,6 +99,21 @@ class ShopController extends Controller
         $upload->reason = $request->reason;
         $upload->approved = $request->approve;
         $upload->save();
+
+        $messageMap = [
+            'userid'=>[
+                '1'=>'کارت ملی شما تایید شد',
+                '0' =>  sprintf('کارت ملی شما به دلیل" %s "رد شد !!',$upload->reason),
+            ],
+            'licence' => [
+                '1' => 'مجوز شما تایید شد',
+                '0' =>  sprintf('مجوز شما به دلیل" %s "رد شد !!',$upload->reason),
+            ],
+        ];
+
+        $upload->shop->notifications()->create([
+            'message'=>$messageMap[$upload->type][$upload->approved],
+        ]);
 
         return JsonResponse::sendJsonResponse(1, 'موفق', 'با موفقیت ثبت شد',
             'DATATABLE_REFRESH');
@@ -133,7 +155,7 @@ class ShopController extends Controller
             Log::info($e);
         }
 
-        return JsonResponse::sendJsonResponse(1, 'موفق', sprintf('ویژگی  %s  با موفقیت ایجاد گردید', $shop->shop_name),
+        return JsonResponse::sendJsonResponse(1, 'موفق', sprintf('فروشگاه  %s  با موفقیت ایجاد گردید', $shop->shop_name),
             'DATATABLE_REFRESH');
 
     }
@@ -216,7 +238,6 @@ class ShopController extends Controller
 
     public function approveShop(Request $request, Shop $shop)
     {
-//dd($request->all());
         $request->validate([
             'reason' => ['required_if:approve,0', 'string', 'max:80'],
             'approve' => ['required', 'in:0,1'],
@@ -226,12 +247,18 @@ class ShopController extends Controller
         $shop->approved = $request->approve;
         $shop->save();
 
+        $message='فروشگاه شما تایید شد';
+
         if ($request->approve == 0) {
             $shop->disapproves()->create([
                 'reason' => $request->reason,
             ]);
+            $message=$request->reason;
         }
 
+        $shop->notifications()->create([
+            'message'=>$message,
+        ]);
         return JsonResponse::sendJsonResponse(1, 'موفق', 'با موفقیت ثبت شد',
             'DATATABLE_REFRESH');
     }

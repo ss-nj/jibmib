@@ -1227,7 +1227,7 @@ $week_day_map=[
 
                 },
                 error: function (data) {
-console.log(response)
+
                 }
 
             }).done(function (response) {

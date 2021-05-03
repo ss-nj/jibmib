@@ -51,7 +51,13 @@ class ShopsDataTable extends DataTable
             })
 
             ->addColumn('approve', function ($query) {
-                return  $query->approved;
+                $approveMap = [
+                    '0'=>'رد شده',
+                    '1'=>'تایید شده',
+                    '2'=>'در دست بررسی',
+                ];
+
+                return $approveMap[$query->approved] ;
             })
             ->addColumn('status', function ($query) {
                 return DataTableHelpers::toggleBottom($query, 'shops');

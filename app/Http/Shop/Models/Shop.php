@@ -20,7 +20,6 @@ class Shop extends Authenticatable implements Auditable
     use Imagable;
     use \OwenIt\Auditing\Auditable;
 //    protected $primaryKey = 'id';
-    protected $primaryKey = 'id';
 
     protected $fillable = [
         'owner_name',
@@ -183,5 +182,10 @@ class Shop extends Authenticatable implements Auditable
     public function orders()
     {
         return $this->hasManyThrough(OrderItem::class, Takhfif::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
     }
 }

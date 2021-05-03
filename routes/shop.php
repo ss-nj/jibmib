@@ -6,6 +6,7 @@ use App\Http\Auth\Shop\LoginController;
 use App\Http\Auth\Shop\RegisterController;
 use App\Http\Shop\Controllers\CouponController;
 use App\Http\Shop\Controllers\LicencesController;
+use App\Http\Shop\Controllers\NotificationController;
 use App\Http\Shop\Controllers\OpenTimesController;
 use App\Http\Shop\Controllers\ParameterController;
 use App\Http\Shop\Controllers\PhoneController;
@@ -122,7 +123,10 @@ Route::name('shop.')->prefix('shop')->middleware(['auth:shop'])->group( function
 
 
 
-    //ads routes
+    //notification routes
+    Route::get('notification',[NotificationController::class, 'index'])->name('notifications.index');
+//    Route::get('notification/{notification}',[NotificationController::class, 'show'])->name('notifications.show');
+    Route::get('notification-dismiss-all',[NotificationController::class, 'dismiss'])->name('notifications.dismiss');
 
 });
 
