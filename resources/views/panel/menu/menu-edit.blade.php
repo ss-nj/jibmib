@@ -54,7 +54,14 @@
 
                                         </div>
 
+                                        <div class="form-group spec-link">
+                                            <label for="link"> ایکن منو<a target="_blank" href="https://iconify.design/icon-sets/fa/">مقدار را از اینجا انتخاب کنید</a></label>
+                                            <input type="text" class="form-control icon" name="icon" id="icon"
+                                                   value="{{$menu->icon}}"   placeholder="ایکن منو " >
 
+                                            <div class="error_field text-danger"> </div>
+
+                                        </div>
                                         <div class="form-group">
                                             <label for="image">تصویر منو</label>
                                             <div class="form-group">
