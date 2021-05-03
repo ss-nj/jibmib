@@ -87,6 +87,8 @@ class TakhfifController extends Controller
 
     public function edit(Takhfif $takhfif)
     {
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return back()->with('error-message', 'کد وارد شده متعلق به فروشگاه شما نیست !!');
         $shop = Auth::guard('shop')->user();
         $parameters = $takhfif->parameters;
         $terms = $takhfif->terms;
@@ -127,6 +129,8 @@ class TakhfifController extends Controller
      */
     public function update(Request $request, Takhfif $takhfif)
     {
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $timesMap = [
             'display_start_time',
@@ -201,6 +205,10 @@ class TakhfifController extends Controller
      */
     public function destroy(Takhfif $takhfif)
     {
+
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
         $name = $takhfif->name;
         $takhfif->delete();
         return JsonResponse::sendJsonResponse(1, 'موفق', sprintf('تخفیف %s با موفقیت حذف گردید', $name),
@@ -210,6 +218,9 @@ class TakhfifController extends Controller
 
     public function toggle(Request $request, Takhfif $takhfif)
     {
+
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $takhfif->active = !$takhfif->active;
         $takhfif->save();
@@ -270,11 +281,18 @@ class TakhfifController extends Controller
 
     public function loadImages(Takhfif $takhfif)
     {
+
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
         return $takhfif->images;
     }
 
     public function uploadImages(Request $request, Takhfif $takhfif)
     {
+
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
 //todo set it in settings
 //        if ($takhfif->images->count() >= 5)

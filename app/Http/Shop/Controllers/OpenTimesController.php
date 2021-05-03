@@ -8,6 +8,7 @@ use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OpenTimesController extends Controller
 {
@@ -19,16 +20,15 @@ class OpenTimesController extends Controller
 
     public function index(Shop $shop)
     {
-        $openTimes = OpenTimes::where('shop_id', $shop->id)->get();
+        $openTimes = OpenTimes::where('shop_id', Auth::guard('shop')->id())->get();
         return response()->json(['times' => $openTimes], 200);
     }
 
     public function store(Request $request, Shop $shop)
     {
-//        dd($request->all());
-//        if (!Auth::user()->can('read-time')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+
+        if ($shop->id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
             'time' => ['array'],// 'unique:times,number,' . auth()->id()
@@ -70,9 +70,9 @@ class OpenTimesController extends Controller
 
     public function destroy(OpenTimes $openTimes)
     {
-//        if (!Auth::user()->can('delete-time')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+
+        if ($openTimes->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $openTimes->delete();
 

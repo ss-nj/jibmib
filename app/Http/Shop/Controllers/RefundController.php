@@ -9,17 +9,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Shop\Models\Shop;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RefundController extends Controller
 {
 
     public function index(Request $request)
     {
-//        if (!Auth::user()->can('create-slider')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
 
-        $query = Refund::query();
+        $query = Refund::where('shop_id', Auth::guard('shop')->id());
 
 
         if ($request->searchById) {
@@ -58,13 +56,11 @@ class RefundController extends Controller
 
     public function store(Request $request)
     {
-        //        if (!Auth::user()->can('read-slider')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
-        $shop = Shop::findOrFail(1);
+
+        $shop = Shop::findOrFail(Auth::guard('shop')->id());
 
         $request->validate([
-            'amount' => ['required', 'integer','max:'.($shop->wallet?$shop->wallet->amount:0)],
+            'amount' => ['required', 'integer', 'max:' . ($shop->wallet ? $shop->wallet->amount : 0)],
             'bank_id' => ['required'],
             'description' => 'nullable', 'max:500',
         ]);
@@ -86,11 +82,8 @@ class RefundController extends Controller
 
     public function ajaxEdit(Refund $refund)
     {
-//        if (!Auth::user()->can('read-users')) {
-////            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//            return response()->json(['message'=>'عدم دسترسی کافی'],419);
-//        }
-
+        if ($refund->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         return view('shop.refund.edit-refund', compact('refund'))->render();
     }
@@ -98,16 +91,16 @@ class RefundController extends Controller
 
     public function update(Request $request, Refund $refund)
     {
-//        if (!Auth::user()->can('update-slider')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+        if ($refund->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
 
         if ($refund->status != 0)
-            return JsonResponse::sendJsonResponse(1, 'موفق', 'امکان ویرایش وجود ندارد',
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'امکان ویرایش وجود ندارد',
                 'DATATABLE_REFRESH');
-        $maxAmount = $refund->shop->wallet ? ($refund->shop->wallet->amount+$refund->amount) : 0;
+        $maxAmount = $refund->shop->wallet ? ($refund->shop->wallet->amount + $refund->amount) : 0;
         $request->validate([
-            'amount' => ['required', 'integer','max:'.$maxAmount],
+            'amount' => ['required', 'integer', 'max:' . $maxAmount],
             'bank_id' => ['required'],
             'description' => 'nullable', 'max:500',
         ]);

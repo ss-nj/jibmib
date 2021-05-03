@@ -52,7 +52,16 @@
                         @guest()
                             <div class="primary-header-btn">
                                 <div class="text-center"><span><i class="fas fa-phone"></i></span> شماره تماس ویژه</div>
-                                <a href="{{route('login.form')}}"><div class="theme-btn orange-btn"><span style="margin: 0 3px;"><i class="fas fa-user"></i></span> ورود به سامانه</div></a>
+                                <div class="align-self-center dropdown">
+                                    <button class="theme-btn orange-btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span style="margin: 0 3px;"><i class="fas fa-user"></i></span> پروفایل
+                                    </button>
+                                    <ul id="dropdownMenuButton3-1" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                        <li><a class="dropdown-item" href="{{route('login.form')}}">ورود به سامانه</a></li>
+                                        <li><a class="dropdown-item" href="{{route('shop.login.form')}}">ورود به کسب و کار</a></li>
+
+                                    </ul>
+                                </div>
                             </div>
                             <div class="primary-header-btn">
                                 <div class="text-center">031 - 35 144</div>

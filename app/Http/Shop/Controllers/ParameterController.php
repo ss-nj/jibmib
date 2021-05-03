@@ -7,6 +7,7 @@ use App\Http\Shop\Models\Parameter;
 use App\Http\Shop\Models\Takhfif;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ParameterController extends Controller
 {
@@ -24,10 +25,8 @@ class ParameterController extends Controller
 
     public function store(Request $request, Takhfif $takhfif)
     {
-//        dd($request->all());
-//        if (!Auth::user()->can('store-parameter')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
             'value' => ['required', 'string','max:999'],
@@ -47,9 +46,9 @@ class ParameterController extends Controller
 
     public function destroy(Parameter $parameter)
     {
-//        if (!Auth::user()->can('delete-parameter')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+        if ($parameter->takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
 
         $parameter->delete();
 

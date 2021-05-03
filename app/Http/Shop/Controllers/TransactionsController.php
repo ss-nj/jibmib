@@ -12,11 +12,10 @@ class TransactionsController extends Controller
 {
     public function index()
     {
-        $id = auth()->id();
+        $id =Auth::guard('shop')->id();
 
         $transactions = [];
 
-//        dd($transactions);
         return view('shop.transactions.index', compact('transactions'));
 
     }

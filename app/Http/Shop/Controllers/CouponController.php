@@ -16,11 +16,11 @@ class CouponController extends Controller
     {
 
         $id = Auth::guard('shop')->id();
+
         $query = OrderItem::with('transaction', 'takhfif')->whereHas('takhfif', function ($query) use ($id) {
             $query->where('shop_id', $id);
         });
 
-//dd($query->get());
         if ($request->searchById) {
             $query->where('id', 'LIKE', '%' . $request->searchById . '%');
         }
@@ -28,6 +28,7 @@ class CouponController extends Controller
         if ($request->searchByName) {
             $query->where('takhfif_name', 'LIKE', '%' . $request->searchByName . '%');
         }
+
         if ($request->searchByUserName) {
             $query->whereHas('user', function ($query) use ($request) {
                 $query->where('first_name', 'like', '%' . $request->searchByUserName . '%')

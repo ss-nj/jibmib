@@ -7,27 +7,28 @@ use App\Http\Shop\Models\Takhfif;
 use App\Http\Shop\Models\UsageTerm;
 use App\Support\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsageTermController extends Controller
 {
     public function __construct()
     {
-        //todo check auth
 
     }
 
     public function index(Takhfif $takhfif)
     {
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
         $terms = UsageTerm::where('takhfif_id', $takhfif)->get();
         return response()->json(['terms' => $terms], 200);
     }
 
     public function store(Request $request, Takhfif $takhfif)
     {
-//        dd($request->all());
-//        if (!Auth::user()->can('store-parameter')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+        if ($takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $request->validate([
             'value' => ['required', 'string','max:999'],
@@ -47,9 +48,8 @@ class UsageTermController extends Controller
 
     public function destroy(UsageTerm $usage_term)
     {
-//        if (!Auth::user()->can('delete-parameter')) {
-//            return back()->with('error-message', 'دسترسی شما به این بخش محدود می باشد!');
-//        }
+        if ($usage_term->takhfif->shop_id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 
         $usage_term->delete();
 

@@ -12,4 +12,9 @@ class Parameter extends Model
     protected $fillable = [
         'value',
     ];
+
+    public function takhfif()
+    {
+        return $this->belongsTo(Takhfif::class);
+    }
 }

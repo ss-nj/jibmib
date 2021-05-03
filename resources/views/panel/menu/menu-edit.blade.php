@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <!-- Form row -->
         <div class="row">
-            <div class="col-xl-9 box-margin">
+            <div class="col-sm-9 box-margin">
                 <form action="{{route('menus.update', $menu->id)}}" class="ajax_validate" method="post"
                       enctype="multipart/form-data">
                     @csrf

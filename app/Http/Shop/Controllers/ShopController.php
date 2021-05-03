@@ -91,7 +91,7 @@ class ShopController extends Controller
             Log::info($e);
         }
 
-        if ($shop->lat&& $shop->lang) {
+        if ($shop->lat && $shop->lang) {
             $path = public_path('img/shops/' . $shop->id . '/maps/');
 
             if (!File::isDirectory($path)) {
@@ -110,12 +110,17 @@ class ShopController extends Controller
 
     public function loadImages(Shop $shop)
     {
+        if ($shop->id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
+
         return $shop->images;
     }
 
     public function uploadImages(Request $request, Shop $shop)
     {
 
+        if ($shop->id !== Auth::guard('shop')->id())
+            return JsonResponse::sendJsonResponse(0, 'خطا', 'کد وارد شده متعلق به فروشگاه شما نیست !!',);
 //todo set it in settings
 //        if ($shop->images->count() >= 5)
 //            return response('حداکثر تعداد فایل اپلودی رد شده است .', 400);
@@ -127,6 +132,8 @@ class ShopController extends Controller
 
     public function destroyImage(Image $image)
     {
+        if ($image->imagable_id !== Auth::guard('shop')->id())
+            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
 
         $path = $image->path;
         $thumbnail = $image->thumbnail;
@@ -176,12 +183,17 @@ class ShopController extends Controller
 
     public function loadLicences(Shop $shop)
     {
+
+        if ($shop->id !== Auth::guard('shop')->id())
+            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
+
         return $shop->licences;
     }
 
     public function uploadLicences(Request $request, Shop $shop)
     {
-
+        if ($shop->id !== Auth::guard('shop')->id())
+            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
 //todo set it in settings
 //        if ($shop->images->count() >= 5)
 //            return response('حداکثر تعداد فایل اپلودی رد شده است .', 400);
@@ -193,7 +205,8 @@ class ShopController extends Controller
 
     public function destroyLicence(Image $image)
     {
-
+        if ($image->imagable_id !== Auth::guard('shop')->id())
+            return response()->json(['success' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']);
         $path = $image->path;
         $thumbnail = $image->thumbnail;
         $image->delete();
