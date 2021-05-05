@@ -39,7 +39,7 @@ class CouponController extends Controller
 
 
         if (isset($request->searchByStatus)) {
-            $query->where('approved', $request->searchByStatus);
+            $query->where('status', $request->searchByStatus);
         }
 
         if ($request->searchByAscDesc) {

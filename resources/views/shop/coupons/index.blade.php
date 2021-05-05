@@ -55,8 +55,8 @@
                 <label for="ajaxApproved" class="form-control-label">وضعیت :</label>
                 <select name="ajaxApproved" id="ajaxApproved" class="form-control ajaxApproved ">
                     <option value="">انتخاب کنید</option>
-                    <option value="1">فعال</option>
-                    <option value="0">استفاده شده</option>
+                    <option value="0">فعال</option>
+                    <option value="1">استفاده شده</option>
 
                 </select>
             </div>
@@ -188,6 +188,7 @@
                     // Read values
                     var ajaxName = $('.ajaxName').val();
                     var ajaxUserName = $('.ajaxUserName').val();
+                    var ajaxApproved = $('.ajaxApproved').val();
                     var ajaxId = $('.ajaxId').val();
                     var ajaxSortBy = $('#ajaxSortBy').val();
                     var ajaxAscDesc = $('#ajaxAscDesc').val();
@@ -195,6 +196,7 @@
                     // Append to data
                     data.searchByName = ajaxName;
                     data.searchByUserName = ajaxUserName;
+                    data.searchByStatus = ajaxApproved;
                     data.searchById = ajaxId;
                     data.searchSortBy = ajaxSortBy;
                     data.searchByAscDesc = ajaxAscDesc;
@@ -235,7 +237,7 @@
         });
 
         //inputs
-        $('#ajaxSortBy ,#ajaxAscDesc').change((event) => {
+        $('#ajaxSortBy ,#ajaxAscDesc ,#ajaxApproved').change((event) => {
             dataTable.draw();
         });
 
