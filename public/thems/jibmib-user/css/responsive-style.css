@@ -44,7 +44,8 @@
         --small-content-width: 100%;
     }
     .small-content-container{ padding-left: 5px; padding-right: 5px;}
-    .home-cat-container{display: none;}
+    .home-cat-container, .special-offer-side{display: none;}
+    .slider-container{height: auto;}
     .home-scrole-section{flex-wrap: nowrap !important; overflow-x: scroll !important;}
     .login-page-container{padding-top: 0;}
     .login-container{background-image: none; }
@@ -55,12 +56,12 @@
 }
 @media only screen and (max-width: 900px) {
     .primary-header{display: none;}
-    .responsive-header{display: block;} 
-    .responsive-header-container input[type='text']{border-radius: 20px;}   
+    .responsive-header{display: block;}
+    .responsive-header-container input[type='text']{border-radius: 20px;}
 }
 
 @media only screen and (max-width: 810px) {
-   
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -85,7 +86,9 @@
 @media only screen and (max-width: 500px) {
     .responsive-header-container .theme-btn{width: auto;}
     .responsive-header-container input[type='text']{width: 250px;}
-    .job-big-thumb-add-cart{margin-left: -20px;} 
+    .job-big-thumb-add-cart{margin-left: -20px;}
+    .thumb-desktop{display: none;}
+    .thumb-responsive{display: block;}
 }
 
 @media only screen and (max-width: 400px) {

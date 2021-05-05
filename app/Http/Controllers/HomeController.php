@@ -45,7 +45,7 @@ class HomeController extends Controller
     {
         $city = $this->getCity($city);
 
-        $category = Category::where('slug', $category)->firstOrfail();
+        $category = Category::with('categories')->where('slug', $category)->firstOrfail();
 
         $takhfifs = Takhfif::
         whereHas('shop', function ($query) use ($city) {
@@ -60,12 +60,14 @@ class HomeController extends Controller
 
         //get cat sliders
         $slides = $this->getSliders($city,$category->id);
-
+//dd($takhfifs);
         //find vip takhfifs
-        $vip_takhfifs = $takhfifs->where('vip', '=', 1)->paginate(2);
+        $vip_takhfif = $takhfifs->where('vip', '=', 1)->first()??($takhfifs->count()?$takhfifs->random():[]);
 
 
-        return view('front.category', compact('category', 'city', 'takhfifs', 'banners', 'slides', 'vip_takhfifs'));
+
+
+        return view('front.category', compact('category', 'city', 'takhfifs', 'banners', 'slides', 'vip_takhfif'));
     }
 
     /**
@@ -75,10 +77,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $user = Shop::where('phone', '09377394549')->first();
-//        Auth::guard('shop')->login($user);
-//
-//        dd($user,auth()->user());
+
         $city = collect(request()->segments())->last();
         if ($city) {
             $city = $this->getCity($city);
@@ -317,19 +316,18 @@ class HomeController extends Controller
     /**
      * @return array
      */
-    public function getCatBanners(): array
+    public function getCatBanners()
     {
-        $banners = [];
+
         $banner_map = [
             'CATEGORIES_1',
             'CATEGORIES_2',
             'CATEGORIES_3',
             'CATEGORIES_4',
         ];
-        foreach ($banner_map as $banner) {
-            $banners[] = Banner::where('banner_position', $banner)->where('start_date', '<=', now())->where('expires_date', '>=', now())->first();
-        }
-        return $banners;
+        return   $banners = Banner::whereIn('banner_position', $banner_map)
+        ->where('start_date', '<=', now())->where('expires_date', '>=', now())
+            ->get();
     }
 
 }
