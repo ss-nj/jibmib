@@ -54,10 +54,11 @@ Route::group(['prefix' => 'shop'], function () {
 
 
 
-Route::name('shop.')->prefix('shop')->middleware(['auth:shop'])->group( function () {
+Route::name('shop.')->prefix('shop')->middleware(['shop_admin'])->group( function () {
 
     //takhfif routes
     Route::resource('takhfifs', TakhfifController::class);
+    Route::get('takhfifs/toggle/{takhfif}', [TakhfifController::class, 'activeToggle'])->name('takhfifs.toggle.active');
 
     //load images for dropzoon preload takhfif
     Route::get('takhfifs-load-images/{takhfif}', [TakhfifController::class,'loadImages'])->name('takhfif.load.images');

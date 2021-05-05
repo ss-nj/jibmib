@@ -29,6 +29,7 @@ class Takhfif extends Model  implements \OwenIt\Auditing\Contracts\Auditable
 //        'active',
 //        'view_count',
 //        'approved',
+        'status',
         'price',
 //        'discount',
         'discount_price',
@@ -45,6 +46,7 @@ class Takhfif extends Model  implements \OwenIt\Auditing\Contracts\Auditable
         'start_time' => 'datetime',
         'expire_time' => 'datetime',
         'active' => 'boolean',
+//        'approved' => 'boolean',
         'vip' => 'boolean',
     ];
 

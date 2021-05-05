@@ -83,7 +83,7 @@ jQuery('document').ready(function($){
             }
             h = h | newHeight;
         }
-
+        slider_height = h;
         var sc = $('.home-cat-section .side-cat'),
         li = sc.children(),
         a = li.children('a'),
@@ -93,7 +93,9 @@ jQuery('document').ready(function($){
         var screen_width = $( window ).width();
         if(screen_width > 768){
           $('.home-top-thumb-side').css('height',h/2);
+          $('.sp-offer').css('height',slider_height);
         }
+        console.log(slider_height);
         
     };
 

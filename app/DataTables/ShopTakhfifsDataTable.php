@@ -71,20 +71,6 @@ class ShopTakhfifsDataTable extends DataTable
             ->addColumn('action', function ($query) {
 
 
-//
-//                                    <form action="{{ route('shop.takhfifs.destroy', $takhfif->id) }}"
-//                                          style="display: inline;"
-//                                          id="frm-delete-takhfif-value{{ $takhfif->id }}"
-//                                          method="post">
-//                                        {{ csrf_field() }}
-//                                        {{ method_field('delete') }}
-//                                        <a href="#" class="btn btn-circle btn-icon-only"
-//                                           onclick="deleteWithModal('frm-delete-takhfif-value', '{{ $takhfif->id }}', event)"><i
-//                                                class="fa fa-trash alert-danger"></i></a>
-//                                    </form>
-
-
-
                 $deleteRoute = route('shop.takhfifs.destroy', $query->id);
                 $csrf=csrf_field();
                 $deleteAction = "  <form action='$deleteRoute '
@@ -110,8 +96,18 @@ class ShopTakhfifsDataTable extends DataTable
                 return $showAction .$editAction.$deleteAction;
             })
             ->addColumn('status', function ($query) {
-                return DataTableHelpers::toggleBottom($query, 'takhfifs');
-            })->rawColumns(['status', 'image', 'action']);
+
+
+                return DataTableHelpers::toggleBottom($query, 'shop.takhfifs');
+            })
+            ->addColumn('approved', function ($query) {
+                $class = !$query->approved ? 'danger fa fa-window-close' : 'success fa fa-check';
+                $approved = $query->approved ? 'تایید شده' : 'رد شده';
+                $approved_badge = $query->approved ? 'success' : 'danger';
+                return  "<i class='alert-{$class}  active-btn-icon'></i>
+                   <span class='badge badge-$approved_badge active-btn-badge'> $approved</span>";
+            })
+            ->rawColumns(['status', 'image', 'action', 'approved']);
     }
 
     /**
@@ -136,7 +132,7 @@ class ShopTakhfifsDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('takhfifs-table')
-            ->columns($this->getColumns())
+//            ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->orderBy(1)
@@ -169,6 +165,7 @@ class ShopTakhfifsDataTable extends DataTable
             Column::computed('discount_price')->title('قیمت با تخفیف'),
             Column::computed('created_at')->title('قیمت با تخفیف'),
             Column::computed('status')->title('وضعیت'),
+            Column::computed('approved')->title('تاییدیه'),
             Column::computed('action')->title('عملیات'),
         ];
     }

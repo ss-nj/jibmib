@@ -186,6 +186,7 @@
                 },
 
                 {data: 'status', name: 'status', title: 'وضعیت', 'className': 'text-center', orderable: false},
+                {data: 'approved', name: 'approved', title: 'تاییدیه', 'className': 'text-center', orderable: false},
                 {data: 'created_at', name: 'created_at', title: 'زمان ایجاد', 'className': 'text-center', orderable: false
                 },
                 {data: 'action', title: 'عملیات', 'className': 'text-center', name: 'action', orderable: false}

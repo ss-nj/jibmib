@@ -196,3 +196,50 @@
     }
 
 </script>
+
+<script>
+    $(document).on('click', '.active-btn', function (e) {
+
+        e.preventDefault();
+        let icon = $(this).find('.active-btn-icon');
+        let badge = $(this).find('.active-btn-badge');
+
+        icon.removeClass('fa fa-check');
+        icon.addClass('fa fa-window-close');
+
+        let url = $(this).attr("href");
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function (response) {
+                if (response.active) {
+                    icon.removeClass('alert-danger fa fa-window-close');
+                    icon.addClass('alert-success fa fa-check');
+
+                    badge.removeClass('badge-danger');
+                    badge.addClass('badge-success');
+                    badge.text('فعال');
+                } else {
+                    icon.removeClass('alert-success fa fa-check');
+                    icon.addClass('alert-danger fa fa-window-close');
+
+                    badge.removeClass('badge-success');
+                    badge.addClass('badge-danger');
+                    badge.text('غیر فعال');
+                }
+                swal(response.message, {
+                    dangerMode: false,
+                    icon: typeof response.active !== 'undefined' ?"success":"error",
+                    title: typeof response.active !== 'undefined' ?"موفق":"خطا",
+                    showCloseButton: true,
+
+                })
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+
+        });
+    });
+
+</script>

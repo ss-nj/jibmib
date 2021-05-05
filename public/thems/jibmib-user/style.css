@@ -1,6 +1,6 @@
 /*
 
-	@package Pejoohan Mehr
+	@package Pejoohan Mehr 
 
 */
 
@@ -68,6 +68,12 @@ input:focus{border:none !important;}
 .is-invalid{box-shadow: inset 0 0 6px 1px rgb(251 0 0) !important;}
 
 .map-overlay{position: absolute; width: 100%;height: 100%;top: 0;left: 0;right: 0;bottom: 0;background-color: transparent;z-index: 2;cursor: pointer;}
+.cr-pointer{cursor: pointer;}
+.f-size-1{font-size: 0.85rem;}
+.f-size-2{font-size: 1rem;}
+.f-size-3{font-size: 1.25rem;}
+.theme-circle{width: 60px; height: 60px; border-radius: 50%; text-align: center; display: flex; align-items: center;}
+
 
 
 /*
@@ -86,7 +92,7 @@ input:focus{border:none !important;}
 .theme-btn{margin-top: 5px;}
 .primary-nav-container{position: absolute; bottom: -9px; right: 5px;}
 .primary-nav-container .dropdown-menu{margin-top: -10px; margin-right: -10px; width: 200px;}
-.primary-nav-container .dropdown-item{color: #707070; font-size: 1rem; padding: 0 2px;}
+.primary-nav-container .dropdown-item{color: #707070; font-size: 1rem; padding: 0 2px;} 
 .primary-nav-container .dropdown-item i{font-size: 1.5rem;}
 .primary-nav-container .sub-menu{position: absolute; top:0; right:200px; background-color: #fff; border: 1px solid #dcdcdc;}
 
@@ -124,10 +130,6 @@ input:focus{border:none !important;}
 .responsive-header-container .tablet-header-btn button {margin-top: -5px;}
 .responsive-header-container .tablet-header-btn ul{width: fit-content !important; min-width: fit-content !important;}
 .header-select-city{/*position: absolute; top: 30px; right: 35px; */ font-size: 1rem;height: 40px;background-color: #fff;border-radius: 0 20px 20px 0;padding: 8px;margin-left: -4px;}
-.mobile-header-select-city{font-size: 1rem; height: 40px;background-color: #fff;border-radius: 0 20px 20px 0; padding: 8px;margin-left: -4px;}
-.mobile-header-select-city>i{position: absolute;font-size: 1.5rem; right: 50px;}
-.mobile-header-select-city>select{border: none;}
-.mobile-search-text{border-radius: 20px 0 0 20px !important;}
 .header-select-city select{border: none;}
 .header-select-city option{padding: 10px;}
 
@@ -235,6 +237,18 @@ input:focus{border:none !important;}
 .job-small-inner-thumb{width: 220px; height: 200px; margin: 10px auto; border-radius: 10px; box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1);}
 .job-small-inner-thumb .thumb-timer{position: absolute; bottom: 50px !important; left: 10px !important; }
 
+/*
+	Category Page
+	=========================================
+*/
+.sp-offer h3{font-size: 1.2rem; color: #00C2AC; font-weight: 700;}
+.cat-spe-add-cart .cart-item-counter{width: fit-content; margin: 0 auto;}
+.cat-spe-add-cart .single-add-cart{margin:0 auto; width: 70px;}
+.sub-cat-active{border: 1px solid #FD7A12 !important; background-color: #FD7A12; color: #fff !important; font-weight: 700;}
+
+.thumb-responsive{display: none; background-color: #f5f5f5;}
+.thumb-responsive img{width: 100px; height: 100px; border-radius: 10px; margin-left: 5px;}
+.thumb-responsive .cart-off-value{right: 10px; bottom: 5px;}
 /*
 	Single Product Page
 	=========================================
@@ -413,10 +427,10 @@ input:focus{border:none !important;}
 	Media Print
 	=========================================
 */
-@media print {
+@media print { 
 	/* All your print styles go here */
 	header, footer, .cat-fixed-container, .support-fixed-container, .btn{ display: none !important; }
 	.small-content-container{ width: 800px;}
 	.ticket-section{border: 1px solid #dcdcdc;}
-
+	
    }

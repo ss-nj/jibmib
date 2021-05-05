@@ -362,4 +362,15 @@ class TakhfifController extends Controller
         $display_start_time = implode('-', $display_start_time) . ' ' . $time;
         return $display_start_time;
     }
+
+    public function activeToggle(Request $request, Takhfif $takhfif)
+    {
+        if ($takhfif->shop_id != Auth::guard('shop')->id())
+            return response()->json(['data' => ['success' => false, 'message' => 'کد وارد شده متعلق به فروشگاه شما نیست !!']]);
+
+        $takhfif->active = !$takhfif->active;
+        $takhfif->save();
+        if ($request->ajax()) return response()->json(['message' => 'با موفقیت ذخیره شد .', 'active' => $takhfif->active]);
+        return back();
+    }
 }

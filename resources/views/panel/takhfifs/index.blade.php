@@ -276,20 +276,23 @@
             data += '<table class="detail" cellpadding="5" cellspacing="0"  style="padding-left:50px">'
                 + '<tr>'
                 + '<td>وضعیت تایید فروشگاه</td>'
-                + '<td>'
+                + '<td>';
+
+
+            data += '<button class="btn btn-success mt-ladda-btn ladda-button approve-shop-bot" ' +
+                ' data-id="'
+                + d.id
+                + '"  >'
 
             if (d.approved == 0)
                 data += '  رد شد به دلیل :' + d.disapprove.reason;
             else if (d.approved == 1)
                 data += 'تایید شده'
             else if (d.approved == 2) {
-                data += '<button class="btn btn-success mt-ladda-btn ladda-button approve-shop-bot" ' +
-                    ' data-id="'
-                    + d.id
-                    + '"  >'
-                    + 'بررسی'
-                    + '</button>'
+                data +=   'بررسی'
             }
+            data += '</button>'
+
             data += ' </td>'
 
                 + '</td>'
