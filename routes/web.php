@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Core\Controllers\CityController;
 use App\Http\ProfileController;
 use App\Http\RateController;
+use App\Http\SearchController;
 use App\Http\TicketController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -118,6 +119,9 @@ Route::post ('rate', [RateController::class,'rate'])->name('rate');;
 
 Route::resource('comment', CommentController::class)->only('index','store','update');
 
+Route::any('search/city/{city}', [SearchController::class,'action'])->name('search.action');
+
+Route::any('ajax-search/city/{city}',  [SearchController::class,'ajaxSearch'])->name('ajax.search');
 
 
 

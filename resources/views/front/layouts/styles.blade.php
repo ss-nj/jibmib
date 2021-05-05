@@ -133,8 +133,15 @@
         top: 230px;
     }
 
-
-
+     .search-dropdown-menu{
+         text-align: right;
+         position: absolute;
+         background-color: #fff;
+         box-shadow: 0px 2px 11px 0px;
+         padding: 16px;
+         z-index: 9999999;
+         width: 600px;
+     }
 
 </style>
 
