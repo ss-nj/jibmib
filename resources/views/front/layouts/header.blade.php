@@ -148,7 +148,7 @@
             dropdown = $('.search-dropdown-menu');
             dropdown.empty();
             dropdown.append('<li><a href="#"> در حال جستجو</a></li>');
-            $('.dropdown').dropdown();
+            // dropdown.dropdown();
             $.ajax({
                 type: "get",
                 url: "{{route('ajax.search',$selected_city)}}",
@@ -158,10 +158,10 @@
                         $('ul.search-dropdown-menu').show();
                         dropdown.empty();
                         for (let i = 0; i < response.length; i++) {
-                            dropdown.append('<li><a  href="#" onclick="setValue(this);document.getElementById(\'top-search\').submit()" class="search-dropdown text-secondary" >' + response[i].name + '</a></li>')
+                            dropdown.append('<li><a  href="#" onclick="setValue(this)" class="search-dropdown text-secondary" >' + response[i].name + '</a></li>')
                         }
 
-                        $('.dropdown').dropdown();
+                        // dropdown.dropdown();
 
                     } else {
 
@@ -184,18 +184,5 @@
     </script>
 @endpush
 
-@push('style')
-    <style>
-        .search-dropdown-menu{
-            text-align: right;
-            position: absolute;
-            background-color: #fff;
-            border: solid;
-            padding: 16px;
-            z-index: 9999999;
-            width: 600px;
-        }
-    </style>
-@endpush
 
 

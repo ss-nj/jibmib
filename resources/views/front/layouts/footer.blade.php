@@ -24,19 +24,18 @@
                             <div class="col-xl-4 col-md-6 mt-3">
                                 <div class="footer-contact-container m-auto">
                                     <span>آدرس :</span>
-                                    <span>اصفهان، خیابان شمس آبادی ساختمان آلا، طبقه دوم، واحد 204</span>
+                                    <span>اصفهان، خ کاوه بسمت شهدا پ ۸۴</span>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-6 mt-3">
                                 <div class="footer-contact-container m-auto">
-                                    <p><span>تلفن همراه :</span><span>09132230000</span></p>
-                                    <p><span>تلفن تماس :</span><span>03135144</span></p>
+                                    <p><span>تلفن تماس :</span><span>۳۳۳۷۰۰۹۴</span></p>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-6 mt-3">
                                 <div class="footer-contact-container m-auto">
                                     <span>پست الکترونیکی :</span>
-                                    <span>Info@Gmail.com</span>
+                                    <span>support@jibmib.com</span>
                                 </div>
                             </div>
                         </div><!--row-->
@@ -50,18 +49,15 @@
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                </ul>
-                                <ul>
+
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                </ul>
-                                <ul>
+
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                </ul>
-                                <ul>
+
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
                                     <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
@@ -94,13 +90,13 @@
             </div><!--.footer-left-side-->
         </div><!--.col-md-8-->
 
-        <div class="social-side">
-            <div class="social-side-icon-container"><i class="fa-brands fa-whatsapp"></i></div><!--social-side-icon-container-->
-            <div class="social-side-icon-container"><i class="fa-brands fa-tumblr"></i></div><!--social-side-icon-container-->
-            <div class="social-side-icon-container"><i class="fa-brands fa-twitter"></i></div><!--social-side-icon-container-->
-            <div class="social-side-icon-container"><i class="fa-brands fa-linkedin-in"></i></div><!--social-side-icon-container-->
-            <div class="social-side-icon-container"><i class="fa-brands fa-facebook-f"></i></div><!--social-side-icon-container-->
-        </div><!--social-side-->
+{{--        <div class="social-side">--}}
+{{--            <div class="social-side-icon-container"><i class="fa-brands fa-whatsapp"></i></div><!--social-side-icon-container-->--}}
+{{--            <div class="social-side-icon-container"><i class="fa-brands fa-tumblr"></i></div><!--social-side-icon-container-->--}}
+{{--            <div class="social-side-icon-container"><i class="fa-brands fa-twitter"></i></div><!--social-side-icon-container-->--}}
+{{--            <div class="social-side-icon-container"><i class="fa-brands fa-linkedin-in"></i></div><!--social-side-icon-container-->--}}
+{{--            <div class="social-side-icon-container"><i class="fa-brands fa-facebook-f"></i></div><!--social-side-icon-container-->--}}
+{{--        </div><!--social-side-->--}}
     </section>
 
         <img class="footer-side footer-side-right" src="{{asset($path_user.'img/footer-side.svg').'?ver='.$ver}}" alt="">

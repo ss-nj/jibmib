@@ -37,12 +37,12 @@
 
 <?php //_______________ Support Fixed __________________ ?>
 <section class="support-fixed-container">
-    <div class="support-circle">
-        <i class="fa-regular fa-user-headset"></i>
-    </div>
-    <div class="support-circle overlay_on">
-        <i class="fa-regular fa-question"></i>
-    </div>
+{{--    <div class="support-circle">--}}
+{{--        <i class="fa-regular fa-user-headset"></i>--}}
+{{--    </div>--}}
+{{--    <div class="support-circle overlay_on">--}}
+{{--        <i class="fa-regular fa-question"></i>--}}
+{{--    </div>--}}
     <div id="go_top" class="support-circle">
         <i class="fa-regular fa-angle-up"></i>
     </div>

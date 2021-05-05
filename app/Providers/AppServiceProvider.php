@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
         try {
 
             View::composer(['front.layouts.cart'], function ($view) {
-                if (auth()->check()) {
+                if (auth()->guard('web')->check()) {
                     $baskets = \auth()->user()->baskets;
                     $cart_count = $baskets->count();
                     $cart_sum = Basket::where('user_id', auth()->id())->sum(DB::raw('baskets.discount_price * baskets.count'));;
