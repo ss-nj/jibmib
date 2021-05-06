@@ -118,6 +118,7 @@ Route::post ('payment-status', [BasketController::class,'callback'])->name('call
 Route::post ('rate', [RateController::class,'rate'])->name('rate');;
 
 Route::resource('comment', CommentController::class)->only('index','store','update');
+Route::post ('comment-answer', [CommentController::class,'answer'])->name('answer');
 
 Route::any('search/city/{city}', [SearchController::class,'action'])->name('search.action');
 

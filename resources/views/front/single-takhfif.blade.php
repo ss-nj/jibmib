@@ -269,6 +269,33 @@
         @include('front.layouts.mail')
 
     </article>
+
+    <form class="needs-validation modal fade ajax_validate" action="{{route('answer')}}" method="post"
+          id="answer-comment" tabindex="-1">
+        {{ csrf_field() }}
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ثبت پاسخ</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ticket-description">متن پاسخ</label>
+                        <textarea class="form-control body" name="body" id="" rows="5"></textarea>
+                        <div class="error_field text-danger"></div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">ثبت پاسخ</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">انصراف</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
 @endsection
 
 

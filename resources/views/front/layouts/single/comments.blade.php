@@ -12,7 +12,12 @@
                 <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span class="pr-3">تاریخ</span><span>
                         {{verta($comment->created_at)->timezone('Asia/Tehran')->format('%d، %B %Y')}}</span>
                 </div>
-                <div><a class="font-weight-bold text-dark" href="#">پاسخ دهید</a></div>
+                <div>
+                    @if($comment->commentable->shop->id == auth()->guard('shop')->id()&&$comment->answer==null)
+                        <a class="font-weight-bold text-dark" data-toggle="modal" href="#"
+                           data-target="#answer-comment">پاسخ دهید</a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -33,7 +38,8 @@
                     </div>
                     <div class="col-4 comment-content-status">
                         <div><span class="pr-3"><i class="fa-solid fa-clock"></i></span><span
-                                class="pr-3">تاریخ</span><span>{{verta($comment->answer_time)->timezone('Asia/Tehran')->format('%d، %B %Y')}}</span></div>
+                                class="pr-3">تاریخ</span><span>{{verta($comment->answer_time)->timezone('Asia/Tehran')->format('%d، %B %Y')}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
