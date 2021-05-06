@@ -120,6 +120,9 @@ class BasketController extends Controller
             return JsonResponse::sendJsonResponse(1, 'موفق', $message);
 
         $price = $totalPrice * 10;
+
+        return JsonResponse::sendJsonResponse(0, 'خطا', 'اتصال به بانک ناموفق بود لطفا با پشتیبانی تماس بگیرید',);
+
         return JsonResponse::sendJsonResponse(1, 'موفق', 'به زودی به درپاه بانکی منتقل خواهید شد .',
             'REDIRECT', route('basket.bank', $price));
 

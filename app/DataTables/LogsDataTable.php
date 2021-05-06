@@ -87,22 +87,7 @@ class LogsDataTable extends DataTable
                 );
                 $filtered = array_diff_key(json_decode($query->old_values,true)??[], $order_disalowed);
 
-                $string = json_encode($filtered, JSON_UNESCAPED_UNICODE);
-                $result = mb_str_replace(
-                    array( '{','}',
-                        'value_fa', 'mobile', 'first_name', 'last_name', 'password', 'address', 'wallet', 'active', 'international_post',
-                        'peyk_motori', 'post', 't_pox', 'barbari', 'express', 'free', 'category_id', 'product_id', 'name',
-                        'slug', 'link', 'position','province_id','account_no','city_id','uuid'
-                    ),
-                    array( '','',
-                        'مقدار', 'موبایل', 'نام', 'نام خانوادگی', 'رمز', 'آدرس', 'کیف پول ', 'وضعیت', 'پست بین الملل',
-                        'پیک موتوری', 'پست', 'تیپاکس', 'باربری', 'اکسپرس', 'مجانی', 'دسته بندی ', 'محصول', 'نام',
-                        'نام لینک', 'لینک', 'ترتیب','استان','شماره حساب','شهر','کدملی'
-                    ),
-                    $string
-                );
-
-                return '<div style="    max-width: 200px;">' .$result.'</div>';
+                return $this->filterCollumns($filtered);
             })
             ->addColumn('new_values', function ($query) {
 
@@ -129,21 +114,7 @@ class LogsDataTable extends DataTable
                 );
                 $filtered = array_diff_key(json_decode($query->new_values,true)??[], $order_disalowed);
 
-                $string = json_encode($filtered, JSON_UNESCAPED_UNICODE);
-                $result = mb_str_replace(
-                    array( '{','}',
-                        'value_fa', 'mobile', 'first_name', 'last_name', 'password', 'address', 'wallet', 'active', 'international_post',
-                        'peyk_motori', 'post', 't_pox', 'barbari', 'express', 'free', 'category_id', 'product_id', 'name',
-                        'slug', 'link', 'position','province_id','account_no','city_id','uuid'
-                    ),
-                    array( '','',
-                        'مقدار', 'موبایل', 'نام', 'نام خانوادگی', 'رمز', 'آدرس', 'کیف پول ', 'وضعیت', 'پست بین الملل',
-                        'پیک موتوری', 'پست', 'تیپاکس', 'باربری', 'اکسپرس', 'مجانی', 'دسته بندی ', 'محصول', 'نام',
-                        'نام لینک', 'لینک', 'ترتیب','استان','شماره حساب','شهر','کدملی'
-                    ),
-                    $string
-                );
-                return '<div style="    max-width: 200px;">' .$result.'</div>';
+                return $this->filterCollumns($filtered);
             })
             ->addColumn('type', function ($query) {
                 $modelTypeMap = [
@@ -155,6 +126,9 @@ class LogsDataTable extends DataTable
                     'App\Http\Commerce\Models\Category' => 'دسته بندی',
                     'App\Http\Core\Models\User' => 'کاربر',
                     'App\Http\Core\Models\Setting' => 'تنظیمات',
+                    'App\Http\Shop\Models\Takhfif' =>'تخفیف' ,
+                     'App\Http\Shop\Models\Shop' =>'کسب و کار',
+                    'App\Http\Shop\Models\Refund' =>'درخواست وچه',
                 ];
                 return $modelTypeMap[$query->auditable_type] ?? $query->auditable_type;
             })
@@ -238,6 +212,29 @@ class LogsDataTable extends DataTable
 //                  ->width(60)
                 ->addClass('text-center')->title('عملیات'),
         ];
+    }
+
+    /**
+     * @param array $filtered
+     * @return string
+     */
+    public function filterCollumns(array $filtered)
+    {
+        $string = json_encode($filtered, JSON_UNESCAPED_UNICODE);
+        $result = mb_str_replace(
+            array('{', '}',
+                'value_fa', 'mobile', 'first_name', 'last_name', 'password', 'address', 'wallet', 'active', 'international_post',
+                'peyk_motori', 'post', 't_pox', 'barbari', 'express', 'free', 'category_id', 'product_id', 'name',
+                'slug', 'link', 'position', 'province_id', 'account_no', 'city_id', 'uuid', 'view_count'
+            ),
+            array('', '',
+                'مقدار', 'موبایل', 'نام', 'نام خانوادگی', 'رمز', 'آدرس', 'کیف پول ', 'وضعیت', 'پست بین الملل',
+                'پیک موتوری', 'پست', 'تیپاکس', 'باربری', 'اکسپرس', 'مجانی', 'دسته بندی ', 'محصول', 'نام',
+                'نام لینک', 'لینک', 'ترتیب', 'استان', 'شماره حساب', 'شهر', 'کدملی', 'تعداد بازدید'
+            ),
+            $string
+        );
+        return '<div style="    max-width: 200px;">' . $result . '</div>';
     }
 
     /**

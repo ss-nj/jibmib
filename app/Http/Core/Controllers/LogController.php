@@ -44,6 +44,9 @@ class LogController extends Controller
             'city_price' => 'App\Http\Commerce\Models\CityPrice',
             'setting' => 'App\Http\Core\Models\Setting',
             'menu' => 'App\Http\Core\Models\Menu',
+            'takhfif' => 'App\Http\Shop\Models\Takhfif',
+            'shop' => 'App\Http\Shop\Models\Shop',
+            'refund' => 'App\Http\Shop\Models\Refund	',
         ];
 
         $query = ModelLog::query();
