@@ -65,6 +65,9 @@
                         <div class="col-lg-6">
                             <div id="transactions-chart"></div>
                         </div>
+                    <div class="col-lg-6">
+                            <div id="orders-chart"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -362,6 +365,55 @@
                     {
                         name: 'موفق',
                         data: {!! json_encode($transactions['success']) !!}
+                    }
+                ]
+            });
+            Highcharts.chart('orders-chart', {
+                chart: {
+                    type: 'spline',
+                    style: {
+                        fontFamily: 'IRANSans'
+                    }
+                },
+                xAxis: {
+                    categories: {!! json_encode($orders['days']) !!},
+                    labels: {
+                        useHTML: true
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '',
+                        useHTML: true
+                    },
+                    labels: {
+                        useHTML: true
+                    }
+                },
+                title: {
+                    text: 'درآمد',
+                    useHTML: true
+                },
+                legend: {
+                    useHTML: true
+                },
+                tooltip: {
+                    headerFormat: '<div class="text-right">',
+                    footerFormat: '</div>',
+                    pointFormat: '{series.name} : <b>{point.y:,.0f}</b> عدد',
+                    useHTML: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [
+                    {{--{--}}
+                    {{--    name: 'تعداد فروش',--}}
+                    {{--    data: {!! json_encode($orders['success']) !!}--}}
+                    {{--},--}}
+                    {
+                        name: 'جمع فروش',
+                        data: {!! json_encode($orders['sum']) !!}
                     }
                 ]
             });

@@ -45,8 +45,11 @@
                                             @endif
                                             <li><a class="dropdown-item" href="{{route('profile.index')}}">پروفایل کاربری</a></li>
                                             <li><a class="dropdown-item" href="{{route('user.tickets.index')}}">پشتیبانی</a></li>
+                                        @else
+                                            <li><a class="dropdown-item" href="{{route('login.form')}}">ورود به بخش کاربری</a></li>
+
                                         @endif
-                                        <li><a class="dropdown-item" href="{{route('shop.dashboard')}}">داشبورد</a></li>
+                                        <li><a class="dropdown-item" href="{{route('shop.dashboard')}}">داشبورد کسب و کار</a></li>
                                         <li><a class="dropdown-item" href="{{route('shop.profiles.index')}}">پروفایل کسب و کار</a></li>
 
                                     </ul>

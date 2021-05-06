@@ -38,11 +38,12 @@ class BasketController extends Controller
     {
 
         $request->validate([
-            'count' => ['required', 'digits_between:1,999'],
+            'count' => ['required', 'integer', 'min:1' ,'max:999'],
             'id' => ['required']
         ]);
 
         $count = $request->count;
+
         $basket = Basket::with('takhfif')->where('user_id', auth()->id())->find($request->id);
         if (!$basket)
             return response()->json(['success' => false

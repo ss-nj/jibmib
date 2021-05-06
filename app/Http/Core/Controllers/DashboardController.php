@@ -57,13 +57,29 @@ class DashboardController extends Controller
             ->where('status', 0)
             ->where('created_at', '>=', Carbon::now()->subMonth())
             ->get();
+
+        $success_orders = DB::table('order_items')
+            ->select(DB::raw('DATE(created_at) as date'),'takhfif_discount')
+//            ->where('status', 1)
+            ->where('created_at', '>=', Carbon::now()->subMonth())
+            ->get();
+
         foreach (range(30, 0) as $item) {
             $transactions['days'][] = verta()->subDays($item)->format('Y-m-d');
             $transactions['success'][] = count($success->whereIn('date', Carbon::now()->subDays($item)->toDateString()));
             $transactions['failed'][] = count($failed->whereIn('date', Carbon::now()->subDays($item)->toDateString()));
+            $transactions['order_count'][] = count($success_orders->whereIn('date', Carbon::now()->subDays($item)->toDateString()));
         }
 
 
+
+        foreach (range(30, 0) as $item) {
+            $orders['days'][] = verta()->subDays($item)->format('Y-m-d');
+//            $orders['success'][] = count($success_orders->whereIn('date', Carbon::now()->subDays($item)->toDateString()));
+            $orders['sum'][] = $success_orders->whereIn('date', Carbon::now()->subDays($item)->toDateString())->sum('takhfif_discount');
+        }
+
+//dd($orders);
         $users = DB::table('users')
             ->select(DB::raw('DATE(created_at) as date'))
             ->where('created_at', '>=', Carbon::now()->subMonth())
@@ -86,7 +102,7 @@ class DashboardController extends Controller
             'todaySells', 'todayTransactions',
             'weekSells', 'weekTransactions',
             'monthSells', 'monthTransactions',
-            'income', 'transactions',
+            'income', 'transactions','orders',
             'activeNotAnswerdTicketCount'));
 
     }

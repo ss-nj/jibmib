@@ -24,8 +24,8 @@
                         <div><i class="fa-regular fa-minus takhfif-count-minus" data-id="{{$basket->id}}"></i></div>
                     </div>
                     <div class="cart-item-price ml-5">
-                        <div><span>{{number_format($basket->takhfif->discount_price)}}</span><span> تومان</span></div>
-                        <div>{{$basket->takhfif->price}}</div>
+                        <div><span>{{number_format($basket->takhfif->discount_price*$basket->count)}}</span><span> تومان</span></div>
+                        <div>{{$basket->takhfif->price*$basket->count}}</div>
                         <div></div>
                     </div>
                     <a class="remove-from-cart" href="{{route('remove.from.cart')}}" data-id="{{$basket->takhfif->id}}">
@@ -58,11 +58,13 @@
                         sendMessage('خطا', toast_message);
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    if (xhr.status == 404) {
+                error: function (response) {
+                    if (response.status == 404) {
                         var toast_message = 'مورد پیدا نشد .';
                         sendMessage('خطا', toast_message);
                     }
+                    console.log(response.responseJSON.errors.count[0] )
+                    sendMessage('خطا', response.responseJSON.errors.count[0]);
                 }
             }).always(function () {
                 $('#page-overlay').css('display', 'none');
@@ -84,13 +86,21 @@
 
          $(document).on('click', '.takhfif-count-minus', function (e) {
             e.preventDefault();
-            $('#page-overlay').css('display', 'block');
-            $('.spinner').css('display', 'block');
 
+             // $('#page-overlay').css('display', 'block');
+             // $('.spinner').css('display', 'block');
             let id = $(this).attr('data-id');
             let takhfifCountField = $('#takhfif-count-' + id);
             let count = parseInt(takhfifCountField.text())-1;
-            changeCount(count,id);
+            if (count<1) {
+                $('#page-overlay').css('display', 'none');
+                $('.spinner').css('display', 'none');
+                return
+            }
+
+
+
+             changeCount(count,id);
 
         })
 
