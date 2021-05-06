@@ -51,6 +51,13 @@ class Takhfif extends Model  implements \OwenIt\Auditing\Contracts\Auditable
     ];
 
 
+    public function scopeActive($query)
+    {
+        return $query;
+        return $query->where('active', 1)->where('approved',1);
+    }
+
+
     public function shop()
     {
         return $this->belongsTo(Shop::class);

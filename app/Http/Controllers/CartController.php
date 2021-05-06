@@ -42,7 +42,7 @@ class CartController extends Controller
         $takhfif = Takhfif::findOrFail($id);
 
 
-        if (!$takhfif->active) {
+        if (!$takhfif->active || $takhfif->approved!=1) {
             $error = 'تخفیف مورد نظر فعال نمی باشد .';
             return response()->json(['success' => false
                 , 'error' => $error], 200);

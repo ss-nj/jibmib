@@ -2,10 +2,10 @@
     <div class="job-big-thumb position-relative">
         <a href="{{route('single',$home_categories[$cat]->takhfifs[$takh]->slug)}}">
             <img class="job-big-thumb-img"
-             src="{{asset($home_categories[$cat]->takhfifs[$takh]->images()->count()
+                 src="{{asset($home_categories[$cat]->takhfifs[$takh]->images()->count()
 ?$home_categories[$cat]->takhfifs[$takh]->images()->first()->path
 :\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
-             alt="{{$home_categories[$cat]->takhfifs[$takh]->name}}">
+                 alt="{{$home_categories[$cat]->takhfifs[$takh]->name}}">
         </a>
         <div class="thumb-timer text-center">
             @include('front.layouts.timer',['timer_takhfif'=>$home_categories[$cat]->takhfifs[$takh]])
@@ -44,41 +44,44 @@
 </div>
 <div class="col-md-6 pt-4">
     <div class="row home-scrole-section">
-
-        <?php for ($j = 1; $j <= 4; $j++): ?>
-        <div class="col-sm-6">
-            <a href="{{route('single',$home_categories[$cat]->takhfifs[$j]->slug)}}">
-                <div class="job-small-thumb position-relative">
-                    <img class="job-small-thumb-img"
-                         src="{{asset($home_categories[$cat]->takhfifs[$j]->images()->count()
-?$home_categories[$cat]->takhfifs[$j]->images()->first()->path
+        @php($i=0)
+        @foreach($home_categories[$cat]->takhfifs as $takhfif )
+            @php($i++)
+             @if($i>=5)
+                 @break
+            @endif
+            <div class="col-sm-6">
+                <a href="{{route('single',$takhfif->slug)}}">
+                    <div class="job-small-thumb position-relative">
+                        <img class="job-small-thumb-img"
+                             src="{{asset($takhfif->images()->count()
+?$takhfif->images()->first()->path
 :\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
-                         alt="{{$home_categories[$cat]->takhfifs[$j]->name}}">
-                    <div class="thumb-timer text-center">
-                        @include('front.layouts.timer',['timer_takhfif'=>$home_categories[$cat]->takhfifs[$j]])
-                    </div><!--thumb-timer-->
-                    <div class="job-small-thumb-off">{{$home_categories[$cat]->takhfifs[$j]->discount}}%
-                    </div>
-                    <div class="row w-100 pt-1">
-                        <div
-                            class="job-big-thumb-title">{{$home_categories[$cat]->takhfifs[$j]->name}}</div>
-                    </div>
-                    <div class="row w-100 job-big-thumb-status">
-                        <div class="col-6 job-small-thumb-location">
-                            <span><i class="fa-solid fa-location-dot"></i></span>
-                            <span>{{\Illuminate\Support\Str::limit($home_categories[$cat]->takhfifs[$j]->shop->address,20)}}</span>
+                             alt="{{$takhfif->name}}">
+                        <div class="thumb-timer text-center">
+                            @include('front.layouts.timer',['timer_takhfif'=>$takhfif])
+                        </div><!--thumb-timer-->
+                        <div class="job-small-thumb-off">{{$takhfif->discount}}%
                         </div>
-                        <div class="col-6 job-small-thumb-rating">
-                            <span><i class="fa-solid fa-eye"></i></span>
-                            <span>بازدید</span>
-                            <span>{{$home_categories[$cat]->takhfifs[$j]->view_count}}</span>
+                        <div class="row w-100 pt-1">
+                            <div
+                                class="job-big-thumb-title">{{$takhfif->name}}</div>
                         </div>
-                    </div>
-                </div><!--job-small-thumb-->
+                        <div class="row w-100 job-big-thumb-status">
+                            <div class="col-6 job-small-thumb-location">
+                                <span><i class="fa-solid fa-location-dot"></i></span>
+                                <span>{{\Illuminate\Support\Str::limit($takhfif->shop->address,20)}}</span>
+                            </div>
+                            <div class="col-6 job-small-thumb-rating">
+                                <span><i class="fa-solid fa-eye"></i></span>
+                                <span>بازدید</span>
+                                <span>{{$takhfif->view_count}}</span>
+                            </div>
+                        </div>
+                    </div><!--job-small-thumb-->
 
-            </a>
-        </div><!--col-sm-6-->
-        <?php endfor; ?>
-
+                </a>
+            </div><!--col-sm-6-->
+        @endforeach
     </div><!--row-->
 </div>

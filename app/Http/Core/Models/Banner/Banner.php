@@ -52,6 +52,15 @@ class Banner extends Model
         'active' => 'boolean',
     ];
 
+
+
+    public function scopeActive($query)
+    {
+        return $query;
+        return $query->where('active', 1)->where('start_date', '<=', now())->where('expires_date', '>=', now());
+    }
+
+
     public function category()
     {
         return $this->belongsTo(Category::class);

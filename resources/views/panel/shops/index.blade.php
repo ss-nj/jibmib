@@ -35,7 +35,8 @@
 
                                 <label for="ajaxCity" class="form-control-label">محل:</label>
                                 <select name="ajaxCity" id="ajaxCity" class="form-control ajaxCity">
-                                    @foreach($cached_places as $cached_place)
+                                    <option value="">انتخاب کنید</option>
+                                @foreach($cached_places as $cached_place)
                                         <option value="{{$cached_place->id}}">{{$cached_place->name}}</option>
                                     @endforeach
                                 </select>

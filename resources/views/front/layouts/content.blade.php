@@ -66,8 +66,9 @@
                         </div>
 
                         <!-- ______________Category Section content ________________-->
-
-                        @include('front.layouts.home.category-grid',['cat'=>$i,'takh'=>0])
+                        @if($home_categories[$i]->takhfifs->count()!=0)
+                            @include('front.layouts.home.category-grid',['cat'=>$i,'takh'=>0])
+                        @endif
                     </div>
                 </div>
             @endif

@@ -73,7 +73,7 @@ class TakhfifController extends Controller
 //dd($query->first());
 
         if ($request->searchById) {
-            $query->where('id', 'LIKE', '%' . $request->searchById . '%');
+            $query->where('id', $request->searchById);
         }
 
         if ($request->searchByName) {

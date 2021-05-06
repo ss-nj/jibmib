@@ -72,16 +72,16 @@
                                         <div class="error_field text-danger"></div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label
-                                            class="cr mb-0">
-                                            <input type="checkbox" name="filter_takhfif_by_category"
-                                                   style="display: inline-block"
-                                                   value="1"
-                                                   checked>
-                                            فیلتر تخفیف
-                                        </label>
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <label--}}
+{{--                                            class="cr mb-0">--}}
+{{--                                            <input type="checkbox" name="filter_takhfif_by_category"--}}
+{{--                                                   style="display: inline-block"--}}
+{{--                                                   value="1"--}}
+{{--                                                   checked>--}}
+{{--                                            فیلتر تخفیف--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="col-md-4">
                                     <label for="place_id" class="form-control-label">شهر:</label>
@@ -100,16 +100,16 @@
                                             <div class="error_field text-danger"></div>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label
-                                            class="cr mb-0">
-                                            <input type="checkbox" name="filter_takhfif_by_place"
-                                                   style="display: inline-block"
-                                                   value="1"
-                                                   checked>
-                                            فیلتر تخفیف
-                                        </label>
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <label--}}
+{{--                                            class="cr mb-0">--}}
+{{--                                            <input type="checkbox" name="filter_takhfif_by_place"--}}
+{{--                                                   style="display: inline-block"--}}
+{{--                                                   value="1"--}}
+{{--                                                   checked>--}}
+{{--                                            فیلتر تخفیف--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="col-md-4">
                                     <label for="takhfif_id" class="form-control-label">تخفیف:</label>

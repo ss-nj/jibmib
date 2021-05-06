@@ -275,7 +275,7 @@
 
             data += '<table class="detail" cellpadding="5" cellspacing="0"  style="padding-left:50px">'
                 + '<tr>'
-                + '<td>وضعیت تایید فروشگاه</td>'
+                + '<td>وضعیت تایید تخفیف</td>'
                 + '<td>';
 
 

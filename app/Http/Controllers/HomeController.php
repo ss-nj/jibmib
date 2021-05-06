@@ -47,7 +47,7 @@ class HomeController extends Controller
 
         $category = Category::with('categories')->where('slug', $category)->firstOrfail();
 
-        $takhfifs = Takhfif::
+        $takhfifs = Takhfif::active()->
         whereHas('shop', function ($query) use ($city) {
             $query->where('place_id', $city->id);
         })->
@@ -105,14 +105,10 @@ class HomeController extends Controller
     public function single($slug)
     {
 
-        foreach (Takhfif::all() as $takhfif) {
-            $takhfif->slug = sprintf('%s-%s', $takhfif->id, str_slug_persian($takhfif->name));
-            $takhfif->save();
-        }
 
-        $takhfif = Takhfif::with('shop', 'parameters', 'terms', 'comments')->withCount('comments')->where('slug', $slug)->firstOrfail();
-        $today_takhfifs = Takhfif::latest()->paginate(4);
-        $similar_takhfifs = Takhfif::latest()->inRandomOrder()->paginate(4);
+        $takhfif = Takhfif::active()->with('shop', 'parameters', 'terms', 'comments')->withCount('comments')->where('slug', $slug)->firstOrfail();
+        $today_takhfifs = Takhfif::active()->latest()->paginate(4);
+        $similar_takhfifs = Takhfif::active()->latest()->inRandomOrder()->paginate(4);
 
         $logos = Image::where('imagable_type', 'LOGOS')->get();
         $takhfif->view_count += 1;
@@ -240,11 +236,8 @@ class HomeController extends Controller
             'FIRST_PAGE_5',
         ];
         foreach ($banner_map as $banner) {
-            $bannerItem = Banner::where('banner_position', $banner)
-                ->where('start_date', '<=', now())->where('expires_date', '>=', now());
-
+            $bannerItem = Banner::active()->where('banner_position', $banner);
             if ($city) $bannerItem = $bannerItem->where('place_id', $city->id);
-
             $home_banner[] = $bannerItem->first();
         }
         return $home_banner;
@@ -275,7 +268,8 @@ class HomeController extends Controller
      */
     public function getVipTakhfifs( $city)
     {
-        $vip_takhfifs = Takhfif::where('vip', '=', 1);
+        $vip_takhfifs = Takhfif::active()->where('vip', '=', 1)
+;
 
         if ($city) $vip_takhfifs = $vip_takhfifs->whereHas('shop', function ($query) use ($city) {
             $query->where('place_id', $city->id);
@@ -325,8 +319,7 @@ class HomeController extends Controller
             'CATEGORIES_3',
             'CATEGORIES_4',
         ];
-        return   $banners = Banner::whereIn('banner_position', $banner_map)
-        ->where('start_date', '<=', now())->where('expires_date', '>=', now())
+        return   $banners = Banner::active()->whereIn('banner_position', $banner_map)
             ->get();
     }
 
