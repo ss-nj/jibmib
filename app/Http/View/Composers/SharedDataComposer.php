@@ -58,17 +58,18 @@ class SharedDataComposer
         });
 
         $cached_places = Cache::remember('cached_places', '10', function () {
-            return Place::orderBy('name', 'asc')->get();
+            return Place::orderBy('name', 'asc')->where('active',1)->get();
 
         });
 
         $cached_categories = Cache::remember('cached_categories', '10', function () {
-            return Category::with('categories')->withCount('categories')->orderBy('name', 'asc')->get();
+            return Category::with('categories')->where('active',1)
+                ->withCount('categories')->orderBy('name', 'asc')->get();
 
         });
 
         $cashed_menus = Cache::remember('cashed_menus', '10', function () {
-            return Menu::orderBy('position', 'asc')->get();
+            return Menu::orderBy('position', 'asc')->where('active',1)->get();
 
         });
 

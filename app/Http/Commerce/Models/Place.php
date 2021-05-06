@@ -19,6 +19,7 @@ class Place extends Model
         'active',
         'position',
     ];
+    protected $casts = ['active' => 'boolean'];
 
     public function city()
     {

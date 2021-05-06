@@ -43,25 +43,30 @@
 
                     <div class="col-12">
                         <div class="footer-cols-container d-sm-flex">
-                            <div class="footer-menus-container d-sm-flex">
+                            <div class="footer-menus-container d-sm-flex justify-content-between">
 
-                                <ul>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
-                                    <li><span class="footer-menu-line"></span><a href="#"> صفحه اصلی </a></li>
+                                <ul class="d-flex flex-column mr-4">
+                                    @foreach($cashed_menus->where('menu','footer_1') as $cashed_menu1)
+                                        <li><span class="footer-menu-line"></span><a href="{{$cashed_menu1->link}}"> {{$cashed_menu1->name}} </a></li>
+                                    @endforeach
                                 </ul>
+                                <ul class="d-flex flex-column mr-4">
+                                    @foreach($cashed_menus->where('menu','footer_2') as $cashed_menu2)
+                                         <li><span class="footer-menu-line"></span><a href="{{$cashed_menu2->link}}"> {{$cashed_menu2->name}} </a></li>
+                                    @endforeach
+                                </ul>
+                                <ul class="d-flex flex-column mr-4">
+                                    @foreach($cashed_menus->where('menu','footer_3') as $cashed_menu3)
+                                         <li><span class="footer-menu-line"></span><a href="{{$cashed_menu3->link}}"> {{$cashed_menu3->name}} </a></li>
+                                    @endforeach
+                                </ul>
+                                <ul class="d-flex flex-column mr-4">
+                                    @foreach($cashed_menus->where('menu','footer_4') as $cashed_menu4)
+                                         <li><span class="footer-menu-line"></span><a href="{{$cashed_menu4->link}}"> {{$cashed_menu4->name}} </a></li>
+                                    @endforeach
+                                </ul>
+
+
                             </div><!--footer-menus-container-->
                             <div class="img-nemad-container text-center"><img src="{{asset($path_user.'img/nemad.png').'?ver='.$ver}}" alt="" width="80"></div>
 

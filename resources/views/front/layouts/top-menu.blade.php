@@ -34,7 +34,7 @@
                 </div>
             </li>
 
-            @foreach($cashed_menus as $cashed_menu)
+            @foreach($cashed_menus->where('menu','header') as $cashed_menu)
                 <li class="nav-item "><a href="{{$cashed_menu->link}}">{{$cashed_menu->name}}</a></li>
             @endforeach
         </ul>

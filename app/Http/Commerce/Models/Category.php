@@ -26,7 +26,7 @@ class Category extends Model
         'icon',
     ];
 
-    protected $casts = ['is_menu' => 'boolean'];
+    protected $casts = ['is_menu' => 'boolean','active' => 'boolean'];
 
     public function takhfifs()
     {

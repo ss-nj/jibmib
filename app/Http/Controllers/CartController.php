@@ -37,7 +37,22 @@ class CartController extends Controller
                 , 'error' => $error], 200);
         }
 
+
+
         $takhfif = Takhfif::findOrFail($id);
+
+
+        if (!$takhfif->active) {
+            $error = 'تخفیف مورد نظر فعال نمی باشد .';
+            return response()->json(['success' => false
+                , 'error' => $error], 200);
+        }
+        if ($takhfif->display_end_time <= now()) {
+            $error = 'زمان استفاده از تخفیف مورد نظر پایان یافته است .';
+            return response()->json(['success' => false
+                , 'error' => $error], 200);
+        }
+
         $image = $takhfif->images()->count() ? $takhfif->images()->first()->path : Image::NO_IMAGE_PATH;
 
         $discount_price = $takhfif->discount_price;

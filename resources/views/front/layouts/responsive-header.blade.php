@@ -9,7 +9,7 @@
                          aria-expanded="false"><i class="fa-solid fa-bars"></i></div>
 
                     <ul class="dropdown-menu w-100">
-                        @foreach($cashed_menus as $cashed_menu)
+                        @foreach($cashed_menus->where('menu','header') as $cashed_menu)
                             <li class="dropdown-item pt-3 menu-dropright"><a class="d-flex pl-2 pr-2 w-100"
                                                                              href="{{$cashed_menu->link}}">{{$cashed_menu->name}}</a>
                             </li>
