@@ -1,5 +1,13 @@
 <?php
-
+//todo
+// notifications fix / vip plans / browser notification  / telegram notification  /
+// create and edit takhfif in admin /bank gates management /auto sitemap / more seo fields in takhfif
+// ajax categories and filters in user side /
+// jobs queue for newsletter and sms and email marketing/
+// shop profile page
+// manage rollbacks
+// manage all permission seeders for admin panel and add them to methods
+// cms
 use App\Http\Auth\User\ForgotPasswordController;
 use App\Http\Auth\User\LoginController;
 use App\Http\Auth\User\RegisterController;

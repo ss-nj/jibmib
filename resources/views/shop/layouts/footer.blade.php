@@ -30,9 +30,9 @@
                 <div class="contact-details">
                     <h5 class="text-3 mb-3">تماس با ما</h5>
                     <ul class="list list-icons list-icons-lg mb-2">
-                        <li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">تبریز، فلکه دانشگاه، برج بلور، طبقه 456</p></li>
-                        <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567" class="ltr-text">(+98) 123-4567</a></p></li>
-                        <li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
+{{--                        <li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">تبریز، فلکه دانشگاه، برج بلور، طبقه 456</p></li>--}}
+{{--                        <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567" class="ltr-text">(+98) 123-4567</a></p></li>--}}
+{{--                        <li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>--}}
                     </ul>
                 </div>
             </div>

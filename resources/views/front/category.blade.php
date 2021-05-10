@@ -81,9 +81,13 @@
                         <div class="col job-sec-title-line"></div>
                     </div>
                     <div class="w-100 pt-3 pl-lg-5">
-                        <div class="single-tag-item">همه</div>
-                        @foreach($category->categories as $category)
-                            <div class="single-tag-item sub-cat-active">{{$category->name}}</div>
+                        <a href="{{route('category',['city'=>$selected_city,'cat'=>$category->slug])}}">
+                            <div class="single-tag-item sub-cat-active">همه</div>
+                        </a>
+                        @foreach($category->categories as $subCategory)
+                            <a href="{{route('category',['city'=>$selected_city,'cat'=>$subCategory->slug])}}">
+                                <div class="single-tag-item">{{$subCategory->name}}</div>
+                            </a>
                         @endforeach
                     </div>
                 </div>

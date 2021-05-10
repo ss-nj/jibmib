@@ -2,8 +2,8 @@
     <div class="job-big-thumb position-relative">
         <a href="{{route('single',$home_categories[$cat]->takhfifs[$takh]->slug)}}">
             <img class="job-big-thumb-img"
-                 src="{{asset($home_categories[$cat]->takhfifs[$takh]->images()->count()
-?$home_categories[$cat]->takhfifs[$takh]->images()->first()->path
+                 src="{{asset($home_categories[$cat]->takhfifs[$takh]->images->count()
+?$home_categories[$cat]->takhfifs[$takh]->images->first()->path
 :\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
                  alt="{{$home_categories[$cat]->takhfifs[$takh]->name}}">
         </a>
@@ -25,14 +25,27 @@
                 <span>{{\Illuminate\Support\Str::limit($home_categories[$cat]->takhfifs[$takh]->shop->address,20)}}</span>
             </div>
             <div class="col-7 job-big-thumb-rating">
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span>5.0/5</span>
+           <span dir="ltr">
+                @php($c=round($home_categories[$cat]->takhfifs[$takh]->rates->avg('rate'),1))
+
+               @for($i;$i<=$c;$i++)
+                   @if($c>$i&&$c<$i+1)
+                       <span><i class="fa-solid fa-star-half-stroke" style="color: #caa10c"></i></span>
+                   @else
+                       <span><i class="fa-solid fa-star" style="color: #caa10c"></i></span>
+                   @endif
+
+               @endfor
+
+               @for($i;$i<=4;$i++)
+                   <span><i class="fa-solid fa-star"></i></span>
+               @endfor
+            </span>
+
+
+                <span>{{round($home_categories[$cat]->takhfifs[$takh]->rates->avg('rate'),1)}}</span>
                 <span>(از مجموع</span>
-                <span>8</span>
+                <span>{{$home_categories[$cat]->takhfifs[$takh]->rates->count()}}</span>
                 <span>رای)</span>
                 <span> | </span>
                 <span><i class="fa-solid fa-eye"></i></span>
@@ -47,15 +60,15 @@
         @php($i=0)
         @foreach($home_categories[$cat]->takhfifs as $takhfif )
             @php($i++)
-             @if($i>=5)
-                 @break
+            @if($i>=5)
+                @break
             @endif
             <div class="col-sm-6">
                 <a href="{{route('single',$takhfif->slug)}}">
                     <div class="job-small-thumb position-relative">
                         <img class="job-small-thumb-img"
-                             src="{{asset($takhfif->images()->count()
-?$takhfif->images()->first()->path
+                             src="{{asset($takhfif->images->count()
+?$takhfif->images->first()->path
 :\App\Http\Core\Models\Image::NO_IMAGE_PATH)}}"
                              alt="{{$takhfif->name}}">
                         <div class="thumb-timer text-center">

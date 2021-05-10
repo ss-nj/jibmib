@@ -23,7 +23,7 @@ class LogoController extends Controller
     public function setDefaultOption(): array
     {
         $defaultOption = [
-            'size' => ['width' => 600, 'height' => 400],
+//            'size' => ['width' => 600, 'height' => 400],
             'watermark' => true,
             'changesize' => true,
             'dir' => 'img/logo/'

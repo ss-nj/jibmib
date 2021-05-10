@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class PhoneController extends Controller
 {
-    public function __construct()
-    {
-        //todo check auth
 
-    }
 
     public function index(Shop $shop)
     {

@@ -11,11 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ParameterController extends Controller
 {
-    public function __construct()
-    {
-        //todo check auth
 
-    }
 
     public function index(Takhfif $takhfif)
     {

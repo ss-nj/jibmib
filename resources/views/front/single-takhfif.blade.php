@@ -476,10 +476,11 @@
 @endpush
 @push('external_css')
     <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"/>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+{{--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">--}}
 
     <link rel="stylesheet" href="{{asset('plugins/rating/themes/fontawesome-stars.css')}}"/>
     <link rel="stylesheet" href="{{asset('plugins/rating/themes/fontawesome-stars-o.css')}}"/>
+    <link rel="stylesheet" href="{{asset('font-awesome-4.7.0/css/font-awesome.min.css')}}"/>
 
 @endpush
 @push('external_js')

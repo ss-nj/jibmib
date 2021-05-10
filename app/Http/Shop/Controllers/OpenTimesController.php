@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OpenTimesController extends Controller
 {
-    public function __construct()
-    {
-        //todo check auth
 
-    }
 
     public function index(Shop $shop)
     {

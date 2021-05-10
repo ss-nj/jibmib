@@ -62,7 +62,7 @@ class HomeController extends Controller
         $slides = $this->getSliders($city,$category->id);
 //dd($takhfifs);
         //find vip takhfifs
-        $vip_takhfif = $takhfifs->where('vip', '=', 1)->first()??($takhfifs->count()?$takhfifs->random():[]);
+        $vip_takhfif = $takhfifs->where('vip', '=', 1)->first()??($takhfifs->count()?$takhfifs->random():null);
 
 
 
@@ -257,7 +257,7 @@ class HomeController extends Controller
         ];
         $home_categories = [];
         foreach ($home_categories_map as $cat) {
-            $home_categories[] = Category::with('takhfifs.shop')->find(Setting::where('key', $cat)->first()->value_fa);
+            $home_categories[] = Category::with('takhfifs.shop','takhfifs.rates','takhfifs.images','image')->find(Setting::where('key', $cat)->first()->value_fa);
         }
         return $home_categories;
     }
